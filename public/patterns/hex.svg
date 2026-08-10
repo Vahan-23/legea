@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="56" height="100" viewBox="0 0 56 100">
+  <!-- Фирменный гексагональный паттерн, tileable -->
+  <g fill="none" stroke="#12305B" stroke-opacity="0.04" stroke-width="1">
+    <path d="M28 2 L54 17 L54 47 L28 62 L2 47 L2 17 Z"/>
+    <path d="M28 38 L54 53 L54 83 L28 98 L2 83 L2 53 Z"/>
+  </g>
+</svg>

@@ -1,0 +1,12 @@
+---
+description: Правила для 3D-компонентов
+globs: components/canvas/**", "app/**/builder/**
+---
+
+- Все 3D подключается через next/dynamic { ssr: false }.
+- Перекраска моделей — через материалы Base/Trim/Logo,
+  без перезагрузки GLB.
+- Смена цвета — lerp 400мс в useFrame, не мгновенная.
+- Canvas создавать с gl={{ preserveDrawingBuffer: true }}
+  для экспорта превью в PNG.
+- На мобильных 3D не автозагружается.

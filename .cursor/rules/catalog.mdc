@@ -1,0 +1,9 @@
+---
+description: Правила для каталога
+globs: app/**/catalog/**", "components/catalog/**
+---
+
+- Каталог рендерится на сервере (SSG/ISR). three.js здесь
+  не импортируется вообще.
+- Фильтры синхронизированы с URL через searchParams.
+- Изображения только через next/image.

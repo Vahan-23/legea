@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-navy: #12305b;
+  --color-blue: #1e7fe0;
+  --color-off-white: #f7f9fc;
+  --color-graphite: #1a1a1a;
+  --color-success: #1e9b4b;
+  --color-muted: #6b7280;
+  --color-white: #ffffff;
+}
+
+@layer base {
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply bg-white font-sans text-graphite antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-display uppercase tracking-display text-navy;
+  }
+}
+
+@layer components {
+  .hex-bg {
+    background-color: var(--color-white);
+    background-image: url("/patterns/hex.svg");
+    background-size: 56px 100px;
+    background-repeat: repeat;
+  }
+
+  .hex-bg-muted {
+    background-color: var(--color-off-white);
+    background-image: url("/patterns/hex.svg");
+    background-size: 56px 100px;
+    background-repeat: repeat;
+  }
+
+  /* Резкая горизонтальная линия-разделитель в стиле каталога Legea */
+  .section-rule {
+    @apply h-px w-full bg-blue;
+  }
+
+  .field-input {
+    @apply w-full border border-navy/20 bg-white px-3 py-2 text-sm text-graphite outline-none transition-colors focus:border-blue;
+  }
+}

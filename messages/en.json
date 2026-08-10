@@ -1,0 +1,317 @@
+{
+  "meta": {
+    "siteName": "Legea",
+    "tagline": "Official distributor — kit for clubs and sports schools"
+  },
+  "nav": {
+    "catalog": "Catalog",
+    "builder": "Kit builder",
+    "spec": "Specification",
+    "about": "About",
+    "delivery": "Delivery",
+    "contacts": "Contacts",
+    "privacy": "Privacy"
+  },
+  "home": {
+    "brand": "LEGEA",
+    "subtitle": "Official distributor — kit for clubs and sports schools",
+    "ctaCatalog": "Open catalog",
+    "ctaBuilder": "Build a kit",
+    "stats": {
+      "articles": "articles",
+      "colorways": "colorways",
+      "delivery": "delivery days",
+      "moq": "MOQ, pcs"
+    },
+    "categories": {
+      "title": "Categories",
+      "subtitle": "Pick a sport or kit type — opens the catalog with filters applied",
+      "football": "Football",
+      "volley": "Volleyball",
+      "basket": "Basketball",
+      "suits": "Tracksuits",
+      "accessories": "Bags & accessories"
+    },
+    "workflow": {
+      "title": "How we work",
+      "subtitle": "From specification to delivery — clear steps and lead times",
+      "steps": {
+        "specification": {
+          "title": "Specification",
+          "text": "Build line items, sizes and branding on the site",
+          "duration": "1 day"
+        },
+        "sampleAndMockup": {
+          "title": "Mockup & sample",
+          "text": "We align visuals and a sample when needed",
+          "duration": "3–5 days"
+        },
+        "production": {
+          "title": "Production",
+          "text": "Order at the Legea factory with quality control",
+          "duration": "15–20 days"
+        },
+        "delivery": {
+          "title": "Delivery",
+          "text": "Shipments across Armenia and agreed pickup",
+          "duration": "5–7 days"
+        }
+      }
+    },
+    "clients": {
+      "title": "Trusted by",
+      "subtitle": "Clubs and schools — logos after approval",
+      "placeholder": "Club {n}"
+    },
+    "lead": {
+      "title": "Quick enquiry",
+      "subtitle": "Leave your contacts — a manager will reply within a business day",
+      "name": "Contact person",
+      "phone": "Phone",
+      "organization": "Organization",
+      "comment": "Comment",
+      "submit": "Send",
+      "sending": "Sending…",
+      "success": "Request received. Reference:",
+      "map": "Map — coming soon",
+      "errors": {
+        "required": "Required field",
+        "phone": "At least 9 digits",
+        "rateLimit": "Too many requests. Try again later.",
+        "send": "Could not send. Email us at {email}"
+      }
+    }
+  },
+  "pages": {
+    "about": {
+      "title": "About",
+      "lead": "Official Legea distributor in Armenia",
+      "body": "We supply kit to clubs, schools and federations — from a single set to seasonal orders.\nWe work from a specification: articles, colorways, sizes and branding are locked before quoting.\nPrices stay private: a manager prepares a commercial offer for your volume and timeline."
+    },
+    "delivery": {
+      "title": "Delivery & lead times",
+      "lead": "Indicative timelines — confirmed in the commercial offer",
+      "body": "A typical cycle from specification to dispatch is about three weeks, depending on factory load and branding method.\nDelivery across Armenia and pickup from the Yerevan warehouse.\nRush orders and large volumes are agreed separately."
+    },
+    "contacts": {
+      "title": "Contacts",
+      "lead": "Reach us by phone, email or the homepage form",
+      "map": "Open in Google Maps",
+      "body": "Legal details and the exact warehouse address will be confirmed with the client.\nHours: weekdays, by appointment."
+    },
+    "privacy": {
+      "title": "Privacy policy",
+      "lead": "How we handle personal data",
+      "body": "We collect contact details only to reply to your enquiry and prepare a commercial offer.\nWe do not share data with third parties except delivery and email providers needed to contact you.\nTo delete or update your data, email the distributor public address.\nThe full policy text will be approved with the client."
+    }
+  },
+  "errors": {
+    "notFoundTitle": "Page not found",
+    "notFoundBody": "Check the URL or go back to the homepage",
+    "genericTitle": "Something went wrong",
+    "genericBody": "Try refreshing the page or come back later",
+    "retry": "Retry",
+    "home": "Home"
+  },
+  "common": {
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "language": "Language"
+  },
+  "footer": {
+    "rights": "All rights reserved",
+    "distributor": "Official Legea distributor"
+  },
+  "catalog": {
+    "title": "Catalog",
+    "subtitle": "Legea kit for clubs — no public prices, precise specs",
+    "searchPlaceholder": "Article or name",
+    "results": "{count, plural, one {# item} other {# items}}",
+    "empty": "Nothing found",
+    "reset": "Reset filters",
+    "sort": "Sort",
+    "sortId": "By article",
+    "sortName": "By name",
+    "filters": "Filters",
+    "sport": "Sport",
+    "type": "Type",
+    "color": "Color",
+    "sizes": "Size range",
+    "has3xs": "Has 3XS",
+    "hasOversize": "Has 3XL / 4XL",
+    "gsm": "Fabric weight",
+    "gsmUnit": "g/m²",
+    "tech": "Technologies",
+    "sizeRange": "{from}–{to}",
+    "gsmValue": "{gsm} g/m²",
+    "gsmUnknown": "Weight not specified",
+    "activeFilters": "Active filters",
+    "categories": {
+      "calcio": "Football",
+      "volley": "Volleyball",
+      "basket": "Basketball",
+      "universal": "Universal"
+    },
+    "types": {
+      "maglie": "Jerseys",
+      "pantaloncini": "Shorts",
+      "tute": "Tracksuits",
+      "giacche": "Jackets",
+      "felpe": "Hoodies",
+      "pantaloni": "Pants",
+      "portiere": "Goalkeeper",
+      "calze": "Socks",
+      "palloni": "Balls",
+      "borse": "Bags",
+      "accessori": "Accessories",
+      "kit": "Kits",
+      "intimo": "Base layer",
+      "polo": "Polo",
+      "tshirt": "T-shirts",
+      "capispalla": "Outerwear"
+    },
+    "gsmBands": {
+      "130-145": "130–145",
+      "200-245": "200–245",
+      "290+": "290+"
+    },
+    "presets": {
+      "squad117": "Squad 11+7",
+      "squad14": "Squad 14",
+      "youthU14": "Youth U-14",
+      "youthU17": "Youth U-17"
+    }
+  },
+  "product": {
+    "pageLabel": "Product page",
+    "priceLevel": "Price level",
+    "priceLevelTooltip": "Relative price level within the category. Exact quote on request.",
+    "colorway": "Colorway",
+    "sizeMatrix": "Sizes and quantities",
+    "totalPieces": "Total: {count} pcs",
+    "moq": "Min. order",
+    "moqValue": "MOQ: {moq} pcs",
+    "moqWarning": "Below minimum order quantity — the manager will confirm terms",
+    "addToSpec": "Add to specification",
+    "added": "Added to specification",
+    "composition": "Composition",
+    "features": "Features",
+    "dimensions": "Dimensions",
+    "kitComponents": "Kit",
+    "badgeOversize": "Oversize 3XL–4XL available",
+    "badgeJunior": "Junior 3XS–XS available",
+    "view3d": "View in 3D"
+  },
+  "branding": {
+    "title": "Branding",
+    "reset": "Reset",
+    "logo": "Club logo",
+    "dropHint": "Drop PNG or SVG (up to 5 MB)",
+    "browse": "Browse",
+    "removeLogo": "Remove logo",
+    "zones": "Placement zones",
+    "editZone": "Edit",
+    "transform": "Transform",
+    "scale": "Scale",
+    "rotation": "Rotation",
+    "offsetY": "Offset",
+    "player": "Number and name",
+    "number": "Number",
+    "name": "Name",
+    "numberColor": "Number color",
+    "method": "Application method",
+    "methods": {
+      "print": "Print",
+      "sublimation": "Sublimation",
+      "embroidery": "Embroidery"
+    },
+    "leadTime": "Lead time: {days} days",
+    "whiteBg": "Preview on white background",
+    "downloadPreview": "Download preview",
+    "error": {
+      "type": "PNG or SVG required",
+      "size": "File larger than 5 MB",
+      "read": "Could not read file",
+      "capture": "Enable 3D view first"
+    },
+    "zone": {
+      "chest-center": "Chest — center",
+      "chest-left": "Chest — left",
+      "chest-right": "Chest — right",
+      "back-top": "Back — top",
+      "back-number": "Back — number",
+      "sleeve-left": "Left sleeve",
+      "sleeve-right": "Right sleeve",
+      "shorts-left": "Shorts — left",
+      "shorts-right": "Shorts — right",
+      "sock-side": "Sock — side"
+    }
+  },
+  "spec": {
+    "title": "Specification",
+    "navCounter": "Specification ({count})",
+    "navPieces": "{count} pcs",
+    "summary": "{positions} lines · {pieces} pcs",
+    "empty": "No items yet — add a product from the catalog",
+    "remove": "Remove",
+    "clear": "Clear specification",
+    "clearConfirm": "Clear the entire specification?",
+    "checkout": "Continue to checkout",
+    "closeDrawer": "Close",
+    "pcs": "pcs",
+    "pageTitle": "Specification",
+    "pageSubtitle": "Technical brief for the manager — no prices",
+    "editOnProduct": "Edit on product page",
+    "backToCatalog": "Back to catalog",
+    "itemComment": "Line comment",
+    "form": {
+      "title": "Contact for quote",
+      "organization": "Organization",
+      "contactPerson": "Contact person",
+      "phone": "Phone",
+      "email": "Email",
+      "city": "City",
+      "delivery": "Desired timeline",
+      "comment": "Comment",
+      "errors": {
+        "required": "Required field",
+        "email": "Invalid email",
+        "phone": "At least 9 digits"
+      }
+    },
+    "delivery": {
+      "urgent": "Urgent (within 2 weeks)",
+      "month": "1 month",
+      "quarter": "2–3 months",
+      "later": "I'll confirm later"
+    },
+    "actions": {
+      "downloadPdf": "Download specification (PDF)",
+      "getQuote": "Request quote",
+      "sending": "Sending…"
+    },
+    "pdf": {
+      "title": "Supply specification",
+      "specNumber": "Number",
+      "date": "Date",
+      "article": "Article",
+      "name": "Name",
+      "colorway": "Colorway",
+      "sizes": "Sizes",
+      "qty": "Qty",
+      "branding": "Branding",
+      "noBranding": "No branding",
+      "priceNote": "Pricing is provided by the manager",
+      "preview": "Preview"
+    },
+    "success": {
+      "title": "Quote within 24 hours",
+      "body": "We received your specification. Reference number:"
+    },
+    "errors": {
+      "pdf": "Could not generate PDF",
+      "rateLimit": "Too many requests. Try again later.",
+      "sendFailed": "Could not send — download the PDF and email us at {email}"
+    }
+  }
+}
