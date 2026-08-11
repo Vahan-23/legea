@@ -2,8 +2,8 @@
 
 ## Приоритет файлов
 
-1. `/public/3D/{productId}_3D.glb` — модель конкретного артикула  
-   (пример: `M1062_3D.glb`)
+1. `/public/3D/{productId}_3D.glb` или `/public/3D/{productId}.glb`  
+   (пример: `M1062_3D.glb`, `M1176.glb`)
 2. `/public/3D/logo_3d.glb` — бренд-логотип (hero на главной)
 3. `/public/models/{model}.glb` — общая модель типа изделия
 4. `PlaceholderModel` — если файла нет

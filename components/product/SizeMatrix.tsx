@@ -84,8 +84,8 @@ export function SizeMatrix({
         ))}
       </div>
 
-      <div className="overflow-x-auto border border-navy/15">
-        <table className="w-full min-w-[480px] border-collapse text-sm">
+      <div className="w-full max-w-full overflow-x-auto overscroll-x-contain border border-navy/15 [-webkit-overflow-scrolling:touch]">
+        <table className="w-max min-w-full border-collapse text-sm">
           <thead>
             <tr className="bg-off-white">
               {sizes.map((size) => (

@@ -81,8 +81,8 @@ export function ProductPanel({ product, locale, photos }: ProductPanelProps) {
   };
 
   return (
-    <div className="mx-auto grid max-w-6xl gap-10 px-6 py-12 lg:grid-cols-2">
-      <div className="space-y-4 lg:sticky lg:top-6 lg:self-start">
+    <div className="mx-auto grid w-full max-w-6xl gap-8 overflow-x-hidden px-4 py-8 sm:gap-10 sm:px-6 sm:py-12 lg:grid-cols-2">
+      <div className="min-w-0 space-y-4 lg:sticky lg:top-6 lg:self-start">
         <ProductViewer
           productId={product.id}
           model={product.model}
@@ -92,7 +92,7 @@ export function ProductPanel({ product, locale, photos }: ProductPanelProps) {
         />
       </div>
 
-      <div className="space-y-8">
+      <div className="min-w-0 space-y-6 sm:space-y-8">
         <div className="space-y-4">
           <Link
             href="/catalog"
@@ -101,12 +101,14 @@ export function ProductPanel({ product, locale, photos }: ProductPanelProps) {
             ← {tNav("catalog")}
           </Link>
 
-          <p className="font-mono text-3xl tracking-tight text-navy">
+          <p className="font-mono text-2xl tracking-tight text-navy sm:text-3xl">
             {product.id}
           </p>
-          <h1 className="text-display-sm normal-case tracking-display">{name}</h1>
+          <h1 className="break-words text-display-sm normal-case tracking-display">
+            {name}
+          </h1>
 
-          <div className="flex flex-wrap items-center gap-4">
+          <div className="flex flex-wrap items-center gap-3 sm:gap-4">
             <PriceLevel level={product.priceLevel} />
             {product.oversizeId ? (
               <span className="border border-navy/20 px-2 py-1 font-mono text-[10px] uppercase text-navy">
@@ -143,7 +145,7 @@ export function ProductPanel({ product, locale, photos }: ProductPanelProps) {
           <BrandingPanel zones={product.brandingZones} />
         ) : null}
 
-        <div className="flex flex-wrap items-center gap-4">
+        <div className="flex flex-wrap items-center gap-3 sm:gap-4">
           <Button onClick={handleAdd} disabled={!canAdd}>
             {t("addToSpec")}
           </Button>

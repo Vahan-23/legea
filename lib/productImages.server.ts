@@ -10,6 +10,10 @@ const EMPTY: ProductPhotos = { front: null, back: null, byColorway: {} };
 
 const EXT = "png|jpe?g|webp";
 
+function escapeRegExp(value: string): string {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
 /**
  * Сканирует public/images/products.
  *
@@ -17,7 +21,9 @@ const EXT = "png|jpe?g|webp";
  *   {id}_Front.{ext} / {id}_Back.{ext}
  *
  * Папка артикула (предпочтительно):
+ *   products/{id}/{id}_{colorway}_Front.{ext}  — полный артикул в имени
  *   products/{id}/{colorway}_Front.{ext}
+ *   products/{id}/{id}_{colorway}_Back.{ext}
  *   products/{id}/{colorway}_Back.{ext}
  *   products/{id}/Front.{ext} / Back.{ext} — общий fallback
  */
@@ -60,6 +66,12 @@ function scanProductImages(): Map<string, ProductPhotos> {
     };
 
     for (const file of fs.readdirSync(dir)) {
+      // M1176_0010_Front.png → colorway 0010
+      const fullMatch = new RegExp(
+        `^${escapeRegExp(id)}_([0-9A-Za-z]+)_(Front|Back)\\.(${EXT})$`,
+        "i",
+      ).exec(file);
+      // 0010_Front.png → colorway 0010
       const colorMatch = new RegExp(
         `^([0-9A-Za-z]+)_(Front|Back)\\.(${EXT})$`,
         "i",
@@ -68,9 +80,10 @@ function scanProductImages(): Map<string, ProductPhotos> {
         file,
       );
 
-      if (colorMatch?.[1] && colorMatch[2]) {
-        const colorway = colorMatch[1];
-        const side = colorMatch[2].toLowerCase() as "front" | "back";
+      const matched = fullMatch ?? colorMatch;
+      if (matched?.[1] && matched[2]) {
+        const colorway = matched[1];
+        const side = matched[2].toLowerCase() as "front" | "back";
         const url = `/images/products/${id}/${file}`;
         const slot: ColorwayPhotos = current.byColorway[colorway] ?? {
           front: null,

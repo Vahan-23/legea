@@ -91,19 +91,22 @@ export function ProductViewer({
   const show3d = hasPhotos ? mode === "3d" : !mobile || mobile3d;
 
   return (
-    <div className="space-y-3">
-      <div className="relative aspect-[3/4] overflow-visible bg-off-white">
+    <div className="w-full max-w-full space-y-3">
+      <div className="relative aspect-[3/4] w-full max-w-full overflow-hidden bg-off-white">
         {show3d ? (
-          <Scene
-            productId={productId}
-            model={model}
-            colorway={colorway}
-            branding={branding}
-            mobile={mobile}
-          />
+          <div className="absolute inset-0 touch-none">
+            <Scene
+              productId={productId}
+              model={model}
+              colorway={colorway}
+              branding={branding}
+              mobile={mobile}
+            />
+          </div>
         ) : (
           <>
             <Image
+              key={activePhoto ?? "placeholder"}
               src={
                 hasPhotos
                   ? (activePhoto ?? PRODUCT_IMAGE_PLACEHOLDER)
@@ -112,11 +115,11 @@ export function ProductViewer({
               alt={alt}
               fill
               priority
-              className="object-contain p-4"
+              className="object-contain p-3 sm:p-4"
               sizes="(max-width: 768px) 100vw, 50vw"
             />
             {!hasPhotos && mobile ? (
-              <div className="absolute inset-x-0 bottom-0 flex justify-center p-4">
+              <div className="absolute inset-x-0 bottom-0 flex justify-center p-3 sm:p-4">
                 <Button type="button" onClick={() => setMobile3d(true)}>
                   {t("view3d")}
                 </Button>
@@ -132,6 +135,7 @@ export function ProductViewer({
             <Button
               type="button"
               variant={mode === "front" ? "primary" : "secondary"}
+              className="px-4 py-2 text-xs sm:px-6 sm:py-3 sm:text-sm"
               onClick={() => setMode("front")}
             >
               {t("photoFront")}
@@ -141,6 +145,7 @@ export function ProductViewer({
             <Button
               type="button"
               variant={mode === "back" ? "primary" : "secondary"}
+              className="px-4 py-2 text-xs sm:px-6 sm:py-3 sm:text-sm"
               onClick={() => setMode("back")}
             >
               {t("photoBack")}
@@ -149,6 +154,7 @@ export function ProductViewer({
           <Button
             type="button"
             variant={mode === "3d" ? "primary" : "secondary"}
+            className="px-4 py-2 text-xs sm:px-6 sm:py-3 sm:text-sm"
             onClick={() => setMode("3d")}
           >
             {t("view3d")}

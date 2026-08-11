@@ -10,7 +10,7 @@ import {
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/Button";
 import { company } from "@/data/company";
-import { colorMap } from "@/data/colors";
+import { colorMap, colors } from "@/data/colors";
 import { downloadDataUrl, loadLogoFile } from "@/lib/logo";
 import { useCanvasCaptureStore } from "@/store/useCanvasCaptureStore";
 import { useProductStore } from "@/store/useProductStore";
@@ -288,20 +288,37 @@ export function BrandingPanel({ zones }: BrandingPanelProps) {
           <div>
             <p className="mb-2 text-sm text-muted">{t("numberColor")}</p>
             <div className="flex flex-wrap gap-2">
-              {Object.entries(colorMap).map(([key, meta]) => (
-                <button
-                  key={key}
-                  type="button"
-                  title={meta.name}
-                  onClick={() => setBranding({ numberColorKey: key })}
-                  className={
-                    branding.numberColorKey === key
-                      ? "h-6 w-6 rounded-full ring-2 ring-blue ring-offset-1"
-                      : "h-6 w-6 rounded-full border border-graphite/20"
-                  }
-                  style={{ backgroundColor: meta.hex }}
-                />
-              ))}
+              {Object.entries(colorMap).map(([key, meta]) => {
+                const n = meta.hex.replace("#", "");
+                const r = Number.parseInt(n.slice(0, 2), 16);
+                const g = Number.parseInt(n.slice(2, 4), 16);
+                const b = Number.parseInt(n.slice(4, 6), 16);
+                const luma = 0.299 * r + 0.587 * g + 0.114 * b;
+                const edge = luma < 70 || luma > 220;
+                return (
+                  <button
+                    key={key}
+                    type="button"
+                    title={meta.name}
+                    onClick={() => setBranding({ numberColorKey: key })}
+                    className={
+                      branding.numberColorKey === key
+                        ? "flex h-6 w-6 items-center justify-center rounded-full bg-white p-px ring-2 ring-blue ring-offset-1"
+                        : "flex h-6 w-6 items-center justify-center rounded-full bg-white p-px ring-1 ring-navy/30"
+                    }
+                  >
+                    <span
+                      className="block h-full w-full rounded-full"
+                      style={{
+                        backgroundColor: meta.hex,
+                        boxShadow: edge
+                          ? `inset 0 0 0 1px ${colors.muted}`
+                          : undefined,
+                      }}
+                    />
+                  </button>
+                );
+              })}
             </div>
           </div>
         </div>
@@ -376,8 +393,8 @@ function SliderRow({
   onChange: (value: number) => void;
 }) {
   return (
-    <label className="grid grid-cols-[100px_1fr_48px] items-center gap-3 text-sm">
-      <span className="text-muted">{label}</span>
+    <label className="grid grid-cols-[1fr_auto] items-center gap-x-3 gap-y-1 text-sm sm:grid-cols-[100px_1fr_48px]">
+      <span className="col-span-2 text-muted sm:col-span-1">{label}</span>
       <input
         type="range"
         min={min}
@@ -385,7 +402,7 @@ function SliderRow({
         step={step}
         value={value}
         onChange={(e) => onChange(Number.parseFloat(e.target.value))}
-        className="accent-blue"
+        className="min-w-0 w-full accent-blue"
       />
       <span className="font-mono text-xs text-graphite">{value}</span>
     </label>

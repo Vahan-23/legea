@@ -2,7 +2,7 @@
 
 import type { ReactNode } from "react";
 import { useTranslations } from "next-intl";
-import { colorMap, type ColorCodeKey } from "@/data/colors";
+import { colorMap, colors, type ColorCodeKey } from "@/data/colors";
 import {
   CATALOG_TECH_FILTERS,
   GSM_BANDS,
@@ -80,6 +80,12 @@ export function FilterSidebar({
           {colorKeys.map((key) => {
             const active = filters.color.includes(key);
             const hex = colorMap[key].hex;
+            const n = hex.replace("#", "");
+            const r = Number.parseInt(n.slice(0, 2), 16);
+            const g = Number.parseInt(n.slice(2, 4), 16);
+            const b = Number.parseInt(n.slice(4, 6), 16);
+            const luma = 0.299 * r + 0.587 * g + 0.114 * b;
+            const edge = luma < 70 || luma > 220;
             return (
               <button
                 key={key}
@@ -94,11 +100,20 @@ export function FilterSidebar({
                 }
                 className={
                   active
-                    ? "h-7 w-7 rounded-full ring-2 ring-blue ring-offset-2"
-                    : "h-7 w-7 rounded-full border border-graphite/20"
+                    ? "flex h-7 w-7 items-center justify-center rounded-full bg-white p-[2px] ring-2 ring-blue ring-offset-2"
+                    : "flex h-7 w-7 items-center justify-center rounded-full bg-white p-[2px] ring-1 ring-navy/30"
                 }
-                style={{ backgroundColor: hex }}
-              />
+              >
+                <span
+                  className="block h-full w-full rounded-full"
+                  style={{
+                    backgroundColor: hex,
+                    boxShadow: edge
+                      ? `inset 0 0 0 1px ${colors.muted}`
+                      : undefined,
+                  }}
+                />
+              </button>
             );
           })}
         </div>

@@ -49,7 +49,7 @@ export default async function ProductPage({ params }: PageProps) {
   const photos = getProductPhotos(product.id);
 
   return (
-    <div className="hex-bg min-h-screen">
+    <div className="hex-bg min-h-screen overflow-x-hidden">
       <ProductPanel
         product={product}
         locale={params.locale as Locale}

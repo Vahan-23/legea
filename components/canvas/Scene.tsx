@@ -102,8 +102,11 @@ export function Scene({
         alpha: true,
       }}
       style={{
+        width: "100%",
+        height: "100%",
         background: transparent ? "transparent" : colors.offWhite,
         pointerEvents: interactive ? "auto" : "none",
+        touchAction: interactive && !mobile ? "none" : undefined,
       }}
       onCreated={({ gl }) => {
         // Не чёрный clear — иначе alpha=1 заливает canvas чёрным поверх CSS

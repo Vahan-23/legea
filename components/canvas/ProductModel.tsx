@@ -9,7 +9,7 @@ import { useColorableMaterials } from "@/components/canvas/useColorableMaterials
 import {
   isKnownModel,
   modelPath,
-  productGlbPath,
+  productGlbCandidates,
 } from "@/lib/models";
 import { splitAlbedoForRecolor } from "@/lib/recolorTexture";
 import type { BrandingDraft } from "@/types/spec";
@@ -24,7 +24,7 @@ type ProductModelProps = {
 };
 
 /**
- * 1) glbUrl  2) /3D/{id}_3D.glb  3) /models/{model}.glb  4) PlaceholderModel
+ * 1) glbUrl  2) /3D/{id}_3D.glb|/3D/{id}.glb  3) /models/{model}.glb  4) PlaceholderModel
  */
 export function ProductModel({
   productId = null,
@@ -61,13 +61,14 @@ export function ProductModel({
       }
 
       if (productId) {
-        const productUrl = productGlbPath(productId);
-        if (await headOk(productUrl)) {
-          if (!cancelled) {
-            setGlbUrl(productUrl);
-            setChecked(true);
+        for (const productUrl of productGlbCandidates(productId)) {
+          if (await headOk(productUrl)) {
+            if (!cancelled) {
+              setGlbUrl(productUrl);
+              setChecked(true);
+            }
+            return;
           }
-          return;
         }
       }
 
@@ -214,7 +215,7 @@ function GlbModel({
         if (original.map) {
           const map = original.map;
           const applySplit = () => {
-            const key = `${map.uuid}:v2`;
+            const key = `${map.uuid}:v3`;
             let split = splitCache.get(key);
             if (split === undefined) {
               split = splitAlbedoForRecolor(map);

@@ -3,7 +3,7 @@ import * as THREE from "three";
 export type SplitAlbedoMaps = {
   /** Почти белый shading-map ткани (logo = чёрный) — цвет ≈ colorMap */
   fabricMap: THREE.CanvasTexture;
-  /** Маска логотипа (белый текст) */
+  /** Маска логотипа (белый текст / значки) */
   logoMap: THREE.CanvasTexture;
 };
 
@@ -12,9 +12,17 @@ const TARGET_LUMA = 240;
 /** Доля оригинального shading (складки/объём), остальное — чистый цвет */
 const SHADE_STRENGTH = 0.3;
 
+/** Белые/светло-серые принты (плечи, LEGEA) — низкая насыщенность */
+const LOGO_SAT_MAX = 0.25;
+/** Абсолютный пол яркости логотипа */
+const LOGO_LUMA_MIN = 142;
+/** Логотип заметно светлее медианы ткани */
+const LOGO_ABOVE_MEDIAN = 50;
+
 /**
  * Режет цветной albedo на soft-AO ткань + маску белого логотипа.
  * Fabric нормализуется, чтобы итоговый цвет был ближе к colorMap, а не «грязным».
+ * Белые значки/текст остаются в emissive и не перекрашиваются.
  */
 export function splitAlbedoForRecolor(
   source: THREE.Texture,
@@ -48,8 +56,8 @@ export function splitAlbedoForRecolor(
   }
 
   const src = data.data;
-  const fabricLumas: number[] = [];
-  const meta: Array<{ isLogo: boolean; luma: number; a: number }> = [];
+  const meta: Array<{ luma: number; sat: number; a: number }> = [];
+  const allLumas: number[] = [];
 
   for (let i = 0; i < src.length; i += 4) {
     const r = src[i] ?? 0;
@@ -60,8 +68,26 @@ export function splitAlbedoForRecolor(
     const min = Math.min(r, g, b);
     const luma = 0.299 * r + 0.587 * g + 0.114 * b;
     const sat = max === 0 ? 0 : (max - min) / max;
-    const isLogo = luma > 185 && sat < 0.28;
-    meta.push({ isLogo, luma, a });
+    meta.push({ luma, sat, a });
+    if (a > 8) allLumas.push(luma);
+  }
+
+  allLumas.sort((x, y) => x - y);
+  const median =
+    allLumas.length > 0
+      ? allLumas[Math.floor(allLumas.length * 0.5)]!
+      : 128;
+
+  const logoLumaCut = Math.max(LOGO_LUMA_MIN, median + LOGO_ABOVE_MEDIAN);
+
+  const fabricLumas: number[] = [];
+  const isLogoFlags = new Array<boolean>(meta.length);
+
+  for (let p = 0; p < meta.length; p += 1) {
+    const { luma, sat, a } = meta[p]!;
+    const isLogo =
+      a > 8 && sat < LOGO_SAT_MAX && luma >= logoLumaCut;
+    isLogoFlags[p] = isLogo;
     if (!isLogo && a > 8) fabricLumas.push(luma);
   }
 
@@ -69,7 +95,7 @@ export function splitAlbedoForRecolor(
   const mean =
     fabricLumas.length > 0
       ? fabricLumas[Math.floor(fabricLumas.length * 0.5)]!
-      : 128;
+      : median;
 
   const fabric = ctx.createImageData(width, height);
   const logo = ctx.createImageData(width, height);
@@ -78,7 +104,8 @@ export function splitAlbedoForRecolor(
 
   for (let p = 0; p < meta.length; p += 1) {
     const i = p * 4;
-    const { isLogo, luma, a } = meta[p]!;
+    const { luma, a } = meta[p]!;
+    const isLogo = isLogoFlags[p]!;
 
     if (isLogo) {
       f[i] = 0;

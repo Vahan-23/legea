@@ -3,7 +3,7 @@
  * (decisions.txt 4.5)
  *
  * Приоритет загрузки:
- * 1. /public/3D/{productId}_3D.glb — модель конкретного артикула
+ * 1. /public/3D/{productId}_3D.glb или /public/3D/{productId}.glb
  * 2. /public/models/{model}.glb — общая модель типа (jersey_ss и т.д.)
  * 3. PlaceholderModel
  *
@@ -38,9 +38,13 @@ export function modelPath(model: string): string {
   return `/models/${model}.glb`;
 }
 
-/** Пер-артикульный GLB: public/3D/{id}_3D.glb */
+/** Пер-артикульный GLB: {id}_3D.glb (предпочтительно) или {id}.glb */
 export function productGlbPath(productId: string): string {
   return `/3D/${productId}_3D.glb`;
+}
+
+export function productGlbCandidates(productId: string): string[] {
+  return [`/3D/${productId}_3D.glb`, `/3D/${productId}.glb`];
 }
 
 /** Бренд-логотип для hero и т.п. */
