@@ -200,7 +200,9 @@
     "kitComponents": "Kit",
     "badgeOversize": "Oversize 3XL–4XL available",
     "badgeJunior": "Junior 3XS–XS available",
-    "view3d": "View in 3D"
+    "view3d": "View in 3D",
+    "photoFront": "Front",
+    "photoBack": "Back"
   },
   "branding": {
     "title": "Branding",

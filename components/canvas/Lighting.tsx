@@ -5,29 +5,38 @@ import { ContactShadows, Environment } from "@react-three/drei";
 type LightingProps = {
   /** На мобильных — более лёгкие тени */
   mobile?: boolean;
+  /** Контактная тень под моделью (выкл. на прозрачном hero) */
+  showFloorShadow?: boolean;
 };
 
-export function Lighting({ mobile = false }: LightingProps) {
+/**
+ * Мягкий «комнатный» свет — без studio HDR и жёстких rim/key.
+ */
+export function Lighting({
+  mobile = false,
+  showFloorShadow = true,
+}: LightingProps) {
   return (
     <>
-      <Environment preset="studio" />
-      {/* Key light сверху-справа */}
+      <Environment preset="apartment" environmentIntensity={0.7} />
+      <hemisphereLight color="#f3efe8" groundColor="#9a958c" intensity={0.5} />
+      {/* Слабый потолочный fill */}
       <directionalLight
-        position={[3.5, 5, 2]}
-        intensity={1.15}
-        castShadow={!mobile}
+        position={[1.2, 4.5, 1.5]}
+        intensity={0.28}
+        castShadow={!mobile && showFloorShadow}
       />
-      {/* Rim light сзади для контура */}
-      <directionalLight position={[-2, 2, -4]} intensity={0.55} />
-      <ambientLight intensity={0.25} />
-      <ContactShadows
-        position={[0, -0.55, 0]}
-        opacity={0.45}
-        scale={6}
-        blur={2.5}
-        far={2}
-        resolution={mobile ? 256 : 512}
-      />
+      <ambientLight intensity={0.4} />
+      {showFloorShadow ? (
+        <ContactShadows
+          position={[0, -0.85, 0]}
+          opacity={0.12}
+          scale={8}
+          blur={4}
+          far={3}
+          resolution={mobile ? 256 : 512}
+        />
+      ) : null}
     </>
   );
 }

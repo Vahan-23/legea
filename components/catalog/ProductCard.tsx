@@ -2,20 +2,23 @@ import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 import { ColorDots } from "@/components/catalog/ColorDots";
 import { Link } from "@/i18n/navigation";
+import { PRODUCT_IMAGE_PLACEHOLDER } from "@/lib/productImages";
 import { productName } from "@/types/product";
 import type { Locale } from "@/i18n/routing";
 import type { Product } from "@/types/product";
 
 type ProductCardProps = {
   product: Product;
+  imageSrc?: string;
 };
 
-export function ProductCard({ product }: ProductCardProps) {
+export function ProductCard({ product, imageSrc }: ProductCardProps) {
   const t = useTranslations("catalog");
   const locale = useLocale() as Locale;
   const name = productName(product, locale);
   const sizeFrom = product.sizes[0];
   const sizeTo = product.sizes[product.sizes.length - 1];
+  const src = imageSrc ?? PRODUCT_IMAGE_PLACEHOLDER;
 
   return (
     <Link
@@ -24,11 +27,11 @@ export function ProductCard({ product }: ProductCardProps) {
     >
       <div className="relative aspect-[3/4] overflow-hidden bg-off-white">
         <Image
-          src="/images/product-placeholder.svg"
+          src={src}
           alt={name}
           fill
           sizes="(max-width: 768px) 50vw, 25vw"
-          className="object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+          className="object-contain p-4 transition-transform duration-300 group-hover:scale-[1.03]"
         />
       </div>
 

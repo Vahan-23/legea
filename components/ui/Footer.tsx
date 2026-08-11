@@ -3,6 +3,7 @@ import { company } from "@/data/company";
 import { Link } from "@/i18n/navigation";
 import { isLocale } from "@/i18n/routing";
 import { notFound } from "next/navigation";
+import { BrandLogo } from "@/components/ui/BrandLogo";
 
 type FooterProps = {
   locale: string;
@@ -21,10 +22,9 @@ export async function Footer({ locale }: FooterProps) {
     <footer className="hex-bg-muted mt-auto border-t border-blue">
       <div className="mx-auto grid max-w-6xl gap-8 px-6 py-12 md:grid-cols-3">
         <div>
-          <p className="font-display text-xl uppercase tracking-display text-navy">
-            {/* TODO: заменить на логотип дистрибьютора */}
-            {company.brandName}
-          </p>
+          <Link href="/" className="inline-block" aria-label="Legea">
+            <BrandLogo height={44} className="h-11 w-auto object-contain" />
+          </Link>
           <p className="mt-2 text-sm text-muted">{t("distributor")}</p>
           {/* TODO: заменить реквизиты */}
           <p className="mt-4 font-mono text-xs text-muted">

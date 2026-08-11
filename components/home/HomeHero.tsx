@@ -3,11 +3,9 @@
 import dynamic from "next/dynamic";
 import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/Button";
-
-gsap.registerPlugin(ScrollTrigger);
+import { brandLogoGlbPath } from "@/lib/models";
 
 const Scene = dynamic(
   () => import("@/components/canvas/Scene").then((m) => m.Scene),
@@ -18,44 +16,28 @@ export function HomeHero() {
   const t = useTranslations("home");
   const sectionRef = useRef<HTMLElement>(null);
   const brandRef = useRef<HTMLHeadingElement>(null);
-  const modelRef = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
     const reduced = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
     ).matches;
     const ctx = gsap.context(() => {
-      if (brandRef.current) {
-        const letters = brandRef.current.querySelectorAll("[data-letter]");
-        if (reduced) {
-          gsap.set(letters, { clipPath: "inset(0 0 0 0)" });
-        } else {
-          gsap.fromTo(
-            letters,
-            { clipPath: "inset(0 100% 0 0)" },
-            {
-              clipPath: "inset(0 0% 0 0)",
-              duration: 0.7,
-              stagger: 0.08,
-              ease: "power3.out",
-            },
-          );
-        }
+      if (!brandRef.current) return;
+      const letters = brandRef.current.querySelectorAll("[data-letter]");
+      if (reduced) {
+        gsap.set(letters, { clipPath: "inset(0 0 0 0)" });
+        return;
       }
-
-      if (!reduced && modelRef.current && sectionRef.current) {
-        gsap.to(modelRef.current, {
-          xPercent: 28,
-          scale: 0.72,
-          ease: "none",
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top top",
-            end: "bottom top",
-            scrub: true,
-          },
-        });
-      }
+      gsap.fromTo(
+        letters,
+        { clipPath: "inset(0 100% 0 0)" },
+        {
+          clipPath: "inset(0 0% 0 0)",
+          duration: 0.7,
+          stagger: 0.08,
+          ease: "power3.out",
+        },
+      );
     }, sectionRef);
 
     return () => ctx.revert();
@@ -95,11 +77,17 @@ export function HomeHero() {
           </div>
         </div>
 
-        <div
-          ref={modelRef}
-          className="relative mx-auto aspect-square w-full max-w-lg origin-center will-change-transform"
-        >
-          <Scene model="jersey_ss" colorway="0203" mobile={false} />
+        <div className="relative mx-auto aspect-square w-full max-w-lg overflow-hidden">
+          <Scene
+            glbUrl={brandLogoGlbPath()}
+            preserveMaterials
+            model={null}
+            colorway={null}
+            mobile={false}
+            transparent
+            interactive={false}
+            modelScale={0.85}
+          />
         </div>
       </div>
       <div className="section-rule" />

@@ -1,8 +1,14 @@
 # Спецификация 3D-моделей Legea
 
-Файлы: `/public/models/{model}.glb`
+## Приоритет файлов
 
-## Модели
+1. `/public/3D/{productId}_3D.glb` — модель конкретного артикула  
+   (пример: `M1062_3D.glb`)
+2. `/public/3D/logo_3d.glb` — бренд-логотип (hero на главной)
+3. `/public/models/{model}.glb` — общая модель типа изделия
+4. `PlaceholderModel` — если файла нет
+
+## Общие модели (`/public/models/`)
 
 `jersey_ss`, `jersey_ls`, `shorts`, `socks`, `jacket`, `hoodie`,
 `pants`, `gk_kit`, `ball`, `backpack`, `volley_top`, `basket_top`
@@ -17,5 +23,6 @@
 
 ## Поведение загрузчика
 
-Если файл отсутствует — рендерится `PlaceholderModel` с теми же именами
+Сначала ищется пер-артикульный файл в `/3D/`, затем общий в `/models/`.
+Если оба отсутствуют — рендерится `PlaceholderModel` с теми же именами
 материалов, чтобы колорайзер и декали работали до подстановки ассетов.

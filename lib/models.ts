@@ -1,8 +1,11 @@
 /**
- * Спецификация GLB-моделей для /public/models/
+ * Спецификация GLB-моделей
  * (decisions.txt 4.5)
  *
- * Naming: {model}.glb — например jersey_ss.glb
+ * Приоритет загрузки:
+ * 1. /public/3D/{productId}_3D.glb — модель конкретного артикула
+ * 2. /public/models/{model}.glb — общая модель типа (jersey_ss и т.д.)
+ * 3. PlaceholderModel
  *
  * Требования:
  * - высота торса ≈ 0.7 world unit
@@ -33,6 +36,16 @@ export type ModelId = (typeof MODEL_FILES)[number];
 
 export function modelPath(model: string): string {
   return `/models/${model}.glb`;
+}
+
+/** Пер-артикульный GLB: public/3D/{id}_3D.glb */
+export function productGlbPath(productId: string): string {
+  return `/3D/${productId}_3D.glb`;
+}
+
+/** Бренд-логотип для hero и т.п. */
+export function brandLogoGlbPath(): string {
+  return "/3D/logo_3d.glb";
 }
 
 export function isKnownModel(model: string | null): model is ModelId {

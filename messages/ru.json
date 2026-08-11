@@ -200,7 +200,9 @@
     "kitComponents": "Комплект",
     "badgeOversize": "Есть oversize 3XL–4XL",
     "badgeJunior": "Есть junior 3XS–XS",
-    "view3d": "Посмотреть в 3D"
+    "view3d": "Посмотреть в 3D",
+    "photoFront": "Спереди",
+    "photoBack": "Сзади"
   },
   "branding": {
     "title": "Брендирование",

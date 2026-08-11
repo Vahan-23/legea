@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { ProductPanel } from "@/components/product/ProductPanel";
+import { getProductPhotos } from "@/lib/productImages.server";
 import { getAllProducts, getProductById } from "@/lib/products";
 import { isLocale, type Locale } from "@/i18n/routing";
 import { productName } from "@/types/product";
@@ -27,9 +28,13 @@ export async function generateMetadata({
   const product = getProductById(params.id);
   if (!product) return {};
   const name = productName(product, params.locale);
+  const photos = getProductPhotos(product.id);
   return {
     title: `${product.id} · ${name}`,
     description: product.composition,
+    openGraph: photos.front
+      ? { images: [{ url: photos.front }] }
+      : undefined,
   };
 }
 
@@ -41,10 +46,15 @@ export default async function ProductPage({ params }: PageProps) {
   if (!product) notFound();
 
   const t = await getTranslations("product");
+  const photos = getProductPhotos(product.id);
 
   return (
     <div className="hex-bg min-h-screen">
-      <ProductPanel product={product} locale={params.locale as Locale} />
+      <ProductPanel
+        product={product}
+        locale={params.locale as Locale}
+        photos={photos}
+      />
       <p className="sr-only">{t("pageLabel")}</p>
     </div>
   );

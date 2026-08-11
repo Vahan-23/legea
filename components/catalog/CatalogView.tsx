@@ -21,9 +21,10 @@ import type { CatalogFilters, Product } from "@/types/product";
 
 type CatalogViewProps = {
   products: Product[];
+  cardImages?: Record<string, string>;
 };
 
-export function CatalogView({ products }: CatalogViewProps) {
+export function CatalogView({ products, cardImages }: CatalogViewProps) {
   const t = useTranslations("catalog");
   const locale = useLocale() as Locale;
   const router = useRouter();
@@ -100,7 +101,7 @@ export function CatalogView({ products }: CatalogViewProps) {
             </div>
           </div>
         ) : (
-          <ProductGrid products={filtered} />
+          <ProductGrid products={filtered} cardImages={cardImages} />
         )}
       </div>
     </div>

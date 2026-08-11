@@ -20,15 +20,17 @@ import { useProductStore } from "@/store/useProductStore";
 import { useSpecStore } from "@/store/useSpecStore";
 import { totalPieces } from "@/types/spec";
 import type { Locale } from "@/i18n/routing";
+import type { ProductPhotos } from "@/lib/productImages";
 import type { Product } from "@/types/product";
 import { productName } from "@/types/product";
 
 type ProductPanelProps = {
   product: Product;
   locale: Locale;
+  photos?: ProductPhotos;
 };
 
-export function ProductPanel({ product, locale }: ProductPanelProps) {
+export function ProductPanel({ product, locale, photos }: ProductPanelProps) {
   const t = useTranslations("product");
   const tNav = useTranslations("nav");
   const name = productName(product, locale);
@@ -82,9 +84,11 @@ export function ProductPanel({ product, locale }: ProductPanelProps) {
     <div className="mx-auto grid max-w-6xl gap-10 px-6 py-12 lg:grid-cols-2">
       <div className="space-y-4 lg:sticky lg:top-6 lg:self-start">
         <ProductViewer
+          productId={product.id}
           model={product.model}
           colorway={colorway}
           alt={name}
+          photos={photos}
         />
       </div>
 
