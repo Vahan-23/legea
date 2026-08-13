@@ -23,9 +23,14 @@ import type { CatalogFilters, Product } from "@/types/product";
 type CatalogViewProps = {
   products: Product[];
   cardPhotos?: Record<string, ProductPhotos>;
+  productIdsWith3d?: string[];
 };
 
-export function CatalogView({ products, cardPhotos }: CatalogViewProps) {
+export function CatalogView({
+  products,
+  cardPhotos,
+  productIdsWith3d,
+}: CatalogViewProps) {
   const t = useTranslations("catalog");
   const locale = useLocale() as Locale;
   const router = useRouter();
@@ -43,10 +48,20 @@ export function CatalogView({ products, cardPhotos }: CatalogViewProps) {
     [products],
   );
 
-  const filtered = useMemo(
-    () => filterProducts(products, filters, locale),
-    [products, filters, locale],
+  const with3d = useMemo(
+    () => new Set(productIdsWith3d ?? []),
+    [productIdsWith3d],
   );
+
+  const filtered = useMemo(() => {
+    const result = filterProducts(products, filters, locale);
+    if (with3d.size === 0) return result;
+    return [...result].sort((a, b) => {
+      const a3d = with3d.has(a.id) ? 0 : 1;
+      const b3d = with3d.has(b.id) ? 0 : 1;
+      return a3d - b3d;
+    });
+  }, [products, filters, locale, with3d]);
 
   const pushFilters = useCallback(
     (next: CatalogFilters) => {

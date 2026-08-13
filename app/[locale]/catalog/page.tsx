@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { CatalogView } from "@/components/catalog/CatalogView";
+import { getProductIdsWithGlb } from "@/lib/models.server";
 import { getAllProductPhotos } from "@/lib/productImages.server";
 import { getAllProducts } from "@/lib/products";
 import { isLocale } from "@/i18n/routing";
@@ -34,8 +35,12 @@ export default async function CatalogPage({ params }: PageProps) {
 
   setRequestLocale(params.locale);
   const t = await getTranslations("catalog");
-  const products = getAllProducts();
   const cardPhotos = getAllProductPhotos();
+  const productIdsWith3d = Array.from(getProductIdsWithGlb());
+  const products = getAllProducts().filter((product) => {
+    const photos = cardPhotos[product.id];
+    return Boolean(photos?.front);
+  });
 
   return (
     <div className="hex-bg-muted min-h-screen">
@@ -55,7 +60,11 @@ export default async function CatalogPage({ params }: PageProps) {
           </div>
         }
       >
-        <CatalogView products={products} cardPhotos={cardPhotos} />
+        <CatalogView
+          products={products}
+          cardPhotos={cardPhotos}
+          productIdsWith3d={productIdsWith3d}
+        />
       </Suspense>
     </div>
   );
