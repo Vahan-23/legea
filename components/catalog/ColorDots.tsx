@@ -1,3 +1,5 @@
+"use client";
+
 import { parseColorway, swatchBackground } from "@/lib/colorCode";
 import { colors } from "@/data/colors";
 
@@ -20,15 +22,20 @@ type ColorDotsProps = {
   colorways: string[];
   limit?: number;
   className?: string;
+  activeCode?: string | null;
+  onPreview?: (code: string) => void;
 };
 
 /**
  * Ряд цветовых точек-свотчей для карточки каталога.
+ * Наведение — hover-превью на карточке (см. ProductCard).
  */
 export function ColorDots({
   colorways,
   limit = 8,
   className = "",
+  activeCode = null,
+  onPreview,
 }: ColorDotsProps) {
   const valid: string[] = [];
   for (const code of colorways) {
@@ -42,16 +49,50 @@ export function ColorDots({
 
   const visible = valid.slice(0, limit);
   const rest = valid.length - visible.length;
+  const interactive = Boolean(onPreview);
 
   return (
-    <ul className={`flex flex-wrap items-center gap-1.5 ${className}`} role="list">
+    <ul
+      className={`flex flex-wrap items-center gap-1.5 ${className}`}
+      role="list"
+    >
       {visible.map((code) => {
         const bg = swatchBackground(code);
         const isGradient = bg.startsWith("conic");
         const edge = isDarkOrLight(code);
+        const active = activeCode === code;
+
         return (
           <li key={code} title={code}>
-            <span className="flex h-3.5 w-3.5 items-center justify-center rounded-full bg-white p-px ring-1 ring-navy/25">
+            <span
+              className={
+                interactive
+                  ? "flex h-4 w-4 cursor-pointer items-center justify-center rounded-full bg-white p-px ring-1 ring-navy/25 transition-shadow hover:ring-blue"
+                  : "flex h-3.5 w-3.5 items-center justify-center rounded-full bg-white p-px ring-1 ring-navy/25"
+              }
+              style={
+                active
+                  ? { boxShadow: `0 0 0 2px ${colors.blue}` }
+                  : undefined
+              }
+              aria-label={code}
+              onMouseEnter={
+                interactive
+                  ? (event) => {
+                      event.stopPropagation();
+                      onPreview?.(code);
+                    }
+                  : undefined
+              }
+              onFocus={
+                interactive
+                  ? (event) => {
+                      event.stopPropagation();
+                      onPreview?.(code);
+                    }
+                  : undefined
+              }
+            >
               <span
                 className="block h-full w-full rounded-full"
                 style={{
@@ -61,7 +102,6 @@ export function ColorDots({
                     ? `inset 0 0 0 1px ${colors.muted}`
                     : undefined,
                 }}
-                aria-label={code}
               />
             </span>
           </li>

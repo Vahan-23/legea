@@ -14,6 +14,49 @@ import {
 import { splitAlbedoForRecolor } from "@/lib/recolorTexture";
 import type { BrandingDraft } from "@/types/spec";
 
+const glbResolveCache = new Map<string, string | null>();
+
+async function headOk(url: string): Promise<boolean> {
+  try {
+    const res = await fetch(url, { method: "HEAD" });
+    return res.ok;
+  } catch {
+    return false;
+  }
+}
+
+async function resolveGlbUrl(
+  glbUrlProp: string | null,
+  productId: string | null,
+  model: string | null,
+): Promise<string | null> {
+  const key = `${glbUrlProp ?? ""}:${productId ?? ""}:${model ?? ""}`;
+  if (glbResolveCache.has(key)) {
+    return glbResolveCache.get(key) ?? null;
+  }
+
+  let result: string | null = null;
+
+  if (glbUrlProp && (await headOk(glbUrlProp))) {
+    result = glbUrlProp;
+  } else if (productId) {
+    for (const productUrl of productGlbCandidates(productId)) {
+      if (await headOk(productUrl)) {
+        result = productUrl;
+        break;
+      }
+    }
+  } else if (model && isKnownModel(model)) {
+    const typeUrl = modelPath(model);
+    if (await headOk(typeUrl)) {
+      result = typeUrl;
+    }
+  }
+
+  glbResolveCache.set(key, result);
+  return result;
+}
+
 type ProductModelProps = {
   productId?: string | null;
   glbUrl?: string | null;
@@ -40,51 +83,10 @@ export function ProductModel({
   useEffect(() => {
     let cancelled = false;
 
-    async function headOk(url: string): Promise<boolean> {
-      try {
-        const res = await fetch(url, { method: "HEAD" });
-        return res.ok;
-      } catch {
-        return false;
-      }
-    }
-
     async function check() {
-      if (glbUrlProp) {
-        if (await headOk(glbUrlProp)) {
-          if (!cancelled) {
-            setGlbUrl(glbUrlProp);
-            setChecked(true);
-          }
-          return;
-        }
-      }
-
-      if (productId) {
-        for (const productUrl of productGlbCandidates(productId)) {
-          if (await headOk(productUrl)) {
-            if (!cancelled) {
-              setGlbUrl(productUrl);
-              setChecked(true);
-            }
-            return;
-          }
-        }
-      }
-
-      if (model && isKnownModel(model)) {
-        const typeUrl = modelPath(model);
-        if (await headOk(typeUrl)) {
-          if (!cancelled) {
-            setGlbUrl(typeUrl);
-            setChecked(true);
-          }
-          return;
-        }
-      }
-
+      const url = await resolveGlbUrl(glbUrlProp, productId, model);
       if (!cancelled) {
-        setGlbUrl(null);
+        setGlbUrl(url);
         setChecked(true);
       }
     }

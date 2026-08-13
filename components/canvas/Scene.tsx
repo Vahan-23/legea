@@ -95,7 +95,7 @@ export function Scene({
   return (
     <Canvas
       camera={{ position: cameraPosition, fov: 35 }}
-      dpr={[1, 2]}
+      dpr={mobile ? 1 : [1, 1.5]}
       gl={{
         preserveDrawingBuffer: interactive,
         antialias: true,

@@ -1,15 +1,20 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/Button";
 import {
   PRODUCT_IMAGE_PLACEHOLDER,
+  collectProductPhotoUrls,
   resolveColorwayPhotos,
   type ProductPhotos,
 } from "@/lib/productImages";
+import {
+  isImageCached,
+  prefetchImage,
+  prefetchImagesQueued,
+} from "@/lib/prefetchImages";
 import { useProductStore } from "@/store/useProductStore";
 
 const Scene = dynamic(
@@ -49,7 +54,7 @@ function useIsMobile(): boolean {
 }
 
 /**
- * Превью карточки: фото front/back по расцветке; иначе 3D / mobile CTA.
+ * Одно фото в DOM + фоновая предзагрузка остальных (без 16× next/image).
  */
 export function ProductViewer({
   productId,
@@ -59,12 +64,16 @@ export function ProductViewer({
   photos,
 }: ProductViewerProps) {
   const t = useTranslations("product");
-  const branding = useProductStore((s) => s.branding);
   const mobile = useIsMobile();
 
   const active = useMemo(
     () => resolveColorwayPhotos(photos, colorway),
     [photos, colorway],
+  );
+
+  const allPhotoUrls = useMemo(
+    () => collectProductPhotoUrls(photos),
+    [photos],
   );
 
   const hasFront = Boolean(active.front);
@@ -73,6 +82,8 @@ export function ProductViewer({
 
   const [mode, setMode] = useState<ViewMode>(hasFront ? "front" : "3d");
   const [mobile3d, setMobile3d] = useState(false);
+  const [displaySrc, setDisplaySrc] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (mode === "back" && !hasBack) {
@@ -83,12 +94,54 @@ export function ProductViewer({
       setMode("3d");
     }
     setMobile3d(false);
-  }, [model, colorway, hasFront, hasBack, hasPhotos, mode]);
+  }, [colorway, hasFront, hasBack, hasPhotos, mode]);
 
   const activePhoto =
     mode === "back" ? active.back : mode === "front" ? active.front : null;
 
   const show3d = hasPhotos ? mode === "3d" : !mobile || mobile3d;
+
+  const branding = useProductStore((s) => (show3d ? s.branding : null));
+
+  useEffect(() => {
+    if (!colorway || !photos?.byColorway[colorway]) return;
+    const entry = photos.byColorway[colorway];
+    if (entry.front) void prefetchImage(entry.front);
+    if (entry.back) void prefetchImage(entry.back);
+  }, [colorway, photos]);
+
+  useEffect(() => {
+    const rest = allPhotoUrls.filter((url) => url !== activePhoto);
+    return prefetchImagesQueued(rest, 300);
+  }, [allPhotoUrls, activePhoto]);
+
+  useEffect(() => {
+    if (!activePhoto) {
+      setDisplaySrc(null);
+      setLoading(false);
+      return;
+    }
+
+    if (isImageCached(activePhoto)) {
+      setDisplaySrc(activePhoto);
+      setLoading(false);
+      return;
+    }
+
+    let cancelled = false;
+    setLoading(true);
+
+    void prefetchImage(activePhoto).then(() => {
+      if (!cancelled) {
+        setDisplaySrc(activePhoto);
+        setLoading(false);
+      }
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [activePhoto]);
 
   return (
     <div className="w-full max-w-full space-y-3">
@@ -105,21 +158,34 @@ export function ProductViewer({
           </div>
         ) : (
           <>
-            <Image
-              key={activePhoto ?? "placeholder"}
-              src={
-                hasPhotos
-                  ? (activePhoto ?? PRODUCT_IMAGE_PLACEHOLDER)
-                  : PRODUCT_IMAGE_PLACEHOLDER
-              }
-              alt={alt}
-              fill
-              priority
-              className="object-contain p-3 sm:p-4"
-              sizes="(max-width: 768px) 100vw, 50vw"
-            />
+            {displaySrc ? (
+              // eslint-disable-next-line @next/next/no-img-element -- прямой cache, без 16× /_next/image
+              <img
+                src={displaySrc}
+                alt={alt}
+                decoding="async"
+                className="absolute inset-0 h-full w-full object-contain p-3 sm:p-4"
+              />
+            ) : (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={PRODUCT_IMAGE_PLACEHOLDER}
+                alt={alt}
+                className="absolute inset-0 h-full w-full object-contain p-3 sm:p-4"
+              />
+            )}
+            {loading ? (
+              <div
+                className="pointer-events-none absolute inset-x-0 top-3 z-10 flex justify-center sm:top-4"
+                aria-hidden
+              >
+                <span className="rounded bg-white/90 px-2 py-1 font-mono text-[10px] uppercase tracking-widest text-muted shadow-sm">
+                  …
+                </span>
+              </div>
+            ) : null}
             {!hasPhotos && mobile ? (
-              <div className="absolute inset-x-0 bottom-0 flex justify-center p-3 sm:p-4">
+              <div className="absolute inset-x-0 bottom-0 z-20 flex justify-center p-3 sm:p-4">
                 <Button type="button" onClick={() => setMobile3d(true)}>
                   {t("view3d")}
                 </Button>

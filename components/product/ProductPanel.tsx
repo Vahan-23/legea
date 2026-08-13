@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import { ProductViewer } from "@/components/canvas/ProductViewer";
 import { BrandingPanel } from "@/components/product/BrandingPanel";
@@ -21,6 +21,7 @@ import { useSpecStore } from "@/store/useSpecStore";
 import { totalPieces } from "@/types/spec";
 import type { Locale } from "@/i18n/routing";
 import type { ProductPhotos } from "@/lib/productImages";
+import { prefetchImage } from "@/lib/prefetchImages";
 import type { Product } from "@/types/product";
 import { productName } from "@/types/product";
 
@@ -58,6 +59,16 @@ export function ProductPanel({ product, locale, photos }: ProductPanelProps) {
 
   const pieces = totalPieces(quantities);
   const canAdd = pieces > 0 && colorway != null;
+
+  const previewColorway = useCallback(
+    (code: string) => {
+      const entry = photos?.byColorway[code];
+      if (!entry) return;
+      if (entry.front) void prefetchImage(entry.front);
+      if (entry.back) void prefetchImage(entry.back);
+    },
+    [photos],
+  );
 
   const handleAdd = () => {
     if (!colorway || !canAdd) return;
@@ -131,6 +142,7 @@ export function ProductPanel({ product, locale, photos }: ProductPanelProps) {
           colorways={product.colorways}
           value={colorway}
           onChange={setColorway}
+          onPreview={previewColorway}
         />
 
         <SizeMatrix

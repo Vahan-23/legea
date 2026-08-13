@@ -17,14 +17,15 @@ import {
   serializeCatalogFilters,
 } from "@/lib/catalogFilters";
 import type { Locale } from "@/i18n/routing";
+import type { ProductPhotos } from "@/lib/productImages";
 import type { CatalogFilters, Product } from "@/types/product";
 
 type CatalogViewProps = {
   products: Product[];
-  cardImages?: Record<string, string>;
+  cardPhotos?: Record<string, ProductPhotos>;
 };
 
-export function CatalogView({ products, cardImages }: CatalogViewProps) {
+export function CatalogView({ products, cardPhotos }: CatalogViewProps) {
   const t = useTranslations("catalog");
   const locale = useLocale() as Locale;
   const router = useRouter();
@@ -101,7 +102,7 @@ export function CatalogView({ products, cardImages }: CatalogViewProps) {
             </div>
           </div>
         ) : (
-          <ProductGrid products={filtered} cardImages={cardImages} />
+          <ProductGrid products={filtered} cardPhotos={cardPhotos} />
         )}
       </div>
     </div>

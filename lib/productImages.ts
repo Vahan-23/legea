@@ -27,3 +27,16 @@ export function resolveColorwayPhotos(
   }
   return { front: photos.front, back: photos.back };
 }
+
+/** Все URL фото товара (для предзагрузки на карточке). */
+export function collectProductPhotoUrls(photos?: ProductPhotos): string[] {
+  if (!photos) return [];
+  const urls = new Set<string>();
+  for (const entry of Object.values(photos.byColorway)) {
+    if (entry.front) urls.add(entry.front);
+    if (entry.back) urls.add(entry.back);
+  }
+  if (photos.front) urls.add(photos.front);
+  if (photos.back) urls.add(photos.back);
+  return [...urls];
+}

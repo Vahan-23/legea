@@ -36,12 +36,15 @@ type ColorSwatchesProps = {
   colorways: string[];
   value: string | null;
   onChange: (code: string) => void;
+  /** Предзагрузка фото при наведении на свотч */
+  onPreview?: (code: string) => void;
 };
 
 export function ColorSwatches({
   colorways,
   value,
   onChange,
+  onPreview,
 }: ColorSwatchesProps) {
   const t = useTranslations("product");
 
@@ -80,6 +83,8 @@ export function ColorSwatches({
                 aria-label={code}
                 aria-pressed={active}
                 onClick={() => onChange(code)}
+                onMouseEnter={() => onPreview?.(code)}
+                onFocus={() => onPreview?.(code)}
                 className={
                   active
                     ? "flex h-10 w-10 items-center justify-center rounded-full bg-white p-[3px] ring-2 ring-blue ring-offset-2"

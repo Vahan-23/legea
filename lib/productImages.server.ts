@@ -9,9 +9,19 @@ import {
 const EMPTY: ProductPhotos = { front: null, back: null, byColorway: {} };
 
 const EXT = "png|jpe?g|webp";
+/** XXYY или kit XXYY-XXYY */
+const COLORWAY = "[0-9A-Za-z-]+";
 
 function escapeRegExp(value: string): string {
   return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+/** M1176, KITP1143, TXM1174P193 из имени папки */
+function folderProductId(name: string): string {
+  const head = name.split("_")[0] ?? name;
+  if (/^[A-Za-z]+\d/.test(head)) return head;
+  const match = /^([A-Za-z]+\d+(?:[A-Za-z]\d+)?)/.exec(name);
+  return match?.[1] ?? name;
 }
 
 /**
@@ -21,11 +31,12 @@ function escapeRegExp(value: string): string {
  *   {id}_Front.{ext} / {id}_Back.{ext}
  *
  * Папка артикула (предпочтительно):
- *   products/{id}/{id}_{colorway}_Front.{ext}  — полный артикул в имени
- *   products/{id}/{colorway}_Front.{ext}
- *   products/{id}/{id}_{colorway}_Back.{ext}
- *   products/{id}/{colorway}_Back.{ext}
- *   products/{id}/Front.{ext} / Back.{ext} — общий fallback
+ *   products/{id}/...
+ *   products/{id}_MAGLIA_NAME/...  — артикул берётся из префикса папки
+ *   файлы:
+ *   {id}_{colorway}_Front.{ext}  — полный артикул в имени
+ *   {colorway}_Front.{ext} / {colorway}_Back.{ext}  (в т.ч. kit 2324-0004)
+ *   Front.{ext} / Back.{ext} — общий fallback
  */
 function scanProductImages(): Map<string, ProductPhotos> {
   const root = path.join(process.cwd(), "public", "images", "products");
@@ -57,8 +68,9 @@ function scanProductImages(): Map<string, ProductPhotos> {
 
     if (!entry.isDirectory()) continue;
 
-    const id = entry.name;
-    const dir = path.join(root, id);
+    // M1159_MAGLIA_MURCIA → M1159, TXM1174P193_TUTA_... → TXM1174P193
+    const id = folderProductId(entry.name);
+    const dir = path.join(root, entry.name);
     const current = map.get(id) ?? {
       front: null,
       back: null,
@@ -68,12 +80,12 @@ function scanProductImages(): Map<string, ProductPhotos> {
     for (const file of fs.readdirSync(dir)) {
       // M1176_0010_Front.png → colorway 0010
       const fullMatch = new RegExp(
-        `^${escapeRegExp(id)}_([0-9A-Za-z]+)_(Front|Back)\\.(${EXT})$`,
+        `^${escapeRegExp(id)}_(${COLORWAY})_(Front|Back)\\.(${EXT})$`,
         "i",
       ).exec(file);
-      // 0010_Front.png → colorway 0010
+      // 0010_Front.png / 2324-0004_Front.png → colorway
       const colorMatch = new RegExp(
-        `^([0-9A-Za-z]+)_(Front|Back)\\.(${EXT})$`,
+        `^(${COLORWAY})_(Front|Back)\\.(${EXT})$`,
         "i",
       ).exec(file);
       const plainMatch = new RegExp(`^(Front|Back)\\.(${EXT})$`, "i").exec(
@@ -121,8 +133,17 @@ function scanProductImages(): Map<string, ProductPhotos> {
   return map;
 }
 
+let scanCache: Map<string, ProductPhotos> | null = null;
+
+function getScanCache(): Map<string, ProductPhotos> {
+  if (!scanCache) {
+    scanCache = scanProductImages();
+  }
+  return scanCache;
+}
+
 export function getProductPhotos(productId: string): ProductPhotos {
-  return scanProductImages().get(productId) ?? EMPTY;
+  return getScanCache().get(productId) ?? EMPTY;
 }
 
 export function getProductCardSrc(productId: string): string {
@@ -132,9 +153,20 @@ export function getProductCardSrc(productId: string): string {
 /** Карта front-превью для листинга каталога */
 export function getAllProductCardImages(): Record<string, string> {
   const result: Record<string, string> = {};
-  for (const [id, photos] of scanProductImages()) {
+  for (const [id, photos] of getScanCache()) {
     if (photos.front) {
       result[id] = photos.front;
+    }
+  }
+  return result;
+}
+
+/** Полные фото по артикулам — для hover-превью в каталоге */
+export function getAllProductPhotos(): Record<string, ProductPhotos> {
+  const result: Record<string, ProductPhotos> = {};
+  for (const [id, photos] of getScanCache()) {
+    if (photos.front || Object.keys(photos.byColorway).length > 0) {
+      result[id] = photos;
     }
   }
   return result;
