@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "tsx --test lib/colorCode.test.ts"
+    "test": "tsx --test lib/colorCode.test.ts",
+    "glb:manifest": "tsx scripts/buildGlbManifest.ts",
+    "glb:zones": "tsx scripts/buildGlbManifest.ts && tsx scripts/analyzeGlbZones.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.7.1",
@@ -30,11 +32,13 @@
     "@types/node": "^20.17.19",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
+    "@types/sharp": "^0.32.0",
     "@types/three": "^0.185.4",
     "autoprefixer": "^10.4.20",
     "eslint": "^8.57.1",
     "eslint-config-next": "^14.2.35",
     "postcss": "^8.5.3",
+    "sharp": "^0.35.3",
     "tailwindcss": "^3.4.17",
     "tsx": "^4.23.12",
     "typescript": "^5.7.3"

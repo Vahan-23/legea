@@ -1,7 +1,6 @@
 "use client";
 
-import dynamic from "next/dynamic";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, type ComponentType } from "react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/Button";
 import {
@@ -17,17 +16,13 @@ import {
 } from "@/lib/prefetchImages";
 import { useProductStore } from "@/store/useProductStore";
 
-const Scene = dynamic(
-  () => import("@/components/canvas/Scene").then((m) => m.Scene),
-  {
-    ssr: false,
-    loading: () => (
-      <div className="flex h-full items-center justify-center font-mono text-xs uppercase tracking-widest text-muted">
-        …
-      </div>
-    ),
-  },
-);
+type SceneProps = {
+  productId?: string | null;
+  model: string | null;
+  colorway: string | null;
+  branding?: unknown;
+  mobile?: boolean;
+};
 
 type ViewMode = "front" | "back" | "3d";
 
@@ -54,7 +49,7 @@ function useIsMobile(): boolean {
 }
 
 /**
- * Одно фото в DOM + фоновая предзагрузка остальных (без 16× next/image).
+ * Одно фото в DOM + 3D только по клику (three.js не грузится заранее).
  */
 export function ProductViewer({
   productId,
@@ -84,6 +79,10 @@ export function ProductViewer({
   const [mobile3d, setMobile3d] = useState(false);
   const [displaySrc, setDisplaySrc] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [SceneComp, setSceneComp] = useState<ComponentType<SceneProps> | null>(
+    null,
+  );
+  const [sceneLoading, setSceneLoading] = useState(false);
 
   useEffect(() => {
     if (mode === "back" && !hasBack) {
@@ -102,6 +101,23 @@ export function ProductViewer({
   const show3d = hasPhotos ? mode === "3d" : !mobile || mobile3d;
 
   const branding = useProductStore((s) => (show3d ? s.branding : null));
+
+  // Подгружаем R3F/three только когда реально нужен 3D
+  useEffect(() => {
+    if (!show3d || SceneComp) return;
+    let cancelled = false;
+    setSceneLoading(true);
+    void import("@/components/canvas/Scene")
+      .then((m) => {
+        if (!cancelled) setSceneComp(() => m.Scene);
+      })
+      .finally(() => {
+        if (!cancelled) setSceneLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [show3d, SceneComp]);
 
   useEffect(() => {
     if (!colorway || !photos?.byColorway[colorway]) return;
@@ -148,13 +164,19 @@ export function ProductViewer({
       <div className="relative aspect-[3/4] w-full max-w-full overflow-hidden bg-off-white">
         {show3d ? (
           <div className="absolute inset-0 touch-none">
-            <Scene
-              productId={productId}
-              model={model}
-              colorway={colorway}
-              branding={branding}
-              mobile={mobile}
-            />
+            {SceneComp ? (
+              <SceneComp
+                productId={productId}
+                model={model}
+                colorway={colorway}
+                branding={branding}
+                mobile={mobile}
+              />
+            ) : (
+              <div className="flex h-full items-center justify-center font-mono text-xs uppercase tracking-widest text-muted">
+                {sceneLoading ? "…" : "3D"}
+              </div>
+            )}
           </div>
         ) : (
           <>

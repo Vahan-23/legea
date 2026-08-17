@@ -29,10 +29,11 @@ function resolveTargets(colorway: string | null): ColorTargets {
   try {
     const parsed = parseColorway(colorway);
     if (parsed.kind === "kit") {
+      // Костюм: Base = верх (толстовка), Trim = низ (брюки)
       return {
         base: hexToColor(parsed.top.base),
-        trim: hexToColor(parsed.top.trim),
-        iridescent: parsed.top.isIridescent,
+        trim: hexToColor(parsed.bottom.base),
+        iridescent: parsed.top.isIridescent || parsed.bottom.isIridescent,
       };
     }
     return {
@@ -79,16 +80,21 @@ function createBaseMaterial(
 
 /**
  * Материалы Base/Trim/Logo + lerp цвета за 400 мс в useFrame.
+ * baseColorMode: "colorway" — tint из расцветки; "white" — для уже
+ * перекрашенного kit-albedo (верх/низ в текстуре).
  */
 export function useColorableMaterials(
   colorway: string | null,
+  baseColorMode: "colorway" | "white" = "colorway",
 ): ColorableMaterials {
   const normalMap = useFabricNormalMap();
   const targets = useMemo(() => resolveTargets(colorway), [colorway]);
-  const iridescent = targets.iridescent;
+  const iridescent = targets.iridescent && baseColorMode === "colorway";
 
   const materials = useMemo(() => {
-    const base = createBaseMaterial(targets.base, iridescent, normalMap);
+    const baseColor =
+      baseColorMode === "white" ? new THREE.Color("#ffffff") : targets.base;
+    const base = createBaseMaterial(baseColor, iridescent, normalMap);
     const trim = new THREE.MeshStandardMaterial({
       color: targets.trim.clone(),
       roughness: 0.85,
@@ -102,8 +108,7 @@ export function useColorableMaterials(
       metalness: 0.05,
     });
     return { base, trim, logo };
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- targets применяются lerp'ом
-  }, [normalMap, iridescent]);
+  }, [normalMap, iridescent, baseColorMode, targets, colorway]);
 
   const current = useRef({
     base: targets.base.clone(),
@@ -123,9 +128,20 @@ export function useColorableMaterials(
     };
     goal.current = targets;
     progress.current = 0;
-  }, [targets]);
+    current.current.base.copy(targets.base);
+    current.current.trim.copy(targets.trim);
+    if (baseColorMode !== "white") {
+      materials.base.color.copy(targets.base);
+      materials.trim.color.copy(targets.trim);
+    }
+  }, [targets, materials, baseColorMode]);
 
   useFrame((_, delta) => {
+    if (baseColorMode === "white") {
+      materials.base.color.setRGB(1, 1, 1);
+      return;
+    }
+
     if (progress.current >= 1) return;
 
     progress.current = Math.min(1, progress.current + (delta * 1000) / LERP_MS);

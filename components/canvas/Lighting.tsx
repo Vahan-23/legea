@@ -1,6 +1,6 @@
 "use client";
 
-import { ContactShadows, Environment } from "@react-three/drei";
+import { ContactShadows } from "@react-three/drei";
 
 type LightingProps = {
   /** На мобильных — более лёгкие тени */
@@ -10,7 +10,7 @@ type LightingProps = {
 };
 
 /**
- * Мягкий «комнатный» свет — без studio HDR и жёстких rim/key.
+ * Лёгкий свет без HDR Environment (apartment тянет мегабайты и сдвигает цвета).
  */
 export function Lighting({
   mobile = false,
@@ -18,23 +18,22 @@ export function Lighting({
 }: LightingProps) {
   return (
     <>
-      <Environment preset="apartment" environmentIntensity={0.7} />
-      <hemisphereLight color="#f3efe8" groundColor="#9a958c" intensity={0.5} />
-      {/* Слабый потолочный fill */}
+      <hemisphereLight color="#f5f2ec" groundColor="#b0aaa0" intensity={0.85} />
       <directionalLight
-        position={[1.2, 4.5, 1.5]}
-        intensity={0.28}
+        position={[2.2, 5, 2.8]}
+        intensity={0.85}
         castShadow={!mobile && showFloorShadow}
       />
-      <ambientLight intensity={0.4} />
+      <directionalLight position={[-2.5, 2, -1.5]} intensity={0.35} />
+      <ambientLight intensity={0.7} />
       {showFloorShadow ? (
         <ContactShadows
           position={[0, -0.85, 0]}
-          opacity={0.12}
+          opacity={0.1}
           scale={8}
-          blur={4}
+          blur={3.5}
           far={3}
-          resolution={mobile ? 256 : 512}
+          resolution={mobile ? 128 : 256}
         />
       ) : null}
     </>

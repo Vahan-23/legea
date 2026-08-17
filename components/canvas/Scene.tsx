@@ -2,6 +2,7 @@
 
 import { Suspense, useEffect, useRef, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
+import * as THREE from "three";
 import type { Group } from "three";
 import { CanvasLoader } from "@/components/canvas/CanvasLoader";
 import {
@@ -100,7 +101,10 @@ export function Scene({
         preserveDrawingBuffer: interactive,
         antialias: true,
         alpha: true,
+        outputColorSpace: THREE.SRGBColorSpace,
       }}
+      // Без ACES: иначе royal blue × orange map = тёмно-бирюзовый
+      flat
       style={{
         width: "100%",
         height: "100%",

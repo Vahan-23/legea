@@ -1,0 +1,26 @@
+{
+  "note": "Ручные правки поверх npm run glb:zones. Ключ = артикул.",
+  "products": {
+    "TXM1144P188": {
+      "bakedColorway": "0404-0044",
+      "confidence": 0.9,
+      "splitMode": "luminance",
+      "zones": [
+        {
+          "role": "top",
+          "colorKey": "04",
+          "bakedHex": "#2A2E3A",
+          "matchRadius": 90,
+          "coverage": 0.08
+        },
+        {
+          "role": "bottom",
+          "colorKey": "44",
+          "bakedHex": "#ABADAE",
+          "matchRadius": 90,
+          "coverage": 0.9
+        }
+      ]
+    }
+  }
+}

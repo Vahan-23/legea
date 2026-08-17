@@ -1,60 +1,98 @@
 "use client";
 
-import { Suspense, useEffect, useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo } from "react";
 import { useGLTF } from "@react-three/drei";
 import * as THREE from "three";
 import { BrandingMarks } from "@/components/canvas/BrandingMarks";
-import { PlaceholderModel } from "@/components/canvas/PlaceholderModel";
+import { CanvasLoader } from "@/components/canvas/CanvasLoader";
 import { useColorableMaterials } from "@/components/canvas/useColorableMaterials";
+import { isKnownModel, modelPath, resolveGlbUrlSync } from "@/lib/models";
 import {
-  isKnownModel,
-  modelPath,
-  productGlbCandidates,
-} from "@/lib/models";
-import { splitAlbedoForRecolor } from "@/lib/recolorTexture";
+  attachGarmentRecolor,
+  updateGarmentRecolor,
+  type GarmentRecolorUniforms,
+} from "@/lib/garmentRecolor";
+import {
+  getGlbProductZones,
+  resolveRuntimeRecolor,
+} from "@/lib/glbColorZones";
+import { parseColorway } from "@/lib/colorCode";
+import { recolorAlbedoFromImage, recolorAlbedoZones } from "@/lib/recolorTexture";
 import type { BrandingDraft } from "@/types/spec";
 
-const glbResolveCache = new Map<string, string | null>();
+const albedoImageCache = new Map<string, Promise<HTMLImageElement>>();
 
-async function headOk(url: string): Promise<boolean> {
+function loadAlbedoImage(url: string): Promise<HTMLImageElement> {
+  let pending = albedoImageCache.get(url);
+  if (!pending) {
+    pending = new Promise((resolve, reject) => {
+      const img = new Image();
+      img.crossOrigin = "anonymous";
+      img.onload = () => resolve(img);
+      img.onerror = () => {
+        albedoImageCache.delete(url);
+        reject(new Error(`Failed to load albedo ${url}`));
+      };
+      img.src = url;
+    });
+    albedoImageCache.set(url, pending);
+  }
+  return pending;
+}
+
+function isKitColorway(colorway: string | null): boolean {
+  if (!colorway) return false;
   try {
-    const res = await fetch(url, { method: "HEAD" });
-    return res.ok;
+    return parseColorway(colorway).kind === "kit";
   } catch {
-    return false;
+    return colorway.includes("-");
   }
 }
 
-async function resolveGlbUrl(
-  glbUrlProp: string | null,
-  productId: string | null,
-  model: string | null,
-): Promise<string | null> {
-  const key = `${glbUrlProp ?? ""}:${productId ?? ""}:${model ?? ""}`;
-  if (glbResolveCache.has(key)) {
-    return glbResolveCache.get(key) ?? null;
-  }
-
-  let result: string | null = null;
-
-  if (glbUrlProp && (await headOk(glbUrlProp))) {
-    result = glbUrlProp;
-  } else if (productId) {
-    for (const productUrl of productGlbCandidates(productId)) {
-      if (await headOk(productUrl)) {
-        result = productUrl;
-        break;
+function sceneHasNamedColorParts(root: THREE.Object3D): boolean {
+  let base = false;
+  let trim = false;
+  root.traverse((obj) => {
+    const names: string[] = [obj.name];
+    if (obj instanceof THREE.Mesh) {
+      const mats = Array.isArray(obj.material) ? obj.material : [obj.material];
+      for (const mat of mats) {
+        if (mat && "name" in mat) names.push(String(mat.name ?? ""));
       }
     }
-  } else if (model && isKnownModel(model)) {
-    const typeUrl = modelPath(model);
-    if (await headOk(typeUrl)) {
-      result = typeUrl;
+    for (const name of names) {
+      const n = name.toLowerCase();
+      if (n === "base" || n.startsWith("base")) base = true;
+      if (n === "trim" || n.startsWith("trim")) trim = true;
     }
-  }
+  });
+  return base && trim;
+}
 
-  glbResolveCache.set(key, result);
-  return result;
+function prepareStandardMaterial(
+  src: THREE.MeshStandardMaterial,
+): THREE.MeshStandardMaterial {
+  const mat = src.clone();
+  mat.userData.legeaOriginalMap = mat.map;
+  mat.color.setRGB(1, 1, 1);
+  mat.vertexColors = false;
+  mat.metalness = 0;
+  mat.metalnessMap = null;
+  mat.roughnessMap = null;
+  mat.emissive.setRGB(0, 0, 0);
+  mat.side = THREE.DoubleSide;
+  mat.envMapIntensity = 0.35;
+  return mat;
+}
+
+function newUniforms(): GarmentRecolorUniforms {
+  return {
+    uTop: { value: new THREE.Color("#ffffff") },
+    uBottom: { value: new THREE.Color("#ffffff") },
+    uMid: { value: 0.38 },
+    uInvert: { value: 0 },
+    uMode: { value: 1 },
+  };
 }
 
 type ProductModelProps = {
@@ -66,9 +104,6 @@ type ProductModelProps = {
   branding?: BrandingDraft | null;
 };
 
-/**
- * 1) glbUrl  2) /3D/{id}_3D.glb|/3D/{id}.glb  3) /models/{model}.glb  4) PlaceholderModel
- */
 export function ProductModel({
   productId = null,
   glbUrl: glbUrlProp = null,
@@ -77,202 +112,297 @@ export function ProductModel({
   colorway,
   branding = null,
 }: ProductModelProps) {
-  const [glbUrl, setGlbUrl] = useState<string | null>(glbUrlProp);
-  const [checked, setChecked] = useState(Boolean(glbUrlProp));
+  const glbUrl = useMemo(
+    () => resolveGlbUrlSync(glbUrlProp, productId, model),
+    [glbUrlProp, productId, model],
+  );
 
-  useEffect(() => {
-    let cancelled = false;
+  const url =
+    glbUrl ?? (model && isKnownModel(model) ? modelPath(model) : null);
 
-    async function check() {
-      const url = await resolveGlbUrl(glbUrlProp, productId, model);
-      if (!cancelled) {
-        setGlbUrl(url);
-        setChecked(true);
-      }
-    }
-
-    setChecked(false);
-    setGlbUrl(null);
-    void check();
-    return () => {
-      cancelled = true;
-    };
-  }, [glbUrlProp, productId, model]);
-
-  if (!checked) return null;
-
-  if (glbUrl) {
-    return (
-      <Suspense
-        fallback={
-          preserveMaterials ? null : (
-            <PlaceholderModel
-              model={model}
-              colorway={colorway}
-              branding={branding}
-            />
-          )
-        }
-      >
-        <GlbModel
-          url={glbUrl}
-          colorway={colorway}
-          branding={branding}
-          preserveMaterials={preserveMaterials}
-        />
-      </Suspense>
-    );
-  }
-
-  if (preserveMaterials) return null;
+  if (!url) return null;
 
   return (
-    <PlaceholderModel
-      model={model}
-      colorway={colorway}
-      branding={branding}
-    />
+    <Suspense fallback={preserveMaterials ? null : <CanvasLoader />}>
+      <GlbModel
+        url={url}
+        productId={productId}
+        colorway={colorway}
+        branding={branding}
+        preserveMaterials={preserveMaterials}
+      />
+    </Suspense>
   );
 }
 
-function GlbModel({
-  url,
-  colorway,
+function ModelFrame({
+  clone,
   branding,
-  preserveMaterials,
 }: {
-  url: string;
-  colorway: string | null;
+  clone: THREE.Object3D;
   branding: BrandingDraft | null;
-  preserveMaterials: boolean;
 }) {
-  const { scene } = useGLTF(url);
-  const materials = useColorableMaterials(colorway);
-  const clone = useMemo(() => scene.clone(true), [scene]);
-  const splitCache = useMemo(() => new Map<string, ReturnType<typeof splitAlbedoForRecolor>>(), []);
-
-  useEffect(() => {
-    if (preserveMaterials) {
-      clone.traverse((obj) => {
-        if (!(obj instanceof THREE.Mesh)) return;
-        obj.castShadow = true;
-        obj.receiveShadow = true;
-      });
-      return;
-    }
-
-    let zoned = false;
-    clone.traverse((obj) => {
-      if (!(obj instanceof THREE.Mesh)) return;
-      obj.castShadow = true;
-      obj.receiveShadow = true;
-
-      const name = obj.name.toLowerCase();
-      const matName =
-        (Array.isArray(obj.material) ? obj.material[0]?.name : obj.material?.name)
-          ?.toLowerCase() ?? "";
-
-      if (name.includes("base") || matName.includes("base")) {
-        obj.material = materials.base;
-        zoned = true;
-      } else if (name.includes("trim") || matName.includes("trim")) {
-        obj.material = materials.trim;
-        zoned = true;
-      } else if (name.includes("logo") || matName.includes("logo")) {
-        obj.material = materials.logo;
-        zoned = true;
-      }
-    });
-
-    if (!zoned) {
-      materials.base.side = THREE.DoubleSide;
-      clone.traverse((obj) => {
-        if (!(obj instanceof THREE.Mesh)) return;
-        const original = Array.isArray(obj.material)
-          ? obj.material[0]
-          : obj.material;
-
-        if (!(original instanceof THREE.MeshStandardMaterial)) {
-          obj.material = materials.base;
-          return;
-        }
-
-        // Keep shading maps from GLB
-        if (original.normalMap) {
-          materials.base.normalMap = original.normalMap;
-          materials.base.normalScale =
-            original.normalScale?.clone() ?? new THREE.Vector2(1, 1);
-        }
-        if (original.roughnessMap) {
-          materials.base.roughnessMap = original.roughnessMap;
-        }
-        if (original.metalnessMap) {
-          materials.base.metalnessMap = original.metalnessMap;
-        }
-        materials.base.roughness = Math.min(original.roughness || 0.85, 0.62);
-        materials.base.metalness = Math.min(original.metalness || 0, 0.05);
-        materials.base.envMapIntensity = 1.05;
-
-        // Albedo → grayscale fabric + white logo mask
-        if (original.map) {
-          const map = original.map;
-          const applySplit = () => {
-            const key = `${map.uuid}:v3`;
-            let split = splitCache.get(key);
-            if (split === undefined) {
-              split = splitAlbedoForRecolor(map);
-              splitCache.set(key, split);
-            }
-            if (split) {
-              materials.base.map = split.fabricMap;
-              materials.base.emissiveMap = split.logoMap;
-              materials.base.emissive = new THREE.Color("#ffffff");
-              materials.base.emissiveIntensity = 1;
-            } else {
-              materials.base.map = null;
-              materials.base.emissiveMap = null;
-              materials.base.emissiveIntensity = 0;
-            }
-            materials.base.needsUpdate = true;
-          };
-
-          const img = map.image as
-            | (CanvasImageSource & {
-                width?: number;
-                complete?: boolean;
-                addEventListener?: (
-                  type: string,
-                  listener: () => void,
-                  options?: { once?: boolean },
-                ) => void;
-              })
-            | undefined;
-          if (img && (img.width || img.complete)) {
-            applySplit();
-          } else {
-            img?.addEventListener?.("load", applySplit, { once: true });
-            requestAnimationFrame(applySplit);
-          }
-        } else {
-          materials.base.map = null;
-          materials.base.emissiveMap = null;
-          materials.base.emissiveIntensity = 0;
-        }
-
-        materials.base.needsUpdate = true;
-        obj.material = materials.base;
-      });
-    }
-  }, [clone, materials, preserveMaterials, splitCache]);
-
   return (
     <group>
       <primitive object={clone} />
-      {branding && !preserveMaterials ? (
+      {branding ? (
         <group position={[0, -0.15, 0]}>
           <BrandingMarks branding={branding} />
         </group>
       ) : null}
     </group>
   );
+}
+
+function GlbModel({
+  url,
+  productId,
+  colorway,
+  branding,
+  preserveMaterials,
+}: {
+  url: string;
+  productId: string | null;
+  colorway: string | null;
+  branding: BrandingDraft | null;
+  preserveMaterials: boolean;
+}) {
+  const { scene } = useGLTF(url);
+  const clone = useMemo(() => scene.clone(true), [scene]);
+  const namedParts = useMemo(() => sceneHasNamedColorParts(clone), [clone]);
+
+  if (preserveMaterials) {
+    return <ShadowOnly clone={clone} />;
+  }
+
+  if (namedParts) {
+    return (
+      <NamedMeshClone clone={clone} colorway={colorway} branding={branding} />
+    );
+  }
+
+  // Только костюмы AABB-CCDD (TXM1144 и т.п.). Остальные артикулы — зоны albedo.
+  if (isKitColorway(colorway)) {
+    return (
+      <ShaderRecolorClone
+        clone={clone}
+        productId={productId}
+        colorway={colorway}
+        branding={branding}
+      />
+    );
+  }
+
+  return (
+    <ZoneRecolorClone
+      clone={clone}
+      productId={productId}
+      colorway={colorway}
+      branding={branding}
+    />
+  );
+}
+
+function ShadowOnly({ clone }: { clone: THREE.Object3D }) {
+  useEffect(() => {
+    clone.traverse((obj) => {
+      if (!(obj instanceof THREE.Mesh)) return;
+      obj.castShadow = true;
+      obj.receiveShadow = true;
+    });
+  }, [clone]);
+  return <primitive object={clone} />;
+}
+
+function NamedMeshClone({
+  clone,
+  colorway,
+  branding,
+}: {
+  clone: THREE.Object3D;
+  colorway: string | null;
+  branding: BrandingDraft | null;
+}) {
+  const materials = useColorableMaterials(colorway);
+
+  useEffect(() => {
+    clone.traverse((obj) => {
+      if (!(obj instanceof THREE.Mesh)) return;
+      obj.castShadow = true;
+      obj.receiveShadow = true;
+      const n = `${obj.name} ${
+        Array.isArray(obj.material) ? "" : (obj.material?.name ?? "")
+      }`.toLowerCase();
+      if (n.includes("logo")) obj.material = materials.logo;
+      else if (n.includes("trim")) obj.material = materials.trim;
+      else if (n.includes("base")) obj.material = materials.base;
+    });
+  }, [clone, materials]);
+
+  return <ModelFrame clone={clone} branding={branding} />;
+}
+
+function ShaderRecolorClone({
+  clone,
+  productId,
+  colorway,
+  branding,
+}: {
+  clone: THREE.Object3D;
+  productId: string | null;
+  colorway: string | null;
+  branding: BrandingDraft | null;
+}) {
+  useEffect(() => {
+    clone.traverse((obj) => {
+      if (!(obj instanceof THREE.Mesh)) return;
+      obj.castShadow = true;
+      obj.receiveShadow = true;
+
+      const src = Array.isArray(obj.material) ? obj.material[0] : obj.material;
+      if (!(src instanceof THREE.MeshStandardMaterial)) return;
+
+      let mat = obj.material as THREE.MeshStandardMaterial;
+      if (!mat.userData.legeaGarment) {
+        mat = prepareStandardMaterial(src);
+        attachGarmentRecolor(mat, newUniforms());
+        obj.material = mat;
+      }
+
+      const uniforms = (obj.material as THREE.MeshStandardMaterial).userData
+        .legeaGarment as GarmentRecolorUniforms | undefined;
+      if (uniforms) updateGarmentRecolor(uniforms, colorway, productId);
+    });
+  }, [clone, colorway, productId]);
+
+  return <ModelFrame clone={clone} branding={branding} />;
+}
+
+function ZoneRecolorClone({
+  clone,
+  productId,
+  colorway,
+  branding,
+}: {
+  clone: THREE.Object3D;
+  productId: string | null;
+  colorway: string | null;
+  branding: BrandingDraft | null;
+}) {
+  useEffect(() => {
+    clone.traverse((obj) => {
+      if (!(obj instanceof THREE.Mesh)) return;
+      obj.castShadow = true;
+      obj.receiveShadow = true;
+      const src = Array.isArray(obj.material) ? obj.material[0] : obj.material;
+      if (!(src instanceof THREE.MeshStandardMaterial)) return;
+      if (src.userData.legeaOriginalMap !== undefined) return;
+      obj.material = prepareStandardMaterial(src);
+    });
+  }, [clone]);
+
+  useEffect(() => {
+    let cancelled = false;
+    let generated: THREE.CanvasTexture | null = null;
+
+    const restoreOriginal = () => {
+      clone.traverse((obj) => {
+        if (!(obj instanceof THREE.Mesh)) return;
+        const mat = Array.isArray(obj.material) ? obj.material[0] : obj.material;
+        if (!(mat instanceof THREE.MeshStandardMaterial)) return;
+        const original = mat.userData.legeaOriginalMap as
+          | THREE.Texture
+          | null
+          | undefined;
+        if (original !== undefined) mat.map = original;
+        mat.color.setRGB(1, 1, 1);
+        mat.needsUpdate = true;
+      });
+    };
+
+    const applyMap = (map: THREE.CanvasTexture) => {
+      clone.traverse((obj) => {
+        if (!(obj instanceof THREE.Mesh)) return;
+        const mat = Array.isArray(obj.material) ? obj.material[0] : obj.material;
+        if (!(mat instanceof THREE.MeshStandardMaterial)) return;
+        const original = mat.userData.legeaOriginalMap as
+          | THREE.Texture
+          | null
+          | undefined;
+        if (original) {
+          map.flipY = original.flipY;
+          map.wrapS = original.wrapS;
+          map.wrapT = original.wrapT;
+        } else {
+          map.flipY = false;
+        }
+        map.colorSpace = THREE.SRGBColorSpace;
+        map.needsUpdate = true;
+        mat.map = map;
+        mat.color.setRGB(1, 1, 1);
+        mat.needsUpdate = true;
+      });
+    };
+
+    async function run() {
+      const plan = resolveRuntimeRecolor(productId, colorway);
+      if (plan.zones.length === 0) {
+        restoreOriginal();
+        return;
+      }
+
+      const albedoUrl = getGlbProductZones(productId)?.albedoUrl;
+      let maps: { map: THREE.CanvasTexture } | null = null;
+
+      if (albedoUrl) {
+        try {
+          const image = await loadAlbedoImage(albedoUrl);
+          if (cancelled) return;
+          maps = recolorAlbedoFromImage(image, plan.zones, plan.splitMode);
+        } catch {
+          maps = null;
+        }
+      }
+
+      if (!maps) {
+        let source: THREE.Texture | null = null;
+        clone.traverse((obj) => {
+          if (source || !(obj instanceof THREE.Mesh)) return;
+          const mat = Array.isArray(obj.material)
+            ? obj.material[0]
+            : obj.material;
+          if (!(mat instanceof THREE.MeshStandardMaterial)) return;
+          const original = mat.userData.legeaOriginalMap as
+            | THREE.Texture
+            | null
+            | undefined;
+          source = original ?? mat.map;
+        });
+        if (source) {
+          maps = recolorAlbedoZones(source, plan.zones, plan.splitMode);
+        }
+      }
+
+      if (cancelled) return;
+      generated?.dispose();
+      generated = null;
+
+      if (!maps) {
+        restoreOriginal();
+        return;
+      }
+
+      generated = maps.map;
+      applyMap(maps.map);
+    }
+
+    void run();
+
+    return () => {
+      cancelled = true;
+      generated?.dispose();
+    };
+  }, [clone, productId, colorway]);
+
+  return <ModelFrame clone={clone} branding={branding} />;
 }
