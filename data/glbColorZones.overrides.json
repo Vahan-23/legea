@@ -21,6 +21,27 @@
           "coverage": 0.9
         }
       ]
+    },
+    "KITB0001": {
+      "bakedColorway": "0203",
+      "confidence": 0.2,
+      "splitMode": "nearest",
+      "zones": [
+        {
+          "role": "base",
+          "colorKey": "02",
+          "bakedHex": "#1D6E50",
+          "matchRadius": 95,
+          "coverage": 0.85
+        },
+        {
+          "role": "trim",
+          "colorKey": "03",
+          "bakedHex": "#8DA7A3",
+          "matchRadius": 70,
+          "coverage": 0.12
+        }
+      ]
     }
   }
 }

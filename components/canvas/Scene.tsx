@@ -64,7 +64,7 @@ export function Scene({
   mobile = false,
   transparent = false,
   interactive = true,
-  modelScale = 1,
+  modelScale = 0.85,
 }: SceneProps) {
   const [reducedMotion, setReducedMotion] = useState(false);
   const setRenderer = useCanvasCaptureStore((s) => s.setRenderer);

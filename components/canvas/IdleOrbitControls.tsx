@@ -19,9 +19,9 @@ const AUTO_SPEED = 0.8;
  * Зум: стартуем на maxDistance = минимальный зум (максимальное отдаление).
  * Камера Scene должна совпадать с DEFAULT_DISTANCE.
  */
-export const MIN_DISTANCE = 1.2;
-export const MAX_DISTANCE = 3.6;
-export const DEFAULT_DISTANCE = MAX_DISTANCE;
+export const MIN_DISTANCE = 1.35;
+export const MAX_DISTANCE = 4.5;
+export const DEFAULT_DISTANCE = 4.2;
 
 /** Начальная позиция камеры на DEFAULT_DISTANCE (тот же ракурс, что [0, 0.35, 2.2]) */
 export const DEFAULT_CAMERA_POSITION: [number, number, number] = (() => {

@@ -79,8 +79,16 @@ function productIdFromGlbName(file: string): string | null {
   if (/^logo/i.test(base) || /_3D1$/i.test(base)) return null;
   const named = /^([A-Za-z0-9]+)_3D$/i.exec(base);
   if (named?.[1]) return named[1];
+  const optimized = /^([A-Za-z0-9]+)-optimized$/i.exec(base);
+  if (optimized?.[1]) return optimized[1];
   if (/^[A-Za-z0-9]+$/.test(base)) return base;
   return null;
+}
+
+function glbFilePriority(file: string): number {
+  if (/_3D\.glb$/i.test(file)) return 3;
+  if (/-optimized\.glb$/i.test(file)) return 2;
+  return 1;
 }
 
 function extractKeysFromColorway(code: string): ColorCodeKey[] {
@@ -596,44 +604,44 @@ function zonesFromClustersForBaked(
       distScore = Math.max(0, 1 - dist(dominant.center, target) / 160);
       warnings.push("mono fabric: only base/top zone");
     } else {
-      for (const slot of slots) {
-        const target = parseHex(colorMap[slot.key].hex);
-        let best = -1;
-        let bestD = Infinity;
-        for (let i = 0; i < clusters.length; i += 1) {
-          if (used.has(i)) continue;
-          const d = dist(clusters[i]!.center, target);
-          if (d < bestD) {
-            bestD = d;
-            best = i;
-          }
-        }
-        if (best < 0) {
-          if (slot.role === "base" || slot.role === "top") {
-            const c = clusters[0]!;
-            zones.push({
-              role: slot.role,
-              colorKey: slot.key,
-              bakedHex: toHex(c.center),
-              matchRadius: Math.max(c.radius, 60),
-              coverage: Number(c.coverage.toFixed(3)),
-            });
-            distScore += Math.max(0, 1 - dist(c.center, target) / 160);
-          } else {
-            warnings.push(`no free cluster for ${slot.role}/${slot.key}`);
-          }
-          continue;
-        }
-        used.add(best);
-        const c = clusters[best]!;
+      // Тело изделия = самый большой кластер, отделка = второй.
+      // Не nearest-to-catalog-hex: запечка часто зелёная, а каталог 0203 —
+      // иначе корпус уезжает в trim (KITB0001).
+      const byCoverage = [...clusters].sort(
+        (a, b) => b.coverage - a.coverage,
+      );
+      const baseSlot =
+        slots.find((s) => s.role === "base") ?? slots[0]!;
+      const trimSlot = slots.find((s) => s.role === "trim");
+      const body = byCoverage[0]!;
+      const accent = byCoverage[1];
+
+      zones.push({
+        role: "base",
+        colorKey: baseSlot.key,
+        bakedHex: toHex(body.center),
+        matchRadius: Math.max(body.radius, 70),
+        coverage: Number(body.coverage.toFixed(3)),
+      });
+      distScore += Math.max(
+        0,
+        1 - dist(body.center, parseHex(colorMap[baseSlot.key].hex)) / 160,
+      );
+      used.add(clusters.indexOf(body));
+
+      if (trimSlot && accent) {
         zones.push({
-          role: slot.role,
-          colorKey: slot.key,
-          bakedHex: toHex(c.center),
-          matchRadius: Math.max(c.radius, 50),
-          coverage: Number(c.coverage.toFixed(3)),
+          role: "trim",
+          colorKey: trimSlot.key,
+          bakedHex: toHex(accent.center),
+          matchRadius: Math.max(accent.radius, 55),
+          coverage: Number(accent.coverage.toFixed(3)),
         });
-        distScore += Math.max(0, 1 - bestD / 160);
+        distScore += Math.max(
+          0,
+          1 - dist(accent.center, parseHex(colorMap[trimSlot.key].hex)) / 160,
+        );
+        used.add(clusters.indexOf(accent));
       }
     }
   }
@@ -783,6 +791,12 @@ async function main() {
     const id = productIdFromGlbName(file);
     if (!id) continue;
     if (filter.size > 0 && !filter.has(id.toUpperCase()) && !filter.has(file.toUpperCase())) {
+      continue;
+    }
+
+    // Один артикул — один GLB (предпочитаем _3D, затем -optimized)
+    const prevFile = out.products[id]?.glbFile;
+    if (prevFile && glbFilePriority(prevFile) > glbFilePriority(file)) {
       continue;
     }
 

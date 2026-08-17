@@ -69,6 +69,16 @@ function isColorKey(v: string): v is ColorCodeKey {
   return Object.prototype.hasOwnProperty.call(colorMap, v);
 }
 
+function hexSaturation(hex: string): number {
+  const n = hex.replace("#", "");
+  const r = Number.parseInt(n.slice(0, 2), 16) / 255;
+  const g = Number.parseInt(n.slice(2, 4), 16) / 255;
+  const b = Number.parseInt(n.slice(4, 6), 16) / 255;
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  return max === 0 ? 0 : (max - min) / max;
+}
+
 function mergeCatalog(): Record<string, GlbProductZones> {
   const base = (zonesFile as GlbColorZonesFile).products ?? {};
   const overrides = (overridesFile as OverridesFile).products ?? {};
@@ -154,7 +164,74 @@ export function resolveRuntimeRecolor(
   };
 
   const zones: RuntimeColorZone[] = [];
-  for (const zone of def.zones) {
+  let sourceZones = def.zones;
+
+  // Корпус всегда больше отделки. Если анализатор привязал XX/YY
+  // к «ближайшему hex каталога», на зелёной запечёнке (KITB0001 и т.п.)
+  // большая ткань оказывается trim — 3D инвертируется относительно фото.
+  if (target.kind === "single") {
+    const base = def.zones.find((z) => z.role === "base");
+    const trim = def.zones.find((z) => z.role === "trim");
+    if (
+      base &&
+      trim &&
+      (trim.coverage ?? 0) > (base.coverage ?? 0) + 0.05
+    ) {
+      sourceZones = def.zones.map((z) => {
+        if (z.role === "base") {
+          return {
+            ...z,
+            bakedHex: trim.bakedHex,
+            matchRadius: Math.max(trim.matchRadius, 80),
+            coverage: trim.coverage,
+          };
+        }
+        if (z.role === "trim") {
+          return {
+            ...z,
+            bakedHex: base.bakedHex,
+            matchRadius: Math.max(base.matchRadius, 55),
+            coverage: base.coverage,
+          };
+        }
+        return z;
+      });
+    }
+
+    // 03YY: корпус белый в albedo (не попадает в кластеры), акценты
+    // часто ошибочно в base → красятся в белый вместо trim (M1158).
+    const baseZ = sourceZones.find((z) => z.role === "base");
+    const trimZ = sourceZones.find((z) => z.role === "trim");
+    if (baseZ && trimZ && target.baseKey === "03") {
+      const baseSat = hexSaturation(baseZ.bakedHex);
+      const trimSat = hexSaturation(trimZ.bakedHex);
+      if (baseSat > trimSat + 0.06) {
+        sourceZones = sourceZones.map((z) => {
+          if (z.role === "base") {
+            return {
+              ...z,
+              bakedHex: trimZ.bakedHex,
+              matchRadius: Math.max(trimZ.matchRadius, 55),
+              coverage: trimZ.coverage,
+            };
+          }
+          if (z.role === "trim") {
+            return {
+              ...z,
+              bakedHex: baseZ.bakedHex,
+              matchRadius: Math.max(baseZ.matchRadius, 90),
+              coverage: baseZ.coverage,
+            };
+          }
+          return z;
+        });
+      }
+      // Белый корпус уже в текстуре — перекрашиваем только trim-зону
+      sourceZones = sourceZones.filter((z) => z.role !== "base");
+    }
+  }
+
+  for (const zone of sourceZones) {
     const targetHex = hexForRole(zone.role, zone.colorKey);
     if (!targetHex) continue;
     const same =
