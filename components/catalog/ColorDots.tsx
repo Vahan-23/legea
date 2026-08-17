@@ -53,7 +53,7 @@ export function ColorDots({
 
   return (
     <ul
-      className={`flex flex-wrap items-center gap-1.5 ${className}`}
+      className={`flex flex-wrap items-center gap-2.5 sm:gap-1.5 ${className}`}
       role="list"
     >
       {visible.map((code) => {
@@ -67,8 +67,8 @@ export function ColorDots({
             <span
               className={
                 interactive
-                  ? "flex h-4 w-4 cursor-pointer items-center justify-center rounded-full bg-white p-px ring-1 ring-navy/25 transition-shadow hover:ring-blue"
-                  : "flex h-3.5 w-3.5 items-center justify-center rounded-full bg-white p-px ring-1 ring-navy/25"
+                  ? "flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-white p-0.5 ring-1 ring-navy/25 transition-shadow hover:ring-blue touch-manipulation sm:h-5 sm:w-5 sm:p-px"
+                  : "flex h-6 w-6 items-center justify-center rounded-full bg-white p-px ring-1 ring-navy/25 sm:h-3.5 sm:w-3.5"
               }
               style={
                 active
@@ -79,6 +79,15 @@ export function ColorDots({
               onMouseEnter={
                 interactive
                   ? (event) => {
+                      event.stopPropagation();
+                      onPreview?.(code);
+                    }
+                  : undefined
+              }
+              onClick={
+                interactive
+                  ? (event) => {
+                      event.preventDefault();
                       event.stopPropagation();
                       onPreview?.(code);
                     }
