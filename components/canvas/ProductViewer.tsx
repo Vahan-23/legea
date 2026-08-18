@@ -14,6 +14,7 @@ import {
   prefetchImage,
   prefetchImagesQueued,
 } from "@/lib/prefetchImages";
+import { preserveGlbMaterials } from "@/lib/models";
 import { useProductStore } from "@/store/useProductStore";
 
 type SceneProps = {
@@ -22,6 +23,7 @@ type SceneProps = {
   colorway: string | null;
   branding?: unknown;
   mobile?: boolean;
+  preserveMaterials?: boolean;
 };
 
 type ViewMode = "front" | "back" | "3d";
@@ -101,6 +103,7 @@ export function ProductViewer({
   const show3d = hasPhotos ? mode === "3d" : !mobile || mobile3d;
 
   const branding = useProductStore((s) => (show3d ? s.branding : null));
+  const preserveMaterials = preserveGlbMaterials(productId);
 
   // Подгружаем R3F/three только когда реально нужен 3D
   useEffect(() => {
@@ -171,6 +174,7 @@ export function ProductViewer({
                 colorway={colorway}
                 branding={branding}
                 mobile={mobile}
+                preserveMaterials={preserveMaterials}
               />
             ) : (
               <div className="flex h-full items-center justify-center font-mono text-xs uppercase tracking-widest text-muted">

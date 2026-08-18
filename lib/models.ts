@@ -85,3 +85,8 @@ export function isKnownModel(model: string | null): model is ModelId {
   if (!model) return false;
   return (MODEL_FILES as readonly string[]).includes(model);
 }
+
+/** TXM-костюмы (верх/низ): показываем GLB как запечён, без kit-shader. */
+export function preserveGlbMaterials(productId: string | null | undefined): boolean {
+  return Boolean(productId?.startsWith("TXM"));
+}

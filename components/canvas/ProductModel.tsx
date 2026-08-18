@@ -168,7 +168,7 @@ function GlbModel({
   const namedParts = useMemo(() => sceneHasNamedColorParts(clone), [clone]);
 
   if (preserveMaterials) {
-    return <ShadowOnly clone={clone} />;
+    return <PreserveMaterialsClone clone={clone} branding={branding} />;
   }
 
   if (namedParts) {
@@ -197,6 +197,23 @@ function GlbModel({
       branding={branding}
     />
   );
+}
+
+function PreserveMaterialsClone({
+  clone,
+  branding,
+}: {
+  clone: THREE.Object3D;
+  branding: BrandingDraft | null;
+}) {
+  useEffect(() => {
+    clone.traverse((obj) => {
+      if (!(obj instanceof THREE.Mesh)) return;
+      obj.castShadow = true;
+      obj.receiveShadow = true;
+    });
+  }, [clone]);
+  return <ModelFrame clone={clone} branding={branding} />;
 }
 
 function ShadowOnly({ clone }: { clone: THREE.Object3D }) {
