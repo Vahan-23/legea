@@ -252,8 +252,10 @@ export function resolveRuntimeRecolor(
   const hasKitPair =
     zones.some((z) => z.role === "top") &&
     zones.some((z) => z.role === "bottom");
-  const splitMode =
-    def.splitMode ?? (hasKitPair ? "luminance" : "nearest");
+  const splitMode: RuntimeRecolorPlan["splitMode"] =
+    def.splitMode === "worldY"
+      ? "luminance"
+      : def.splitMode ?? (hasKitPair ? "luminance" : "nearest");
 
   return { zones, splitMode };
 }

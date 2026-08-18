@@ -14,17 +14,9 @@ import {
   prefetchImage,
   prefetchImagesQueued,
 } from "@/lib/prefetchImages";
+import type { SceneProps } from "@/components/canvas/Scene";
 import { preserveGlbMaterials } from "@/lib/models";
 import { useProductStore } from "@/store/useProductStore";
-
-type SceneProps = {
-  productId?: string | null;
-  model: string | null;
-  colorway: string | null;
-  branding?: unknown;
-  mobile?: boolean;
-  preserveMaterials?: boolean;
-};
 
 type ViewMode = "front" | "back" | "3d";
 
@@ -112,7 +104,10 @@ export function ProductViewer({
     setSceneLoading(true);
     void import("@/components/canvas/Scene")
       .then((m) => {
-        if (!cancelled) setSceneComp(() => m.Scene);
+        if (!cancelled) {
+          // Updater form: state is a component (function), not a lazy initializer.
+          setSceneComp((_prev: ComponentType<SceneProps> | null) => m.Scene);
+        }
       })
       .finally(() => {
         if (!cancelled) setSceneLoading(false);
