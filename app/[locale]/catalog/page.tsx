@@ -36,8 +36,9 @@ export default async function CatalogPage({ params }: PageProps) {
   setRequestLocale(params.locale);
   const t = await getTranslations("catalog");
   const cardPhotos = getAllProductPhotos();
-  const productIdsWith3d = Array.from(getProductIdsWithGlb());
+  const productIdsWith3d = getProductIdsWithGlb();
   const products = getAllProducts().filter((product) => {
+    if (!productIdsWith3d.has(product.id)) return false;
     const photos = cardPhotos[product.id];
     return Boolean(photos?.front);
   });
@@ -63,7 +64,7 @@ export default async function CatalogPage({ params }: PageProps) {
         <CatalogView
           products={products}
           cardPhotos={cardPhotos}
-          productIdsWith3d={productIdsWith3d}
+          productIdsWith3d={Array.from(productIdsWith3d)}
         />
       </Suspense>
     </div>

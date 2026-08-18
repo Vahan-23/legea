@@ -35,7 +35,7 @@ export type GlbProductZones = {
    * Для kit: пиксели делить по яркости между top/bottom
    * (надёжнее, когда navy в текстуре «серый»).
    */
-  splitMode?: "nearest" | "luminance";
+  splitMode?: "nearest" | "luminance" | "worldY";
   /** Вынутый albedo: /3D/albedo/{id}.webp — для перекраски без чтения GPU-текстуры */
   albedoUrl?: string;
   /** Предупреждения анализатора */

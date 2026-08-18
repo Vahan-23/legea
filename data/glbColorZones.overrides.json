@@ -1,6 +1,37 @@
 {
   "note": "Ручные правки поверх npm run glb:zones. Ключ = артикул.",
   "products": {
+    "TXM1152P187": {
+      "bakedColorway": "1204-0004",
+      "splitMode": "worldY",
+      "confidence": 0.134,
+      "zones": [
+        {
+          "role": "top",
+          "colorKey": "12",
+          "bakedHex": "#8394AC",
+          "matchRadius": 71,
+          "coverage": 0.061
+        },
+        {
+          "role": "bottom",
+          "colorKey": "04",
+          "bakedHex": "#2C5A92",
+          "matchRadius": 55,
+          "coverage": 0.872
+        },
+        {
+          "role": "trim",
+          "colorKey": "04",
+          "bakedHex": "#263A5A",
+          "matchRadius": 52,
+          "coverage": 0.067
+        }
+      ]
+    },
+    "TXM1173P193": { "splitMode": "worldY" },
+    "TXM1174P193": { "splitMode": "worldY" },
+    "TXM1174P229": { "splitMode": "worldY" },
     "TXM1144P188": {
       "bakedColorway": "0404-0044",
       "confidence": 0.9,

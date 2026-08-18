@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-08-17T22:36:11.802Z",
+  "generatedAt": "2026-08-17T23:45:37.530Z",
   "files": {
     "351277": "/3D/351277.glb",
     "B302": "/3D/B302.glb",
@@ -68,6 +68,28 @@
     "SMB3000": "/3D/SMB3000-optimized.glb",
     "T074": "/3D/T074-optimized.glb",
     "TS010": "/3D/TS010-optimized.glb",
-    "TXM1144P188": "/3D/TXM1144P188_3D.glb"
+    "TXM1121P229": "/3D/TXM1121P229-optimized.glb",
+    "TXM1122P193": "/3D/TXM1122P193-optimized.glb",
+    "TXM1122P229": "/3D/TXM1122P229-optimized.glb",
+    "TXM1143BP188B": "/3D/TXM1143BP188B-optimized.glb",
+    "TXM1143JP188": "/3D/TXM1143JP188-optimized.glb",
+    "TXM1143P188": "/3D/TXM1143P188-optimized.glb",
+    "TXM1144JP188": "/3D/TXM1144JP188-optimized.glb",
+    "TXM1144P188": "/3D/TXM1144P188_3D.glb",
+    "TXM1144P188B": "/3D/TXM1144P188B-optimized.glb",
+    "TXM1146BP188B": "/3D/TXM1146BP188B-optimized.glb",
+    "TXM1146JP188": "/3D/TXM1146JP188-optimized.glb",
+    "TXM1146P188": "/3D/TXM1146P188-optimized.glb",
+    "TXM1147BP187BC": "/3D/TXM1147BP187BC-optimized.glb",
+    "TXM1147P187": "/3D/TXM1147P187-optimized.glb",
+    "TXM1152BP187BC": "/3D/TXM1152BP187BC-optimized.glb",
+    "TXM1152P187": "/3D/TXM1152P187-optimized.glb",
+    "TXM1166BP193B": "/3D/TXM1166BP193B-optimized.glb",
+    "TXM1166P193": "/3D/TXM1166P193-optimized.glb",
+    "TXM1166P229": "/3D/TXM1166P229-optimized.glb",
+    "TXM1173BP193B": "/3D/TXM1173BP193B-optimized.glb",
+    "TXM1173P193": "/3D/TXM1173P193-optimized.glb",
+    "TXM1174P193": "/3D/TXM1174P193-optimized.glb",
+    "TXM1174P229": "/3D/TXM1174P229-optimized.glb"
   }
 }

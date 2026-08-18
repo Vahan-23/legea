@@ -9,6 +9,8 @@ import { useColorableMaterials } from "@/components/canvas/useColorableMaterials
 import { isKnownModel, modelPath, resolveGlbUrlSync } from "@/lib/models";
 import {
   attachGarmentRecolor,
+  kitSplitYFromObject,
+  newGarmentUniforms,
   updateGarmentRecolor,
   type GarmentRecolorUniforms,
 } from "@/lib/garmentRecolor";
@@ -86,13 +88,7 @@ function prepareStandardMaterial(
 }
 
 function newUniforms(): GarmentRecolorUniforms {
-  return {
-    uTop: { value: new THREE.Color("#ffffff") },
-    uBottom: { value: new THREE.Color("#ffffff") },
-    uMid: { value: 0.38 },
-    uInvert: { value: 0 },
-    uMode: { value: 1 },
-  };
+  return newGarmentUniforms();
 }
 
 type ProductModelProps = {
@@ -253,6 +249,8 @@ function ShaderRecolorClone({
   colorway: string | null;
   branding: BrandingDraft | null;
 }) {
+  const splitY = useMemo(() => kitSplitYFromObject(clone), [clone]);
+
   useEffect(() => {
     clone.traverse((obj) => {
       if (!(obj instanceof THREE.Mesh)) return;
@@ -271,9 +269,11 @@ function ShaderRecolorClone({
 
       const uniforms = (obj.material as THREE.MeshStandardMaterial).userData
         .legeaGarment as GarmentRecolorUniforms | undefined;
-      if (uniforms) updateGarmentRecolor(uniforms, colorway, productId);
+      if (uniforms) {
+        updateGarmentRecolor(uniforms, colorway, productId, splitY);
+      }
     });
-  }, [clone, colorway, productId]);
+  }, [clone, colorway, productId, splitY]);
 
   return <ModelFrame clone={clone} branding={branding} />;
 }

@@ -424,7 +424,9 @@ function roleSlotsForColorway(code: string): RoleSlot[] {
   const slots: RoleSlot[] = [];
   const seenKeys = new Set<string>();
   const push = (role: GlbZoneRole, key: ColorCodeKey) => {
-    if (seenKeys.has(key)) return;
+    if (slots.some((s) => s.role === role && s.key === key)) return;
+    // Kit: 1204-0004 → trim куртки и корпус штанов оба «04», но роли разные.
+    if (parsed.kind !== "kit" && seenKeys.has(key)) return;
     seenKeys.add(key);
     slots.push({ role, key });
   };
@@ -726,16 +728,27 @@ async function analyzeOne(
     }
   }
 
+  const topZone = built.zones.find((z) => z.role === "top");
+  const botZone = built.zones.find((z) => z.role === "bottom");
+  const conf = Number(Math.max(0, Math.min(1, built.conf)).toFixed(3));
+  const needsWorldY =
+    topZone &&
+    botZone &&
+    (topZone.coverage ?? 0) < 0.14 &&
+    (botZone.coverage ?? 0) > 0.65;
+
   return {
     bakedColorway,
     glbFile,
     albedoUrl,
-    confidence: Number(Math.max(0, Math.min(1, built.conf)).toFixed(3)),
+    confidence: conf,
     zones: built.zones,
-    splitMode: slots.some((s) => s.role === "top") &&
-      slots.some((s) => s.role === "bottom")
-      ? "luminance"
-      : "nearest",
+    splitMode: needsWorldY
+      ? "worldY"
+      : slots.some((s) => s.role === "top") &&
+          slots.some((s) => s.role === "bottom")
+        ? "luminance"
+        : "nearest",
     warnings: warnings.length ? warnings : undefined,
   };
 }
