@@ -12,6 +12,10 @@ import { TechBadges } from "@/components/product/TechBadges";
 import { Button } from "@/components/ui/Button";
 import { Link } from "@/i18n/navigation";
 import {
+  catalogHrefFromFocus,
+  peekCatalogFocus,
+} from "@/lib/catalogScroll";
+import {
   getMatrixSizes,
   partitionQuantitiesBySku,
 } from "@/lib/products";
@@ -29,9 +33,15 @@ type ProductPanelProps = {
   product: Product;
   locale: Locale;
   photos?: ProductPhotos;
+  fashionSrc?: string | null;
 };
 
-export function ProductPanel({ product, locale, photos }: ProductPanelProps) {
+export function ProductPanel({
+  product,
+  locale,
+  photos,
+  fashionSrc = null,
+}: ProductPanelProps) {
   const t = useTranslations("product");
   const tNav = useTranslations("nav");
   const name = productName(product, locale);
@@ -48,6 +58,8 @@ export function ProductPanel({ product, locale, photos }: ProductPanelProps) {
   const capture = useCanvasCaptureStore((s) => s.capture);
 
   const [addedFlash, setAddedFlash] = useState(false);
+  const [fashionActive, setFashionActive] = useState(Boolean(fashionSrc));
+  const [catalogBackHref, setCatalogBackHref] = useState("/catalog");
 
   useEffect(() => {
     initProduct({
@@ -56,6 +68,14 @@ export function ProductPanel({ product, locale, photos }: ProductPanelProps) {
       sizes,
     });
   }, [product.id, product.colorways, sizes, initProduct]);
+
+  useEffect(() => {
+    setFashionActive(Boolean(fashionSrc));
+  }, [product.id, fashionSrc]);
+
+  useEffect(() => {
+    setCatalogBackHref(catalogHrefFromFocus(peekCatalogFocus()));
+  }, [product.id]);
 
   const pieces = totalPieces(quantities);
   const canAdd = pieces > 0 && colorway != null;
@@ -98,15 +118,24 @@ export function ProductPanel({ product, locale, photos }: ProductPanelProps) {
           productId={product.id}
           model={product.model}
           colorway={colorway}
+          colorways={product.colorways}
+          onColorwayChange={(code) => {
+            setFashionActive(false);
+            setColorway(code);
+          }}
           alt={name}
           photos={photos}
+          fashionSrc={fashionSrc}
+          fashionActive={fashionActive}
+          onFashionOff={() => setFashionActive(false)}
+          onFashionOn={() => setFashionActive(true)}
         />
       </div>
 
       <div className="min-w-0 space-y-6 sm:space-y-8">
         <div className="space-y-4">
           <Link
-            href="/catalog"
+            href={catalogBackHref}
             className="inline-block font-mono text-xs uppercase tracking-widest text-blue hover:text-navy"
           >
             ← {tNav("catalog")}
@@ -138,12 +167,20 @@ export function ProductPanel({ product, locale, photos }: ProductPanelProps) {
 
         <TechBadges tech={product.tech} />
 
-        <ColorSwatches
-          colorways={product.colorways}
-          value={colorway}
-          onChange={setColorway}
-          onPreview={previewColorway}
-        />
+        <div className="space-y-3">
+          <ColorSwatches
+            colorways={product.colorways}
+            value={colorway}
+            fashionSrc={fashionSrc}
+            fashionActive={fashionActive}
+            onSelectFashion={() => setFashionActive(true)}
+            onChange={(code) => {
+              setFashionActive(false);
+              setColorway(code);
+            }}
+            onPreview={previewColorway}
+          />
+        </div>
 
         <SizeMatrix
           sizes={sizes}

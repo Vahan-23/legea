@@ -24,8 +24,15 @@ type ProductViewerProps = {
   productId?: string;
   model: string | null;
   colorway: string | null;
+  colorways?: string[];
+  onColorwayChange?: (code: string) => void;
   alt: string;
   photos?: ProductPhotos;
+  /** AI fashion — если задан и fashionActive, показывается вместо front/back */
+  fashionSrc?: string | null;
+  fashionActive?: boolean;
+  onFashionOff?: () => void;
+  onFashionOn?: () => void;
 };
 
 function useIsMobile(): boolean {
@@ -49,8 +56,14 @@ export function ProductViewer({
   productId,
   model,
   colorway,
+  colorways = [],
+  onColorwayChange,
   alt,
   photos,
+  fashionSrc = null,
+  fashionActive = false,
+  onFashionOff,
+  onFashionOn,
 }: ProductViewerProps) {
   const t = useTranslations("product");
   const mobile = useIsMobile();
@@ -89,13 +102,73 @@ export function ProductViewer({
     setMobile3d(false);
   }, [colorway, hasFront, hasBack, hasPhotos, mode]);
 
-  const activePhoto =
-    mode === "back" ? active.back : mode === "front" ? active.front : null;
+  const showFashion =
+    Boolean(fashionSrc) && fashionActive && mode !== "3d";
+
+  const activePhoto = showFashion
+    ? fashionSrc
+    : mode === "back"
+      ? active.back
+      : mode === "front"
+        ? active.front
+        : null;
 
   const show3d = hasPhotos ? mode === "3d" : !mobile || mobile3d;
 
   const branding = useProductStore((s) => (show3d ? s.branding : null));
   const preserveMaterials = preserveGlbMaterials(productId);
+
+  useEffect(() => {
+    if (fashionSrc) void prefetchImage(fashionSrc);
+  }, [fashionSrc]);
+
+  useEffect(() => {
+    if (fashionActive && fashionSrc) {
+      setMode((m) => (m === "3d" ? "front" : m));
+    }
+  }, [fashionActive, fashionSrc]);
+
+  const swatchColorways = useMemo(() => {
+    const fromPhotos = colorways.filter(
+      (code) => photos?.byColorway[code]?.front,
+    );
+    return fromPhotos.length > 1 ? fromPhotos : colorways;
+  }, [colorways, photos]);
+
+  /** Fashion + расцветки — для стрелок */
+  const arrowSteps = useMemo(() => {
+    const steps: Array<"fashion" | string> = [];
+    if (fashionSrc) steps.push("fashion");
+    steps.push(...swatchColorways);
+    return steps;
+  }, [fashionSrc, swatchColorways]);
+
+  const goColorway = (delta: number) => {
+    if (arrowSteps.length < 2) return;
+    const current: "fashion" | string =
+      fashionActive && fashionSrc
+        ? "fashion"
+        : colorway && arrowSteps.includes(colorway)
+          ? colorway
+          : (arrowSteps.find((s) => s !== "fashion") ?? arrowSteps[0]!);
+    const idx = arrowSteps.indexOf(current);
+    const base = idx >= 0 ? idx : 0;
+    const next =
+      arrowSteps[(base + delta + arrowSteps.length) % arrowSteps.length];
+    if (!next) return;
+    if (next === "fashion") {
+      onFashionOn?.();
+      setMode("front");
+      return;
+    }
+    onFashionOff?.();
+    onColorwayChange?.(next);
+  };
+
+  const selectMode = (next: ViewMode) => {
+    if (next === "front" || next === "back") onFashionOff?.();
+    setMode(next);
+  };
 
   // Подгружаем R3F/three только когда реально нужен 3D
   useEffect(() => {
@@ -185,7 +258,11 @@ export function ProductViewer({
                 src={displaySrc}
                 alt={alt}
                 decoding="async"
-                className="absolute inset-0 h-full w-full object-contain p-3 sm:p-4"
+                className={
+                  showFashion
+                    ? "absolute inset-0 h-full w-full object-cover"
+                    : "absolute inset-0 h-full w-full object-contain p-3 sm:p-4"
+                }
               />
             ) : (
               // eslint-disable-next-line @next/next/no-img-element
@@ -214,16 +291,41 @@ export function ProductViewer({
             ) : null}
           </>
         )}
+
+        {arrowSteps.length > 1 ? (
+          <>
+            <button
+              type="button"
+              aria-label={t("photoPrev")}
+              onClick={() => goColorway(-1)}
+              className="absolute left-2 top-1/2 z-30 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-navy shadow-sm ring-1 ring-navy/10 transition hover:bg-white sm:left-3 sm:h-11 sm:w-11"
+            >
+              <span aria-hidden className="text-lg leading-none sm:text-xl">
+                ‹
+              </span>
+            </button>
+            <button
+              type="button"
+              aria-label={t("photoNext")}
+              onClick={() => goColorway(1)}
+              className="absolute right-2 top-1/2 z-30 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-navy shadow-sm ring-1 ring-navy/10 transition hover:bg-white sm:right-3 sm:h-11 sm:w-11"
+            >
+              <span aria-hidden className="text-lg leading-none sm:text-xl">
+                ›
+              </span>
+            </button>
+          </>
+        ) : null}
       </div>
 
-      {hasPhotos ? (
+      {hasPhotos && !fashionActive ? (
         <div className="flex flex-wrap gap-2">
           {hasFront ? (
             <Button
               type="button"
               variant={mode === "front" ? "primary" : "secondary"}
               className="px-4 py-2 text-xs sm:px-6 sm:py-3 sm:text-sm"
-              onClick={() => setMode("front")}
+              onClick={() => selectMode("front")}
             >
               {t("photoFront")}
             </Button>
@@ -233,7 +335,7 @@ export function ProductViewer({
               type="button"
               variant={mode === "back" ? "primary" : "secondary"}
               className="px-4 py-2 text-xs sm:px-6 sm:py-3 sm:text-sm"
-              onClick={() => setMode("back")}
+              onClick={() => selectMode("back")}
             >
               {t("photoBack")}
             </Button>
@@ -242,7 +344,7 @@ export function ProductViewer({
             type="button"
             variant={mode === "3d" ? "primary" : "secondary"}
             className="px-4 py-2 text-xs sm:px-6 sm:py-3 sm:text-sm"
-            onClick={() => setMode("3d")}
+            onClick={() => selectMode("3d")}
           >
             {t("view3d")}
           </Button>

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { ProductPanel } from "@/components/product/ProductPanel";
+import { resolveFashionForProduct } from "@/lib/fashionModels.server";
 import { getProductPhotos } from "@/lib/productImages.server";
 import { getAllProducts, getProductById } from "@/lib/products";
 import { isLocale, type Locale } from "@/i18n/routing";
@@ -47,6 +48,7 @@ export default async function ProductPage({ params }: PageProps) {
 
   const t = await getTranslations("product");
   const photos = getProductPhotos(product.id);
+  const fashionSrc = resolveFashionForProduct(product);
 
   return (
     <div className="hex-bg min-h-screen overflow-x-hidden">
@@ -54,6 +56,7 @@ export default async function ProductPage({ params }: PageProps) {
         product={product}
         locale={params.locale as Locale}
         photos={photos}
+        fashionSrc={fashionSrc}
       />
       <p className="sr-only">{t("pageLabel")}</p>
     </div>

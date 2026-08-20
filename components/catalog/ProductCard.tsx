@@ -2,8 +2,10 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
+import { useSearchParams } from "next/navigation";
 import { ColorDots } from "@/components/catalog/ColorDots";
 import { Link } from "@/i18n/navigation";
+import { saveCatalogFocus } from "@/lib/catalogScroll";
 import {
   PRODUCT_IMAGE_PLACEHOLDER,
   collectProductPhotoUrls,
@@ -60,6 +62,7 @@ export function ProductCard({
 }: ProductCardProps) {
   const t = useTranslations("catalog");
   const locale = useLocale() as Locale;
+  const searchParams = useSearchParams();
   const mobile = useIsMobile();
   const name = productName(product, locale);
   const sizeFrom = product.sizes[0];
@@ -205,11 +208,14 @@ export function ProductCard({
 
   const handleLinkClick = useCallback(
     (event: React.MouseEvent) => {
-      if (!swipedRef.current) return;
-      event.preventDefault();
-      swipedRef.current = false;
+      if (swipedRef.current) {
+        event.preventDefault();
+        swipedRef.current = false;
+        return;
+      }
+      saveCatalogFocus(product.id, searchParams.toString());
     },
-    [],
+    [product.id, searchParams],
   );
 
   const activeCode =

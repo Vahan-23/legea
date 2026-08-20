@@ -203,7 +203,11 @@
     "badgeJunior": "Junior 3XS–XS available",
     "view3d": "View in 3D",
     "photoFront": "Front",
-    "photoBack": "Back"
+    "photoBack": "Back",
+    "photoPrev": "Previous colorway",
+    "photoNext": "Next colorway",
+    "showFashion": "Fashion",
+    "showProductPhoto": "Product photo"
   },
   "branding": {
     "title": "Branding",

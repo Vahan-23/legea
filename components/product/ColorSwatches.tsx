@@ -38,6 +38,9 @@ type ColorSwatchesProps = {
   onChange: (code: string) => void;
   /** Предзагрузка фото при наведении на свотч */
   onPreview?: (code: string) => void;
+  fashionSrc?: string | null;
+  fashionActive?: boolean;
+  onSelectFashion?: () => void;
 };
 
 export function ColorSwatches({
@@ -45,6 +48,9 @@ export function ColorSwatches({
   value,
   onChange,
   onPreview,
+  fashionSrc = null,
+  fashionActive = false,
+  onSelectFashion,
 }: ColorSwatchesProps) {
   const t = useTranslations("product");
 
@@ -57,19 +63,50 @@ export function ColorSwatches({
     }
   });
 
+  const label = fashionActive
+    ? t("showFashion")
+    : value
+      ? value
+      : null;
+
   return (
     <div>
       <p className="mb-3 font-mono text-[11px] uppercase tracking-widest text-muted">
         {t("colorway")}
-        {value ? (
+        {label ? (
           <span className="ml-2 font-mono text-navy normal-case tracking-normal">
-            {value}
+            {label}
           </span>
         ) : null}
       </p>
       <ul className="flex flex-wrap gap-3">
+        {fashionSrc ? (
+          <li>
+            <button
+              type="button"
+              title={t("showFashion")}
+              aria-label={t("showFashion")}
+              aria-pressed={fashionActive}
+              onClick={() => onSelectFashion?.()}
+              className={
+                fashionActive
+                  ? "flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-white p-[3px] ring-2 ring-blue ring-offset-2"
+                  : "flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-white p-[3px] ring-1 ring-navy/30 hover:ring-blue"
+              }
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={fashionSrc}
+                alt=""
+                draggable={false}
+                className="h-full w-full rounded-full object-cover"
+              />
+            </button>
+          </li>
+        ) : null}
+
         {valid.map((code) => {
-          const active = code === value;
+          const active = !fashionActive && code === value;
           const bg = swatchBackground(code);
           const isGradient = bg.startsWith("conic");
           const dark = isDarkSwatch(code);
