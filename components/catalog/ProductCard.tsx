@@ -23,6 +23,8 @@ const SWIPE_THRESHOLD_PX = 36;
 type ProductCardProps = {
   product: Product;
   photos?: ProductPhotos;
+  /** AI fashion — показывается по умолчанию; hover → реальное фото */
+  fashionSrc?: string | null;
 };
 
 function useIsMobile(): boolean {
@@ -51,7 +53,11 @@ function resolveDefaultFront(
   return photos.front ?? PRODUCT_IMAGE_PLACEHOLDER;
 }
 
-export function ProductCard({ product, photos }: ProductCardProps) {
+export function ProductCard({
+  product,
+  photos,
+  fashionSrc = null,
+}: ProductCardProps) {
   const t = useTranslations("catalog");
   const locale = useLocale() as Locale;
   const mobile = useIsMobile();
@@ -59,10 +65,13 @@ export function ProductCard({ product, photos }: ProductCardProps) {
   const sizeFrom = product.sizes[0];
   const sizeTo = product.sizes[product.sizes.length - 1];
 
-  const defaultSrc = useMemo(
+  const productSrc = useMemo(
     () => resolveDefaultFront(product, photos),
     [product, photos],
   );
+
+  const hasFashion = Boolean(fashionSrc);
+  const defaultSrc = hasFashion ? fashionSrc! : productSrc;
 
   const allUrls = useMemo(() => collectProductPhotoUrls(photos), [photos]);
 
@@ -86,9 +95,13 @@ export function ProductCard({ product, photos }: ProductCardProps) {
   }, [defaultSrc]);
 
   useEffect(() => {
-    if (!canPreview) return;
-    return prefetchImagesQueued(allUrls.filter((url) => url !== defaultSrc), 120);
-  }, [allUrls, defaultSrc, canPreview]);
+    const extras = allUrls.filter((url) => url !== defaultSrc);
+    if (hasFashion && productSrc !== defaultSrc) {
+      extras.unshift(productSrc);
+    }
+    if (extras.length === 0) return;
+    return prefetchImagesQueued(extras, 120);
+  }, [allUrls, defaultSrc, canPreview, hasFashion, productSrc]);
 
   const showColorPhoto = useCallback(
     (code: string) => {
@@ -124,11 +137,27 @@ export function ProductCard({ product, photos }: ProductCardProps) {
     [mobile, selectColor, showColorPhoto],
   );
 
-  const handlePreviewEnd = useCallback(() => {
-    if (mobile) return;
+  const restoreDefault = useCallback(() => {
     setPreviewCode(null);
     setDisplaySrc(defaultSrc);
-  }, [defaultSrc, mobile]);
+  }, [defaultSrc]);
+
+  const handlePreviewEnd = useCallback(() => {
+    if (mobile) return;
+    restoreDefault();
+  }, [mobile, restoreDefault]);
+
+  /** Fashion → фото продукта при наведении на карточку */
+  const handleCardEnter = useCallback(() => {
+    if (mobile || !hasFashion || previewCode) return;
+    if (isImageCached(productSrc)) {
+      setDisplaySrc(productSrc);
+      return;
+    }
+    void prefetchImage(productSrc).then(() => {
+      setDisplaySrc(productSrc);
+    });
+  }, [mobile, hasFashion, previewCode, productSrc]);
 
   const handleTouchStart = useCallback(
     (event: React.TouchEvent) => {
@@ -186,10 +215,19 @@ export function ProductCard({ product, photos }: ProductCardProps) {
   const activeCode =
     previewCode ?? colorwaysWithPhoto[colorIndex] ?? null;
 
+  const imageClass = hasFashion
+    ? "pointer-events-none absolute inset-0 h-full w-full object-cover transition-opacity duration-500"
+    : "pointer-events-none absolute inset-0 h-full w-full object-contain p-4 transition-transform duration-300 group-hover:scale-[1.03]";
+
+  const showingFashion = hasFashion && displaySrc === fashionSrc;
+
   return (
     <article
       className="group flex flex-col border border-transparent bg-white transition-all hover:-translate-y-1 hover:border-blue"
-      onMouseLeave={canPreview && !mobile ? handlePreviewEnd : undefined}
+      onMouseEnter={hasFashion && !mobile ? handleCardEnter : undefined}
+      onMouseLeave={
+        (canPreview || hasFashion) && !mobile ? handlePreviewEnd : undefined
+      }
     >
       <Link
         href={`/catalog/${product.id}`}
@@ -201,14 +239,39 @@ export function ProductCard({ product, photos }: ProductCardProps) {
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
         >
-          {/* eslint-disable-next-line @next/next/no-img-element -- hover / swipe swap, browser cache */}
-          <img
-            src={displaySrc}
-            alt={name}
-            decoding="async"
-            draggable={false}
-            className="pointer-events-none absolute inset-0 h-full w-full object-contain p-4 transition-transform duration-300 group-hover:scale-[1.03]"
-          />
+          {hasFashion ? (
+            <>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={fashionSrc!}
+                alt=""
+                decoding="async"
+                draggable={false}
+                className={`${imageClass} ${
+                  showingFashion ? "opacity-100" : "opacity-0"
+                }`}
+              />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={displaySrc === fashionSrc ? productSrc : displaySrc}
+                alt={name}
+                decoding="async"
+                draggable={false}
+                className={`pointer-events-none absolute inset-0 h-full w-full object-contain p-4 transition-opacity duration-500 ${
+                  showingFashion ? "opacity-0" : "opacity-100"
+                }`}
+              />
+            </>
+          ) : (
+            // eslint-disable-next-line @next/next/no-img-element -- hover / swipe swap, browser cache
+            <img
+              src={displaySrc}
+              alt={name}
+              decoding="async"
+              draggable={false}
+              className={imageClass}
+            />
+          )}
         </div>
       </Link>
 

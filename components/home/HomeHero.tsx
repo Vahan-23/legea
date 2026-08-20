@@ -1,16 +1,12 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/Button";
-import { brandLogoGlbPath } from "@/lib/models";
+import { Link } from "@/i18n/navigation";
 
-const Scene = dynamic(
-  () => import("@/components/canvas/Scene").then((m) => m.Scene),
-  { ssr: false },
-);
+const HERO_IMAGE = "/3D/FashionModels/comand.png";
 
 export function HomeHero() {
   const t = useTranslations("home");
@@ -50,7 +46,7 @@ export function HomeHero() {
       ref={sectionRef}
       className="hex-bg relative min-h-[100svh] overflow-hidden"
     >
-      <div className="mx-auto grid max-w-6xl items-center gap-8 px-6 py-16 lg:grid-cols-2 lg:py-24">
+      <div className="mx-auto grid max-w-7xl items-center gap-6 px-4 py-12 sm:px-6 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.4fr)] lg:gap-4 lg:py-16">
         <div className="relative z-10 space-y-8">
           <h1
             ref={brandRef}
@@ -77,18 +73,19 @@ export function HomeHero() {
           </div>
         </div>
 
-        <div className="relative mx-auto aspect-square w-full max-w-lg overflow-hidden">
-          <Scene
-            glbUrl={brandLogoGlbPath()}
-            preserveMaterials
-            model={null}
-            colorway={null}
-            mobile={false}
-            transparent
-            interactive={false}
-            modelScale={0.85}
+        <Link
+          href="/catalog"
+          className="relative mx-auto flex h-[min(72svh,680px)] w-full max-w-3xl items-center justify-center overflow-hidden outline-none focus-visible:ring-2 focus-visible:ring-blue lg:max-w-none lg:h-[min(85svh,820px)]"
+          aria-label={t("ctaCatalog")}
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={HERO_IMAGE}
+            alt=""
+            decoding="async"
+            className="h-full w-full object-contain transition-transform duration-700 ease-out hover:scale-[1.02]"
           />
-        </div>
+        </Link>
       </div>
       <div className="section-rule" />
     </section>
