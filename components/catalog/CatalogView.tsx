@@ -13,11 +13,13 @@ import { usePathname, useRouter } from "@/i18n/navigation";
 import { useSearchParams } from "next/navigation";
 import { ActiveFilters } from "@/components/catalog/ActiveFilters";
 import { FilterSidebar } from "@/components/catalog/FilterSidebar";
+import { MobileFilterSheet } from "@/components/catalog/MobileFilterSheet";
 import { ProductGrid } from "@/components/catalog/ProductGrid";
 import { SearchBar, SortSelect } from "@/components/catalog/SearchBar";
 import { Button } from "@/components/ui/Button";
 import {
   collectCatalogColorKeys,
+  countActiveCatalogFacets,
   emptyCatalogFilters,
   filterProducts,
   parseCatalogFilters,
@@ -54,8 +56,8 @@ export function CatalogView({
     [searchParams],
   );
 
-  /** Локальный текст поиска — без router на каждый символ */
   const [qDraft, setQDraft] = useState(filters.q);
+  const [filtersOpen, setFiltersOpen] = useState(false);
 
   useEffect(() => {
     setQDraft(filters.q);
@@ -75,6 +77,8 @@ export function CatalogView({
     (): CatalogFilters => ({ ...filters, q: qDraft.trim() }),
     [filters, qDraft],
   );
+
+  const facetCount = countActiveCatalogFacets(filtersLive);
 
   const filtered = useMemo(() => {
     const result = filterProducts(products, filtersLive, locale);
@@ -101,7 +105,6 @@ export function CatalogView({
     [pathname, router, startTransition],
   );
 
-  // URL обновляем с debounce — только для шаринга / назад
   useEffect(() => {
     const nextQ = qDraft.trim();
     if (nextQ === filters.q) return;
@@ -124,21 +127,48 @@ export function CatalogView({
     [pushFilters, qDraft],
   );
 
+  const handleApplySheet = useCallback(
+    (next: CatalogFilters) => {
+      const merged = { ...next, q: qDraft.trim(), sort: filters.sort };
+      if (merged.q !== qDraft) setQDraft(merged.q);
+      pushFilters(merged);
+    },
+    [filters.sort, pushFilters, qDraft],
+  );
+
   return (
-    <div className="mx-auto grid max-w-6xl gap-10 px-6 py-12 lg:grid-cols-[240px_1fr]">
+    <div className="mx-auto grid max-w-6xl gap-8 px-4 py-8 sm:px-6 sm:py-12 lg:grid-cols-[240px_1fr] lg:gap-10">
       <FilterSidebar
         filters={filtersLive}
         colorKeys={colorKeys}
         onChange={handleFiltersChange}
       />
 
-      <div className="space-y-6">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <div className="space-y-5 sm:space-y-6">
+        <div className="flex flex-col gap-3 sm:gap-4">
           <SearchBar value={qDraft} onChange={setQDraft} />
-          <SortSelect
-            value={filters.sort}
-            onChange={(sort) => pushFilters({ ...filters, q: qDraft.trim(), sort })}
-          />
+
+          <div className="flex items-center gap-2 justify-between">
+            <button
+              type="button"
+              onClick={() => setFiltersOpen(true)}
+              className="inline-flex shrink-0 items-center gap-2 border border-navy bg-white px-4 py-2.5 font-sans text-xs font-medium uppercase tracking-wide text-navy lg:hidden"
+            >
+              {t("filters")}
+              {facetCount > 0 ? (
+                <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-blue px-1 font-mono text-[10px] text-white">
+                  {facetCount}
+                </span>
+              ) : null}
+            </button>
+
+            <SortSelect
+              value={filters.sort}
+              onChange={(sort) =>
+                pushFilters({ ...filters, q: qDraft.trim(), sort })
+              }
+            />
+          </div>
         </div>
 
         <ActiveFilters
@@ -162,7 +192,9 @@ export function CatalogView({
         ) : (
           <div
             className={
-              listPending ? "opacity-70 transition-opacity" : "transition-opacity"
+              listPending
+                ? "opacity-70 transition-opacity"
+                : "transition-opacity"
             }
           >
             <ProductGrid
@@ -173,6 +205,15 @@ export function CatalogView({
           </div>
         )}
       </div>
+
+      <MobileFilterSheet
+        open={filtersOpen}
+        onClose={() => setFiltersOpen(false)}
+        filters={filtersLive}
+        colorKeys={colorKeys}
+        products={products}
+        onApply={handleApplySheet}
+      />
     </div>
   );
 }

@@ -34,14 +34,14 @@ export function SortSelect({ value, onChange }: SortSelectProps) {
   const t = useTranslations("catalog");
 
   return (
-    <label className="flex items-center gap-2 text-sm text-muted">
-      <span>{t("sort")}</span>
+    <label className="ml-auto flex min-w-0 flex-1 items-center justify-end gap-2 text-sm text-muted sm:flex-none">
+      <span className="shrink-0">{t("sort")}</span>
       <select
         value={value}
         onChange={(event) =>
           onChange(event.target.value === "name" ? "name" : "id")
         }
-        className="border border-navy/20 bg-white px-3 py-2 text-graphite outline-none focus:border-blue"
+        className="min-w-0 flex-1 border border-navy/20 bg-white px-3 py-2.5 text-graphite outline-none focus:border-blue sm:flex-none"
       >
         <option value="id">{t("sortId")}</option>
         <option value="name">{t("sortName")}</option>

@@ -115,15 +115,19 @@ export function emptyCatalogFilters(): CatalogFilters {
 }
 
 export function hasActiveCatalogFilters(filters: CatalogFilters): boolean {
+  return countActiveCatalogFacets(filters) > 0 || filters.q.length > 0;
+}
+
+/** Активные фасеты без строки поиска — для бейджа на кнопке «Фильтры». */
+export function countActiveCatalogFacets(filters: CatalogFilters): number {
   return (
-    filters.category.length > 0 ||
-    filters.type.length > 0 ||
-    filters.color.length > 0 ||
-    filters.has3xs ||
-    filters.hasOversize ||
-    filters.gsm.length > 0 ||
-    filters.tech.length > 0 ||
-    filters.q.length > 0
+    filters.category.length +
+    filters.type.length +
+    filters.color.length +
+    filters.gsm.length +
+    filters.tech.length +
+    (filters.has3xs ? 1 : 0) +
+    (filters.hasOversize ? 1 : 0)
   );
 }
 
