@@ -1,20 +1,13 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import { useSearchParams } from "next/navigation";
 import { ColorDots } from "@/components/catalog/ColorDots";
 import { Link } from "@/i18n/navigation";
 import { saveCatalogFocus } from "@/lib/catalogScroll";
-import {
-  PRODUCT_IMAGE_PLACEHOLDER,
-  collectProductPhotoUrls,
-} from "@/lib/productImages";
-import {
-  isImageCached,
-  prefetchImage,
-  prefetchImagesQueued,
-} from "@/lib/prefetchImages";
+import { PRODUCT_IMAGE_PLACEHOLDER } from "@/lib/productImages";
+import { isImageCached, prefetchImage } from "@/lib/prefetchImages";
+import { useIsMobile } from "@/lib/useIsMobile";
 import { productName } from "@/types/product";
 import type { Locale } from "@/i18n/routing";
 import type { Product } from "@/types/product";
@@ -29,20 +22,6 @@ type ProductCardProps = {
   fashionSrc?: string | null;
 };
 
-function useIsMobile(): boolean {
-  const [mobile, setMobile] = useState(false);
-
-  useEffect(() => {
-    const mq = window.matchMedia("(max-width: 767px)");
-    const update = () => setMobile(mq.matches);
-    update();
-    mq.addEventListener("change", update);
-    return () => mq.removeEventListener("change", update);
-  }, []);
-
-  return mobile;
-}
-
 function resolveDefaultFront(
   product: Product,
   photos?: ProductPhotos,
@@ -55,14 +34,13 @@ function resolveDefaultFront(
   return photos.front ?? PRODUCT_IMAGE_PLACEHOLDER;
 }
 
-export function ProductCard({
+function ProductCardInner({
   product,
   photos,
   fashionSrc = null,
 }: ProductCardProps) {
   const t = useTranslations("catalog");
   const locale = useLocale() as Locale;
-  const searchParams = useSearchParams();
   const mobile = useIsMobile();
   const name = productName(product, locale);
   const sizeFrom = product.sizes[0];
@@ -75,8 +53,6 @@ export function ProductCard({
 
   const hasFashion = Boolean(fashionSrc);
   const defaultSrc = hasFashion ? fashionSrc! : productSrc;
-
-  const allUrls = useMemo(() => collectProductPhotoUrls(photos), [photos]);
 
   const colorwaysWithPhoto = useMemo(() => {
     if (!photos) return [];
@@ -96,15 +72,6 @@ export function ProductCard({
     setPreviewCode(null);
     setColorIndex(0);
   }, [defaultSrc]);
-
-  useEffect(() => {
-    const extras = allUrls.filter((url) => url !== defaultSrc);
-    if (hasFashion && productSrc !== defaultSrc) {
-      extras.unshift(productSrc);
-    }
-    if (extras.length === 0) return;
-    return prefetchImagesQueued(extras, 120);
-  }, [allUrls, defaultSrc, canPreview, hasFashion, productSrc]);
 
   const showColorPhoto = useCallback(
     (code: string) => {
@@ -150,7 +117,6 @@ export function ProductCard({
     restoreDefault();
   }, [mobile, restoreDefault]);
 
-  /** Fashion → фото продукта при наведении на карточку */
   const handleCardEnter = useCallback(() => {
     if (mobile || !hasFashion || previewCode) return;
     if (isImageCached(productSrc)) {
@@ -213,9 +179,10 @@ export function ProductCard({
         swipedRef.current = false;
         return;
       }
-      saveCatalogFocus(product.id, searchParams.toString());
+      const search = window.location.search.replace(/^\?/, "");
+      saveCatalogFocus(product.id, search);
     },
-    [product.id, searchParams],
+    [product.id],
   );
 
   const activeCode =
@@ -252,6 +219,7 @@ export function ProductCard({
                 src={fashionSrc!}
                 alt=""
                 decoding="async"
+                loading="lazy"
                 draggable={false}
                 className={`${imageClass} ${
                   showingFashion ? "opacity-100" : "opacity-0"
@@ -262,6 +230,7 @@ export function ProductCard({
                 src={displaySrc === fashionSrc ? productSrc : displaySrc}
                 alt={name}
                 decoding="async"
+                loading="lazy"
                 draggable={false}
                 className={`pointer-events-none absolute inset-0 h-full w-full object-contain p-4 transition-opacity duration-500 ${
                   showingFashion ? "opacity-0" : "opacity-100"
@@ -269,11 +238,12 @@ export function ProductCard({
               />
             </>
           ) : (
-            // eslint-disable-next-line @next/next/no-img-element -- hover / swipe swap, browser cache
+            // eslint-disable-next-line @next/next/no-img-element
             <img
               src={displaySrc}
               alt={name}
               decoding="async"
+              loading="lazy"
               draggable={false}
               className={imageClass}
             />
@@ -334,3 +304,5 @@ export function ProductCard({
     </article>
   );
 }
+
+export const ProductCard = memo(ProductCardInner);

@@ -178,8 +178,17 @@ function matchesQuery(
 ): boolean {
   if (!query) return true;
   const needle = query.toLowerCase();
+  if (product.id.toLowerCase().includes(needle)) return true;
   const name = (product.name[locale] || product.name.ru).toLowerCase();
-  return product.id.toLowerCase().includes(needle) || name.includes(needle);
+  if (name.includes(needle)) return true;
+  // Также en/ru имена — чтобы поиск не зависел только от локали
+  if (locale !== "ru" && product.name.ru.toLowerCase().includes(needle)) {
+    return true;
+  }
+  if (locale !== "en" && product.name.en.toLowerCase().includes(needle)) {
+    return true;
+  }
+  return false;
 }
 
 export function filterProducts(

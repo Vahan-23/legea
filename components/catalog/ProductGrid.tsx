@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { ProductCard } from "@/components/catalog/ProductCard";
 import { consumeCatalogFocus } from "@/lib/catalogScroll";
 import type { ProductPhotos } from "@/lib/productImages";
@@ -18,14 +18,21 @@ export function ProductGrid({
   cardPhotos,
   fashionModels,
 }: ProductGridProps) {
+  const restoredRef = useRef(false);
+
   useEffect(() => {
+    if (restoredRef.current) return;
     const focus = consumeCatalogFocus();
-    if (!focus) return;
+    if (!focus) {
+      restoredRef.current = true;
+      return;
+    }
 
     const scrollToCard = () => {
       const el = document.getElementById(`catalog-product-${focus.productId}`);
       if (!el) return false;
       el.scrollIntoView({ block: "center", behavior: "smooth" });
+      restoredRef.current = true;
       return true;
     };
 
@@ -36,13 +43,14 @@ export function ProductGrid({
     }, 120);
     const t2 = window.setTimeout(() => {
       scrollToCard();
+      restoredRef.current = true;
     }, 400);
 
     return () => {
       window.clearTimeout(t1);
       window.clearTimeout(t2);
     };
-  }, [products]);
+  }, []);
 
   return (
     <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
