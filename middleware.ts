@@ -8,5 +8,9 @@ export default createMiddleware({
 });
 
 export const config = {
-  matcher: ["/", "/(ru|hy|en)/:path*", "/((?!api|_next|_vercel|.*\\..*).*)"],
+  matcher: [
+    "/",
+    "/(ru|hy|en)/:path*",
+    "/((?!api|_next|_vercel|icon|apple-icon|manifest|.*\\..*).*)",
+  ],
 };

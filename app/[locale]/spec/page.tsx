@@ -1,11 +1,29 @@
+import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { SpecCheckout } from "@/components/spec/SpecCheckout";
-import { isLocale } from "@/i18n/routing";
+import { isLocale, type Locale } from "@/i18n/routing";
+import { pageMetadata } from "@/lib/seo";
 
 type PageProps = {
   params: { locale: string };
 };
+
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  if (!isLocale(params.locale)) return {};
+  const t = await getTranslations({
+    locale: params.locale,
+    namespace: "meta",
+  });
+  return pageMetadata({
+    locale: params.locale as Locale,
+    path: "/spec",
+    title: t("specTitle"),
+    description: t("specDescription"),
+  });
+}
 
 export default async function SpecPage({ params }: PageProps) {
   if (!isLocale(params.locale)) notFound();

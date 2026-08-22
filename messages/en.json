@@ -1,7 +1,19 @@
 {
   "meta": {
     "siteName": "Legea",
-    "tagline": "Official distributor — kit for clubs and sports schools"
+    "tagline": "Official distributor — kit for clubs and sports schools",
+    "homeTitle": "Legea — sports kit for clubs",
+    "homeDescription": "Official Legea distributor in Armenia: catalog for clubs and sports schools, price-free specs, branding and delivery.",
+    "aboutTitle": "About",
+    "aboutDescription": "Official Legea distributor in Armenia — supply for clubs, schools and federations by specification.",
+    "deliveryTitle": "Delivery and lead times",
+    "deliveryDescription": "Legea kit lead times, delivery across Armenia and pickup from the Yerevan warehouse.",
+    "contactsTitle": "Contacts",
+    "contactsDescription": "Phone, email and address of the Legea distributor in Armenia — request a quote.",
+    "privacyTitle": "Privacy policy",
+    "privacyDescription": "How Legea Armenia processes personal data when handling inquiries and quotes.",
+    "specTitle": "Specification",
+    "specDescription": "Build a Legea kit specification: articles, colorways, sizes and branding — no prices on the site."
   },
   "nav": {
     "catalog": "Catalog",

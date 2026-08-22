@@ -2,14 +2,16 @@ import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { ProductPanel } from "@/components/product/ProductPanel";
+import { JsonLd } from "@/components/seo/JsonLd";
 import {
   getVisibleCatalogProducts,
   isProductVisibleInCatalog,
 } from "@/lib/catalogProducts.server";
 import { resolveFashionForProduct } from "@/lib/fashionModels.server";
 import { getProductIdsWithGlb } from "@/lib/models.server";
-import { getAllProductPhotos, getProductPhotos } from "@/lib/productImages.server";
+import { getAllProductPhotos } from "@/lib/productImages.server";
 import { getProductById } from "@/lib/products";
+import { absoluteUrl, pageMetadata, productJsonLd, getSiteUrl } from "@/lib/seo";
 import { isLocale, type Locale } from "@/i18n/routing";
 import { productName } from "@/types/product";
 
@@ -33,15 +35,24 @@ export async function generateMetadata({
   if (!isLocale(params.locale)) return {};
   const product = getProductById(params.id);
   if (!product) return {};
-  const name = productName(product, params.locale);
-  const photos = getProductPhotos(product.id);
-  return {
+
+  const locale = params.locale as Locale;
+  const name = productName(product, locale);
+  const tCat = await getTranslations({
+    locale,
+    namespace: "catalog",
+  });
+  const categoryLabel = tCat(`categories.${product.category}`);
+  const description = [name, categoryLabel, product.composition]
+    .filter(Boolean)
+    .join(" — ");
+
+  return pageMetadata({
+    locale,
+    path: `/catalog/${product.id}`,
     title: `${product.id} · ${name}`,
-    description: product.composition,
-    openGraph: photos.front
-      ? { images: [{ url: photos.front }] }
-      : undefined,
-  };
+    description,
+  });
 }
 
 export default async function ProductPage({ params }: PageProps) {
@@ -57,14 +68,36 @@ export default async function ProductPage({ params }: PageProps) {
     notFound();
   }
 
+  const locale = params.locale as Locale;
   const t = await getTranslations("product");
+  const tCat = await getTranslations("catalog");
   const fashionSrc = resolveFashionForProduct(product);
+  const name = productName(product, locale);
+  const site = getSiteUrl();
+
+  const imageUrls = [
+    photos?.front,
+    photos?.back,
+    fashionSrc,
+  ]
+    .filter((src): src is string => Boolean(src))
+    .map((src) => (src.startsWith("http") ? src : `${site}${src}`));
 
   return (
     <div className="hex-bg min-h-screen overflow-x-hidden">
+      <JsonLd
+        data={productJsonLd({
+          name,
+          sku: product.id,
+          description: product.composition || name,
+          image: imageUrls,
+          category: tCat(`categories.${product.category}`),
+          url: absoluteUrl(locale, `/catalog/${product.id}`),
+        })}
+      />
       <ProductPanel
         product={product}
-        locale={params.locale as Locale}
+        locale={locale}
         photos={photos}
         fashionSrc={fashionSrc}
       />

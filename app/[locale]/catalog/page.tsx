@@ -4,7 +4,8 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { CatalogView } from "@/components/catalog/CatalogView";
 import { getCatalogPageData } from "@/lib/catalogProducts.server";
-import { isLocale } from "@/i18n/routing";
+import { isLocale, type Locale } from "@/i18n/routing";
+import { pageMetadata } from "@/lib/seo";
 
 export const revalidate = 3600;
 
@@ -20,10 +21,12 @@ export async function generateMetadata({
     locale: params.locale,
     namespace: "catalog",
   });
-  return {
+  return pageMetadata({
+    locale: params.locale as Locale,
+    path: "/catalog",
     title: t("title"),
     description: t("subtitle"),
-  };
+  });
 }
 
 export default async function CatalogPage({ params }: PageProps) {
@@ -49,7 +52,7 @@ export default async function CatalogPage({ params }: PageProps) {
       {/* Suspense: useSearchParams в CatalogView */}
       <Suspense
         fallback={
-          <div className="mx-auto max-w-6xl px-6 py-16 font-mono text-sm text-muted">
+          <div className="mx-auto max-w-6xl px-6 py-16 font-mono text-xs uppercase tracking-widest text-muted">
             …
           </div>
         }
