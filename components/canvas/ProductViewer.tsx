@@ -15,7 +15,7 @@ import {
   prefetchImagesQueued,
 } from "@/lib/prefetchImages";
 import type { SceneProps } from "@/components/canvas/Scene";
-import { preserveGlbMaterials } from "@/lib/models";
+import { preserveGlbMaterials, productHasViewer3d } from "@/lib/models";
 import { useProductStore } from "@/store/useProductStore";
 
 type ViewMode = "front" | "back" | "3d";
@@ -81,8 +81,11 @@ export function ProductViewer({
   const hasFront = Boolean(active.front);
   const hasBack = Boolean(active.back);
   const hasPhotos = hasFront || hasBack;
+  const has3d = productHasViewer3d(productId, model);
 
-  const [mode, setMode] = useState<ViewMode>(hasFront ? "front" : "3d");
+  const [mode, setMode] = useState<ViewMode>(
+    hasFront ? "front" : has3d ? "3d" : "front",
+  );
   const [mobile3d, setMobile3d] = useState(false);
   const [displaySrc, setDisplaySrc] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -93,14 +96,16 @@ export function ProductViewer({
 
   useEffect(() => {
     if (mode === "back" && !hasBack) {
-      setMode(hasFront ? "front" : "3d");
+      setMode(hasFront ? "front" : has3d ? "3d" : "front");
     } else if (mode === "front" && !hasFront) {
-      setMode(hasBack ? "back" : "3d");
-    } else if (mode !== "3d" && !hasPhotos) {
+      setMode(hasBack ? "back" : has3d ? "3d" : "front");
+    } else if (mode === "3d" && !has3d) {
+      setMode(hasFront ? "front" : hasBack ? "back" : "front");
+    } else if (mode !== "3d" && !hasPhotos && has3d) {
       setMode("3d");
     }
     setMobile3d(false);
-  }, [colorway, hasFront, hasBack, hasPhotos, mode]);
+  }, [colorway, hasFront, hasBack, hasPhotos, has3d, mode]);
 
   const showFashion =
     Boolean(fashionSrc) && fashionActive && mode !== "3d";
@@ -113,7 +118,7 @@ export function ProductViewer({
         ? active.front
         : null;
 
-  const show3d = hasPhotos ? mode === "3d" : !mobile || mobile3d;
+  const show3d = has3d && (hasPhotos ? mode === "3d" : !mobile || mobile3d);
 
   const branding = useProductStore((s) => (show3d ? s.branding : null));
   const preserveMaterials = preserveGlbMaterials(productId);
@@ -282,7 +287,7 @@ export function ProductViewer({
                 </span>
               </div>
             ) : null}
-            {!hasPhotos && mobile ? (
+            {!hasPhotos && has3d && mobile ? (
               <div className="absolute inset-x-0 bottom-0 z-20 flex justify-center p-3 sm:p-4">
                 <Button type="button" onClick={() => setMobile3d(true)}>
                   {t("view3d")}
@@ -340,14 +345,16 @@ export function ProductViewer({
               {t("photoBack")}
             </Button>
           ) : null}
-          <Button
-            type="button"
-            variant={mode === "3d" ? "primary" : "secondary"}
-            className="px-4 py-2 text-xs sm:px-6 sm:py-3 sm:text-sm"
-            onClick={() => selectMode("3d")}
-          >
-            {t("view3d")}
-          </Button>
+          {has3d ? (
+            <Button
+              type="button"
+              variant={mode === "3d" ? "primary" : "secondary"}
+              className="px-4 py-2 text-xs sm:px-6 sm:py-3 sm:text-sm"
+              onClick={() => selectMode("3d")}
+            >
+              {t("view3d")}
+            </Button>
+          ) : null}
         </div>
       ) : null}
     </div>

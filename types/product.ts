@@ -78,6 +78,10 @@ export type ProductsFile = {
   meta: {
     source: string;
     version: string;
+    /** Публичный каталог сайта (с фото) */
+    visibleCatalogCount?: number;
+    /** Артикулы в JSON, но скрыты на сайте до ассетов */
+    hiddenWithoutAssets?: string[];
     colorwayFormat: {
       single: string;
       kit: string;

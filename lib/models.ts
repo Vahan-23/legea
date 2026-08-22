@@ -59,6 +59,7 @@ export function resolveGlbUrlSync(
   model: string | null,
 ): string | null {
   if (glbUrlProp) return glbUrlProp;
+  if (isPhotoOnlyProduct(productId)) return null;
   if (productId) {
     const byProduct = resolveProductGlbUrl(productId);
     if (byProduct) return byProduct;
@@ -84,6 +85,37 @@ export function getGlbBakedKitColorway(productId: string | null): string | null 
 export function isKnownModel(model: string | null): model is ModelId {
   if (!model) return false;
   return (MODEL_FILES as readonly string[]).includes(model);
+}
+
+/** Только фото/fashion в каталоге — без 3D (в т.ч. без generic ball.glb). */
+export const PHOTO_ONLY_PRODUCT_IDS = new Set<string>([
+  "P278",
+  "P281",
+  "M1037",
+  "P186",
+  "K200",
+  "K212",
+  "G030",
+  "G027",
+  "B111",
+  "TXM1173P229",
+]);
+
+export function isPhotoOnlyProduct(
+  productId: string | null | undefined,
+): boolean {
+  return Boolean(productId && PHOTO_ONLY_PRODUCT_IDS.has(productId));
+}
+
+/** Есть ли вкладка/сцена 3D на карточке товара */
+export function productHasViewer3d(
+  productId: string | null | undefined,
+  model: string | null,
+): boolean {
+  if (isPhotoOnlyProduct(productId)) return false;
+  if (productId && resolveProductGlbUrl(productId)) return true;
+  if (model && isKnownModel(model)) return true;
+  return false;
 }
 
 /** TXM-костюмы (верх/низ): показываем GLB как запечён, без kit-shader. */

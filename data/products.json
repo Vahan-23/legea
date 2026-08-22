@@ -2,11 +2,13 @@
   "meta": {
     "source": "CATALOGO SPONSORIZZAZIONI LEGEA 2024",
     "version": "1.0.0",
+    "visibleCatalogCount": 89,
+    "hiddenWithoutAssets": ["B319", "FON11", "FON14", "FON13", "FON10"],
     "colorwayFormat": {
       "single": "XXYY — XX основной цвет, YY цвет отделки (см. data/colors.ts)",
       "kit": "AABB-CCDD — расцветка верха и низа через дефис (только для type: tute)"
     },
-    "note": "basePrice: null означает «данных нет», не «бесплатно». gsm: null — плотность не указана в каталоге."
+    "note": "Публичный каталог сайта = 89 позиций (фото + 3D или photo-only). В JSON остаются 94 записи; B319 и FON* скрыты до появления фото. basePrice: null означает «данных нет», не «бесплатно». gsm: null — плотность не указана в каталоге."
   },
   "products": [
     {

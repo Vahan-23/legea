@@ -7,7 +7,7 @@ import { HomeQuickLead } from "@/components/home/HomeQuickLead";
 import { HomeWorkflow } from "@/components/home/HomeWorkflow";
 import { StatsStrip } from "@/components/home/StatsStrip";
 import { company } from "@/data/company";
-import { getCatalogStats } from "@/lib/products";
+import { getCatalogStats } from "@/lib/catalogProducts.server";
 import { isLocale } from "@/i18n/routing";
 
 type HomePageProps = {

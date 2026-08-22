@@ -91,6 +91,11 @@ function scanProductImages(): Map<string, ProductPhotos> {
       const plainMatch = new RegExp(`^(Front|Back)\\.(${EXT})$`, "i").exec(
         file,
       );
+      // 0302.png — один ракурс на расцветку (мячи и т.п.)
+      const colorOnlyMatch = new RegExp(
+        `^(${COLORWAY})\\.(${EXT})$`,
+        "i",
+      ).exec(file);
 
       const matched = fullMatch ?? colorMatch;
       if (matched?.[1] && matched[2]) {
@@ -105,6 +110,24 @@ function scanProductImages(): Map<string, ProductPhotos> {
         current.byColorway[colorway] = slot;
         if (side === "front" && !current.front) current.front = url;
         if (side === "back" && !current.back) current.back = url;
+        continue;
+      }
+
+      if (colorOnlyMatch?.[1]) {
+        const colorway = colorOnlyMatch[1];
+        const url = `/images/products/${id}/${file}`;
+        // P281/P281.png — общий front, не код расцветки
+        if (colorway.toUpperCase() === id.toUpperCase()) {
+          if (!current.front) current.front = url;
+          continue;
+        }
+        const slot: ColorwayPhotos = current.byColorway[colorway] ?? {
+          front: null,
+          back: null,
+        };
+        if (!slot.front) slot.front = url;
+        current.byColorway[colorway] = slot;
+        if (!current.front) current.front = url;
         continue;
       }
 

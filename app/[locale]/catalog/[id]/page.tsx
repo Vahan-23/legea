@@ -2,9 +2,14 @@ import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { ProductPanel } from "@/components/product/ProductPanel";
+import {
+  getVisibleCatalogProducts,
+  isProductVisibleInCatalog,
+} from "@/lib/catalogProducts.server";
 import { resolveFashionForProduct } from "@/lib/fashionModels.server";
-import { getProductPhotos } from "@/lib/productImages.server";
-import { getAllProducts, getProductById } from "@/lib/products";
+import { getProductIdsWithGlb } from "@/lib/models.server";
+import { getAllProductPhotos, getProductPhotos } from "@/lib/productImages.server";
+import { getProductById } from "@/lib/products";
 import { isLocale, type Locale } from "@/i18n/routing";
 import { productName } from "@/types/product";
 
@@ -15,7 +20,7 @@ type PageProps = {
 };
 
 export function generateStaticParams() {
-  const products = getAllProducts();
+  const products = getVisibleCatalogProducts();
   const locales = ["ru", "hy", "en"] as const;
   return locales.flatMap((locale) =>
     products.map((product) => ({ locale, id: product.id })),
@@ -46,8 +51,13 @@ export default async function ProductPage({ params }: PageProps) {
   const product = getProductById(params.id);
   if (!product) notFound();
 
+  const photos = getAllProductPhotos()[product.id];
+  const with3d = getProductIdsWithGlb();
+  if (!isProductVisibleInCatalog(product, photos, with3d)) {
+    notFound();
+  }
+
   const t = await getTranslations("product");
-  const photos = getProductPhotos(product.id);
   const fashionSrc = resolveFashionForProduct(product);
 
   return (

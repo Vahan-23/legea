@@ -15,22 +15,6 @@ export function getAllProducts(): Product[] {
   return data.products;
 }
 
-export function getCatalogStats(): {
-  productCount: number;
-  colorwayCount: number;
-} {
-  const colorways = new Set<string>();
-  for (const product of data.products) {
-    for (const code of product.colorways) {
-      colorways.add(code);
-    }
-  }
-  return {
-    productCount: data.products.length,
-    colorwayCount: colorways.size,
-  };
-}
-
 export function getProductById(id: string): Product | undefined {
   return data.products.find((product) => product.id === id);
 }
