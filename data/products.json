@@ -3,7 +3,13 @@
     "source": "CATALOGO SPONSORIZZAZIONI LEGEA 2024",
     "version": "1.0.0",
     "visibleCatalogCount": 89,
-    "hiddenWithoutAssets": ["B319", "FON11", "FON14", "FON13", "FON10"],
+    "hiddenWithoutAssets": [
+      "B319",
+      "FON11",
+      "FON14",
+      "FON13",
+      "FON10"
+    ],
     "colorwayFormat": {
       "single": "XXYY — XX основной цвет, YY цвет отделки (см. data/colors.ts)",
       "kit": "AABB-CCDD — расцветка верха и низа через дефис (только для type: tute)"
@@ -13,196 +19,573 @@
   "products": [
     {
       "id": "M1062",
-      "name": { "ru": "Футболка Lipsia", "en": "Maglia Lipsia", "hy": "Футболка Lipsia" },
+      "name": {
+        "ru": "Футболка Lipsia",
+        "en": "Maglia Lipsia",
+        "hy": "Շապիկ Lipsia"
+      },
       "category": "calcio",
       "type": "maglie",
       "model": "jersey_ss",
       "gsm": 135,
       "composition": "100% polyester",
-      "sizes": ["3XS", "2XS", "XS", "S", "M", "L", "XL", "2XL"],
-      "features": ["PRINTED LOGO", "MICROMESH FABRIC", "ROUNDED BOTTOM"],
-      "tech": ["POLFRESH"],
-      "colorways": ["0002", "0012", "0003", "0005", "0007", "0014", "0013", "0008", "0004", "0010", "0006", "0040"],
+      "sizes": [
+        "3XS",
+        "2XS",
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "features": [
+        "PRINTED LOGO",
+        "MICROMESH FABRIC",
+        "ROUNDED BOTTOM"
+      ],
+      "tech": [
+        "POLFRESH"
+      ],
+      "colorways": [
+        "0002",
+        "0012",
+        "0003",
+        "0005",
+        "0007",
+        "0014",
+        "0013",
+        "0008",
+        "0004",
+        "0010",
+        "0006",
+        "0040"
+      ],
       "priceLevel": 1,
       "basePrice": null,
       "moq": 10,
       "brandable": true,
-      "brandingZones": ["chest-center", "chest-left", "back-top", "back-number", "sleeve-left", "sleeve-right"]
+      "brandingZones": [
+        "chest-center",
+        "chest-left",
+        "back-top",
+        "back-number",
+        "sleeve-left",
+        "sleeve-right"
+      ]
     },
     {
       "id": "M1176",
-      "name": { "ru": "Футболка Baviera", "en": "Maglia Baviera", "hy": "Футболка Baviera" },
+      "name": {
+        "ru": "Футболка Baviera",
+        "en": "Maglia Baviera",
+        "hy": "Շապիկ Baviera"
+      },
       "category": "calcio",
       "type": "maglie",
       "model": "jersey_ss",
       "gsm": 135,
       "composition": "100% polyester",
-      "sizes": ["3XS", "2XS", "XS", "S", "M", "L", "XL", "2XL"],
-      "features": ["PRINTED LOGO", "FABRIC INSERTS", "HEM LONGER AND ROUNDED AT THE BACK"],
-      "tech": ["POLFRESH", "3T"],
-      "colorways": ["0002", "0012", "0003", "0006", "0007", "0024", "0013", "0008", "0040", "0004", "0010"],
+      "sizes": [
+        "3XS",
+        "2XS",
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "features": [
+        "PRINTED LOGO",
+        "FABRIC INSERTS",
+        "HEM LONGER AND ROUNDED AT THE BACK"
+      ],
+      "tech": [
+        "POLFRESH",
+        "3T"
+      ],
+      "colorways": [
+        "0002",
+        "0012",
+        "0003",
+        "0006",
+        "0007",
+        "0024",
+        "0013",
+        "0008",
+        "0040",
+        "0004",
+        "0010"
+      ],
       "priceLevel": 1,
       "basePrice": null,
       "moq": 10,
       "brandable": true,
-      "brandingZones": ["chest-center", "chest-left", "back-top", "back-number", "sleeve-left", "sleeve-right"]
+      "brandingZones": [
+        "chest-center",
+        "chest-left",
+        "back-top",
+        "back-number",
+        "sleeve-left",
+        "sleeve-right"
+      ]
     },
     {
       "id": "M1130",
-      "name": { "ru": "Футболка Ajaccio", "en": "Maglia Ajaccio", "hy": "Футболка Ajaccio" },
+      "name": {
+        "ru": "Футболка Ajaccio",
+        "en": "Maglia Ajaccio",
+        "hy": "Շապիկ Ajaccio"
+      },
       "category": "calcio",
       "type": "maglie",
       "model": "jersey_ss",
       "gsm": 135,
       "composition": "100% polyester",
-      "sizes": ["3XS", "2XS", "XS", "S", "M", "L", "XL"],
-      "features": ["EMBROIDERED LOGO", "HEM LONGER AND ROUNDED AT THE BACK"],
-      "tech": ["POLFRESH", "3T"],
-      "colorways": ["0002", "0012", "0003", "0007", "0013", "0008", "0004", "0010"],
+      "sizes": [
+        "3XS",
+        "2XS",
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "features": [
+        "EMBROIDERED LOGO",
+        "HEM LONGER AND ROUNDED AT THE BACK"
+      ],
+      "tech": [
+        "POLFRESH",
+        "3T"
+      ],
+      "colorways": [
+        "0002",
+        "0012",
+        "0003",
+        "0007",
+        "0013",
+        "0008",
+        "0004",
+        "0010"
+      ],
       "priceLevel": 1,
       "basePrice": null,
       "moq": 10,
       "brandable": true,
-      "brandingZones": ["chest-center", "chest-left", "back-top", "back-number", "sleeve-left", "sleeve-right"]
+      "brandingZones": [
+        "chest-center",
+        "chest-left",
+        "back-top",
+        "back-number",
+        "sleeve-left",
+        "sleeve-right"
+      ]
     },
     {
       "id": "M1175",
-      "name": { "ru": "Футболка Giacarta", "en": "Maglia Giacarta", "hy": "Футболка Giacarta" },
+      "name": {
+        "ru": "Футболка Giacarta",
+        "en": "Maglia Giacarta",
+        "hy": "Շապիկ Giacarta"
+      },
       "category": "calcio",
       "type": "maglie",
       "model": "jersey_ss",
       "gsm": 135,
       "composition": "100% polyester",
-      "sizes": ["3XS", "2XS", "XS", "S", "M", "L", "XL", "2XL"],
-      "features": ["IRIDESCENT PATTERN LUXIOM", "PRINT LOGO", "SHELL FABRIC COLLAR"],
-      "tech": ["POLFRESH", "LUXIOM"],
-      "colorways": ["1075", "2324", "0476", "1010", "0404"],
+      "sizes": [
+        "3XS",
+        "2XS",
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "features": [
+        "IRIDESCENT PATTERN LUXIOM",
+        "PRINT LOGO",
+        "SHELL FABRIC COLLAR"
+      ],
+      "tech": [
+        "POLFRESH",
+        "LUXIOM"
+      ],
+      "colorways": [
+        "1075",
+        "2324",
+        "0476",
+        "1010",
+        "0404"
+      ],
       "priceLevel": 2,
       "basePrice": null,
       "moq": 10,
       "brandable": true,
-      "brandingZones": ["chest-center", "chest-left", "back-top", "back-number"]
+      "brandingZones": [
+        "chest-center",
+        "chest-left",
+        "back-top",
+        "back-number"
+      ]
     },
     {
       "id": "M1123",
-      "name": { "ru": "Футболка Pristina", "en": "Maglia Pristina", "hy": "Футболка Pristina" },
+      "name": {
+        "ru": "Футболка Pristina",
+        "en": "Maglia Pristina",
+        "hy": "Շապիկ Pristina"
+      },
       "category": "calcio",
       "type": "maglie",
       "model": "jersey_ss",
       "gsm": 135,
       "composition": "100% polyester",
-      "sizes": ["3XS", "2XS", "XS", "S", "M", "L", "XL", "2XL"],
-      "features": ["EMBROIDERED LOGO", "MICROMESH INSERTS", "HEM LONGER AND ROUNDED AT THE BACK"],
-      "tech": ["POLFRESH", "BREATHVENT"],
-      "colorways": ["0203", "1203", "0704", "1303", "0803", "0403", "0407", "1003"],
+      "sizes": [
+        "3XS",
+        "2XS",
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "features": [
+        "EMBROIDERED LOGO",
+        "MICROMESH INSERTS",
+        "HEM LONGER AND ROUNDED AT THE BACK"
+      ],
+      "tech": [
+        "POLFRESH",
+        "BREATHVENT"
+      ],
+      "colorways": [
+        "0203",
+        "1203",
+        "0704",
+        "1303",
+        "0803",
+        "0403",
+        "0407",
+        "1003"
+      ],
       "priceLevel": 1,
       "basePrice": null,
       "moq": 10,
       "brandable": true,
-      "brandingZones": ["chest-center", "chest-left", "back-top", "back-number", "sleeve-left", "sleeve-right"]
+      "brandingZones": [
+        "chest-center",
+        "chest-left",
+        "back-top",
+        "back-number",
+        "sleeve-left",
+        "sleeve-right"
+      ]
     },
     {
       "id": "M1124",
-      "name": { "ru": "Футболка Vienna (длинный рукав)", "en": "Maglia Vienna", "hy": "Футболка Vienna" },
+      "name": {
+        "ru": "Футболка Vienna (длинный рукав)",
+        "en": "Maglia Vienna",
+        "hy": "Շապիկ Vienna (երկար թև)"
+      },
       "category": "calcio",
       "type": "maglie",
       "model": "jersey_ls",
       "gsm": 135,
       "composition": "100% polyester",
-      "sizes": ["3XS", "2XS", "XS", "S", "M", "L", "XL", "2XL"],
-      "features": ["EMBROIDERED LOGO", "MICROMESH INSERTS", "HEM LONGER AND ROUNDED AT THE BACK"],
-      "tech": ["POLFRESH", "BREATHVENT"],
-      "colorways": ["0203", "1203", "1303", "0803", "0403", "0407", "1003"],
+      "sizes": [
+        "3XS",
+        "2XS",
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "features": [
+        "EMBROIDERED LOGO",
+        "MICROMESH INSERTS",
+        "HEM LONGER AND ROUNDED AT THE BACK"
+      ],
+      "tech": [
+        "POLFRESH",
+        "BREATHVENT"
+      ],
+      "colorways": [
+        "0203",
+        "1203",
+        "1303",
+        "0803",
+        "0403",
+        "0407",
+        "1003"
+      ],
       "priceLevel": 1,
       "basePrice": null,
       "moq": 10,
       "brandable": true,
-      "brandingZones": ["chest-center", "chest-left", "back-top", "back-number", "sleeve-left", "sleeve-right"]
+      "brandingZones": [
+        "chest-center",
+        "chest-left",
+        "back-top",
+        "back-number",
+        "sleeve-left",
+        "sleeve-right"
+      ]
     },
     {
       "id": "M1158",
-      "name": { "ru": "Футболка Barcellona", "en": "Maglia Barcellona", "hy": "Футболка Barcellona" },
+      "name": {
+        "ru": "Футболка Barcellona",
+        "en": "Maglia Barcellona",
+        "hy": "Շապիկ Barcellona"
+      },
       "category": "calcio",
       "type": "maglie",
       "model": "jersey_ss",
       "gsm": 135,
       "composition": "100% polyester",
-      "sizes": ["3XS", "2XS", "XS", "S", "M", "L", "XL"],
-      "features": ["EMBROIDERED LOGO", "FABRIC INSERTS", "HEM LONGER AND ROUNDED AT THE BACK"],
-      "tech": ["POLFRESH", "3T"],
-      "colorways": ["0302", "0312", "0313", "0308", "0304", "0310"],
+      "sizes": [
+        "3XS",
+        "2XS",
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "features": [
+        "EMBROIDERED LOGO",
+        "FABRIC INSERTS",
+        "HEM LONGER AND ROUNDED AT THE BACK"
+      ],
+      "tech": [
+        "POLFRESH",
+        "3T"
+      ],
+      "colorways": [
+        "0302",
+        "0312",
+        "0313",
+        "0308",
+        "0304",
+        "0310"
+      ],
       "priceLevel": 1,
       "basePrice": null,
       "moq": 10,
       "brandable": true,
-      "brandingZones": ["chest-center", "chest-left", "back-top", "back-number", "sleeve-left", "sleeve-right"]
+      "brandingZones": [
+        "chest-center",
+        "chest-left",
+        "back-top",
+        "back-number",
+        "sleeve-left",
+        "sleeve-right"
+      ]
     },
     {
       "id": "M1157",
-      "name": { "ru": "Футболка Malaga", "en": "Maglia Malaga", "hy": "Футболка Malaga" },
+      "name": {
+        "ru": "Футболка Malaga",
+        "en": "Maglia Malaga",
+        "hy": "Շապիկ Malaga"
+      },
       "category": "calcio",
       "type": "maglie",
       "model": "jersey_ss",
       "gsm": 135,
       "composition": "100% polyester",
-      "sizes": ["3XS", "2XS", "XS", "S", "M", "L", "XL"],
-      "features": ["EMBROIDERED LOGO", "SUBLIMATIC PRINT", "HEM LONGER AND ROUNDED AT THE BACK"],
-      "tech": ["POLFRESH", "3T"],
-      "colorways": ["0203", "1203", "1202", "0710", "1310"],
+      "sizes": [
+        "3XS",
+        "2XS",
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "features": [
+        "EMBROIDERED LOGO",
+        "SUBLIMATIC PRINT",
+        "HEM LONGER AND ROUNDED AT THE BACK"
+      ],
+      "tech": [
+        "POLFRESH",
+        "3T"
+      ],
+      "colorways": [
+        "0203",
+        "1203",
+        "1202",
+        "0710",
+        "1310"
+      ],
       "priceLevel": 1,
       "basePrice": null,
       "moq": 10,
       "brandable": true,
-      "brandingZones": ["chest-center", "chest-left", "back-top", "back-number", "sleeve-left", "sleeve-right"]
+      "brandingZones": [
+        "chest-center",
+        "chest-left",
+        "back-top",
+        "back-number",
+        "sleeve-left",
+        "sleeve-right"
+      ]
     },
     {
       "id": "M1155",
-      "name": { "ru": "Футболка Marbella", "en": "Maglia Marbella", "hy": "Футболка Marbella" },
+      "name": {
+        "ru": "Футболка Marbella",
+        "en": "Maglia Marbella",
+        "hy": "Շապիկ Marbella"
+      },
       "category": "calcio",
       "type": "maglie",
       "model": "jersey_ss",
       "gsm": 135,
       "composition": "100% polyester",
-      "sizes": ["3XS", "2XS", "XS", "S", "M", "L", "XL"],
-      "features": ["EMBROIDERED LOGO", "SUBLIMATIC PRINT", "PIPING ON SLEEVE BOARD", "HEM LONGER AND ROUNDED AT THE BACK"],
-      "tech": ["POLFRESH", "3T"],
-      "colorways": ["1204", "0302", "0312", "0110", "0704"],
+      "sizes": [
+        "3XS",
+        "2XS",
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "features": [
+        "EMBROIDERED LOGO",
+        "SUBLIMATIC PRINT",
+        "PIPING ON SLEEVE BOARD",
+        "HEM LONGER AND ROUNDED AT THE BACK"
+      ],
+      "tech": [
+        "POLFRESH",
+        "3T"
+      ],
+      "colorways": [
+        "1204",
+        "0302",
+        "0312",
+        "0110",
+        "0704"
+      ],
       "priceLevel": 1,
       "basePrice": null,
       "moq": 10,
       "brandable": true,
-      "brandingZones": ["chest-center", "chest-left", "back-top", "back-number", "sleeve-left", "sleeve-right"]
+      "brandingZones": [
+        "chest-center",
+        "chest-left",
+        "back-top",
+        "back-number",
+        "sleeve-left",
+        "sleeve-right"
+      ]
     },
     {
       "id": "M1159",
-      "name": { "ru": "Футболка Murcia", "en": "Maglia Murcia", "hy": "Футболка Murcia" },
+      "name": {
+        "ru": "Футболка Murcia",
+        "en": "Maglia Murcia",
+        "hy": "Շապիկ Murcia"
+      },
       "category": "calcio",
       "type": "maglie",
       "model": "jersey_ss",
       "gsm": 135,
       "composition": "100% polyester",
-      "sizes": ["3XS", "2XS", "XS", "S", "M", "L", "XL"],
-      "features": ["EMBROIDERED LOGO", "YUKO AND FABRIC COLLAR", "YUKO SLEEVE BOTTOM", "SLIT ON SIDE", "HEM LONGER AND ROUNDED AT THE BACK"],
-      "tech": ["POLFRESH", "3T"],
-      "colorways": ["0203", "1203", "0310", "0503", "0103", "1303", "0803"],
+      "sizes": [
+        "3XS",
+        "2XS",
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "features": [
+        "EMBROIDERED LOGO",
+        "YUKO AND FABRIC COLLAR",
+        "YUKO SLEEVE BOTTOM",
+        "SLIT ON SIDE",
+        "HEM LONGER AND ROUNDED AT THE BACK"
+      ],
+      "tech": [
+        "POLFRESH",
+        "3T"
+      ],
+      "colorways": [
+        "0203",
+        "1203",
+        "0310",
+        "0503",
+        "0103",
+        "1303",
+        "0803"
+      ],
       "priceLevel": 1,
       "basePrice": null,
       "moq": 10,
       "brandable": true,
-      "brandingZones": ["chest-center", "chest-left", "back-top", "back-number", "sleeve-left", "sleeve-right"]
+      "brandingZones": [
+        "chest-center",
+        "chest-left",
+        "back-top",
+        "back-number",
+        "sleeve-left",
+        "sleeve-right"
+      ]
     },
     {
       "id": "LFM62",
-      "name": { "ru": "Термобельё Body 6", "en": "Body 6", "hy": "Термобельё Body 6" },
+      "name": {
+        "ru": "Термобельё Body 6",
+        "en": "Body 6",
+        "hy": "Թերմոներքնամաս Body 6"
+      },
       "category": "universal",
       "type": "intimo",
       "model": "jersey_ls",
       "gsm": 240,
       "composition": "92% polyester, 8% elastan",
-      "sizes": ["2XS", "XS", "S", "M", "L", "XL", "2XL"],
-      "features": ["TECHNICAL FABRIC", "PRINTED LOGO", "TURTLENECK"],
-      "tech": ["POLFRESH", "TEIFABRIC", "ELASTICFABRIC"],
-      "colorways": ["0002", "0012", "0003", "0007", "0013", "0008", "0004", "0010"],
+      "sizes": [
+        "2XS",
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "features": [
+        "TECHNICAL FABRIC",
+        "PRINTED LOGO",
+        "TURTLENECK"
+      ],
+      "tech": [
+        "POLFRESH",
+        "TEIFABRIC",
+        "ELASTICFABRIC"
+      ],
+      "colorways": [
+        "0002",
+        "0012",
+        "0003",
+        "0007",
+        "0013",
+        "0008",
+        "0004",
+        "0010"
+      ],
       "priceLevel": 1,
       "basePrice": null,
       "moq": 10,
@@ -211,88 +594,234 @@
     },
     {
       "id": "P202",
-      "name": { "ru": "Шорты Taipei", "en": "Pant Taipei", "hy": "Шорты Taipei" },
+      "name": {
+        "ru": "Шорты Taipei",
+        "en": "Pant Taipei",
+        "hy": "Շորտեր Taipei"
+      },
       "category": "calcio",
       "type": "pantaloncini",
       "model": "shorts",
       "gsm": 135,
       "composition": "100% polyester",
-      "sizes": ["3XS", "2XS", "XS", "S", "M", "L", "XL", "2XL"],
-      "features": ["EMBROIDERED LOGO"],
-      "tech": ["POLFRESH"],
-      "colorways": ["0002", "0012", "0003", "0007", "0013", "0008", "0004", "0010"],
+      "sizes": [
+        "3XS",
+        "2XS",
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "features": [
+        "EMBROIDERED LOGO"
+      ],
+      "tech": [
+        "POLFRESH"
+      ],
+      "colorways": [
+        "0002",
+        "0012",
+        "0003",
+        "0007",
+        "0013",
+        "0008",
+        "0004",
+        "0010"
+      ],
       "priceLevel": 1,
       "basePrice": null,
       "moq": 10,
       "brandable": true,
-      "brandingZones": ["shorts-left", "shorts-right"]
+      "brandingZones": [
+        "shorts-left",
+        "shorts-right"
+      ]
     },
     {
       "id": "KITP1143",
-      "name": { "ru": "Вратарский комплект Rostov", "en": "Kit Portiere Rostov", "hy": "Вратарский комплект Rostov" },
+      "name": {
+        "ru": "Вратарский комплект Rostov",
+        "en": "Kit Portiere Rostov",
+        "hy": "Դարպասապահի հավաքածու Rostov"
+      },
       "category": "calcio",
       "type": "portiere",
       "model": "gk_kit",
       "gsm": 135,
       "composition": "100% polyester",
-      "sizes": ["3XS", "2XS", "XS", "S", "M", "L", "XL"],
-      "features": ["EMBROIDERED LOGO", "FABRIC INSERTS", "PRINTED LOGO ON SLEEVE", "SUBLIMATIC PRINT", "HIP AND ELBOW PADDING"],
-      "tech": ["POLFRESH", "3T", "PADDING"],
-      "colorways": ["0075", "0008", "0010"],
+      "sizes": [
+        "3XS",
+        "2XS",
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "features": [
+        "EMBROIDERED LOGO",
+        "FABRIC INSERTS",
+        "PRINTED LOGO ON SLEEVE",
+        "SUBLIMATIC PRINT",
+        "HIP AND ELBOW PADDING"
+      ],
+      "tech": [
+        "POLFRESH",
+        "3T",
+        "PADDING"
+      ],
+      "colorways": [
+        "0075",
+        "0008",
+        "0010"
+      ],
       "priceLevel": 2,
       "basePrice": null,
       "moq": 5,
       "brandable": true,
-      "brandingZones": ["chest-center", "chest-left", "back-top", "back-number"]
+      "brandingZones": [
+        "chest-center",
+        "chest-left",
+        "back-top",
+        "back-number"
+      ]
     },
     {
       "id": "KITP1141",
-      "name": { "ru": "Вратарский комплект San Memes", "en": "Kit Portiere San Memes", "hy": "Вратарский комплект San Memes" },
+      "name": {
+        "ru": "Вратарский комплект San Memes",
+        "en": "Kit Portiere San Memes",
+        "hy": "Դարպասապահի հավաքածու San Memes"
+      },
       "category": "calcio",
       "type": "portiere",
       "model": "gk_kit",
       "gsm": 135,
       "composition": "100% polyester",
-      "sizes": ["3XS", "2XS", "XS", "S", "M", "L", "XL"],
-      "features": ["EMBROIDERED LOGO", "FABRIC INSERTS", "PRINTED LOGO ON SLEEVE", "SUBLIMATIC PRINT", "HIP AND ELBOW PADDING"],
-      "tech": ["POLFRESH", "3T", "PADDING"],
-      "colorways": ["0007", "0006", "0010"],
+      "sizes": [
+        "3XS",
+        "2XS",
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "features": [
+        "EMBROIDERED LOGO",
+        "FABRIC INSERTS",
+        "PRINTED LOGO ON SLEEVE",
+        "SUBLIMATIC PRINT",
+        "HIP AND ELBOW PADDING"
+      ],
+      "tech": [
+        "POLFRESH",
+        "3T",
+        "PADDING"
+      ],
+      "colorways": [
+        "0007",
+        "0006",
+        "0010"
+      ],
       "priceLevel": 2,
       "basePrice": null,
       "moq": 5,
       "brandable": true,
-      "brandingZones": ["chest-center", "chest-left", "back-top", "back-number"]
+      "brandingZones": [
+        "chest-center",
+        "chest-left",
+        "back-top",
+        "back-number"
+      ]
     },
     {
       "id": "KITP1142",
-      "name": { "ru": "Вратарский комплект Villamarin", "en": "Kit Portiere Villamarin", "hy": "Вратарский комплект Villamarin" },
+      "name": {
+        "ru": "Вратарский комплект Villamarin",
+        "en": "Kit Portiere Villamarin",
+        "hy": "Դարպասապահի հավաքածու Villamarin"
+      },
       "category": "calcio",
       "type": "portiere",
       "model": "gk_kit",
       "gsm": 135,
       "composition": "100% polyester",
-      "sizes": ["3XS", "2XS", "XS", "S", "M", "L", "XL"],
-      "features": ["EMBROIDERED LOGO", "SUBLIMATIC PRINT", "FABRIC INSERTS", "PRINTED LOGO ON SLEEVE", "HIP AND ELBOW PADDING"],
-      "tech": ["POLFRESH", "3T", "PADDING"],
-      "colorways": ["0013", "0005", "0001"],
+      "sizes": [
+        "3XS",
+        "2XS",
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "features": [
+        "EMBROIDERED LOGO",
+        "SUBLIMATIC PRINT",
+        "FABRIC INSERTS",
+        "PRINTED LOGO ON SLEEVE",
+        "HIP AND ELBOW PADDING"
+      ],
+      "tech": [
+        "POLFRESH",
+        "3T",
+        "PADDING"
+      ],
+      "colorways": [
+        "0013",
+        "0005",
+        "0001"
+      ],
       "priceLevel": 2,
       "basePrice": null,
       "moq": 5,
       "brandable": true,
-      "brandingZones": ["chest-center", "chest-left", "back-top", "back-number"]
+      "brandingZones": [
+        "chest-center",
+        "chest-left",
+        "back-top",
+        "back-number"
+      ]
     },
     {
       "id": "C165B",
-      "name": { "ru": "Гетры Mondial", "en": "Calza Mondial", "hy": "Гетры Mondial" },
+      "name": {
+        "ru": "Гетры Mondial",
+        "en": "Calza Mondial",
+        "hy": "Գետրեր Mondial"
+      },
       "category": "calcio",
       "type": "calze",
       "model": "socks",
       "gsm": null,
       "composition": "75% polyester, 15% cotton, 10% polyamide",
-      "sizes": ["1", "2", "3"],
+      "sizes": [
+        "1",
+        "2",
+        "3"
+      ],
       "features": [],
-      "tech": ["POLFRESH", "FRESHCOTTON"],
-      "colorways": ["0002", "0012", "0003", "0011", "0005", "0001", "0007", "0013", "0008", "0004", "0023", "0010"],
+      "tech": [
+        "POLFRESH",
+        "FRESHCOTTON"
+      ],
+      "colorways": [
+        "0002",
+        "0012",
+        "0003",
+        "0011",
+        "0005",
+        "0001",
+        "0007",
+        "0013",
+        "0008",
+        "0004",
+        "0023",
+        "0010"
+      ],
       "priceLevel": 1,
       "basePrice": null,
       "moq": 10,
@@ -301,260 +830,687 @@
     },
     {
       "id": "M1167",
-      "name": { "ru": "Куртка Tajima", "en": "Giacca Tajima", "hy": "Куртка Tajima" },
+      "name": {
+        "ru": "Куртка Tajima",
+        "en": "Giacca Tajima",
+        "hy": "Բաճկոն Tajima"
+      },
       "category": "universal",
       "type": "giacche",
       "model": "jacket",
       "gsm": 240,
       "composition": "100% polyester",
-      "sizes": ["3XS", "2XS", "XS", "S", "M", "L", "XL", "2XL"],
-      "features": ["PRINTED LOGO ON SLEEVE", "FABRIC INSERTS"],
-      "tech": ["POLFRESH", "WITHOUT ZIP"],
-      "colorways": ["0010", "0004", "0040"],
+      "sizes": [
+        "3XS",
+        "2XS",
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "features": [
+        "PRINTED LOGO ON SLEEVE",
+        "FABRIC INSERTS"
+      ],
+      "tech": [
+        "POLFRESH",
+        "WITHOUT ZIP"
+      ],
+      "colorways": [
+        "0010",
+        "0004",
+        "0040"
+      ],
       "priceLevel": 2,
       "basePrice": null,
       "moq": 10,
       "brandable": true,
-      "brandingZones": ["chest-left", "back-top", "sleeve-left"]
+      "brandingZones": [
+        "chest-left",
+        "back-top",
+        "sleeve-left"
+      ]
     },
     {
       "id": "M1180",
-      "name": { "ru": "Куртка Montana", "en": "Giacca Montana", "hy": "Куртка Montana" },
+      "name": {
+        "ru": "Куртка Montana",
+        "en": "Giacca Montana",
+        "hy": "Բաճկոն Montana"
+      },
       "category": "universal",
       "type": "giacche",
       "model": "jacket",
       "gsm": 240,
       "composition": "100% polyester",
-      "sizes": ["3XS", "2XS", "XS", "S", "M", "L", "XL", "2XL"],
-      "features": ["EMBROIDERED LOGO", "PRINTED LOGO VELA", "FABRIC INSERTS", "POCKET ON SIDE"],
-      "tech": ["POLFRESH"],
-      "colorways": ["0012", "0013", "0002", "0024", "0008", "0007", "0004", "0010", "0040"],
+      "sizes": [
+        "3XS",
+        "2XS",
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "features": [
+        "EMBROIDERED LOGO",
+        "PRINTED LOGO VELA",
+        "FABRIC INSERTS",
+        "POCKET ON SIDE"
+      ],
+      "tech": [
+        "POLFRESH"
+      ],
+      "colorways": [
+        "0012",
+        "0013",
+        "0002",
+        "0024",
+        "0008",
+        "0007",
+        "0004",
+        "0010",
+        "0040"
+      ],
       "priceLevel": 2,
       "basePrice": null,
       "moq": 10,
       "brandable": true,
-      "brandingZones": ["chest-left", "back-top", "sleeve-left"]
+      "brandingZones": [
+        "chest-left",
+        "back-top",
+        "sleeve-left"
+      ]
     },
     {
       "id": "M1152",
-      "name": { "ru": "Куртка Bolivia", "en": "Giacca Bolivia", "hy": "Куртка Bolivia" },
+      "name": {
+        "ru": "Куртка Bolivia",
+        "en": "Giacca Bolivia",
+        "hy": "Բաճկոն Bolivia"
+      },
       "category": "universal",
       "type": "giacche",
       "model": "jacket",
       "gsm": 230,
       "composition": "100% polyester",
-      "sizes": ["3XS", "2XS", "XS", "S", "M", "L", "XL", "2XL"],
-      "features": ["EMBROIDERED LOGO", "FABRIC INSERTS ON SLEEVES", "POCKET ON SIDE", "FULL ZIP"],
-      "tech": ["POLFRESH"],
-      "colorways": ["1204", "1304", "0704", "0204", "0304"],
+      "sizes": [
+        "3XS",
+        "2XS",
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "features": [
+        "EMBROIDERED LOGO",
+        "FABRIC INSERTS ON SLEEVES",
+        "POCKET ON SIDE",
+        "FULL ZIP"
+      ],
+      "tech": [
+        "POLFRESH"
+      ],
+      "colorways": [
+        "1204",
+        "1304",
+        "0704",
+        "0204",
+        "0304"
+      ],
       "priceLevel": 2,
       "basePrice": null,
       "moq": 10,
       "brandable": true,
-      "brandingZones": ["chest-left", "back-top", "sleeve-left"],
+      "brandingZones": [
+        "chest-left",
+        "back-top",
+        "sleeve-left"
+      ],
       "oversizeId": "M1152B"
     },
     {
       "id": "M1147",
-      "name": { "ru": "Куртка Cuba", "en": "Giacca Cuba", "hy": "Куртка Cuba" },
+      "name": {
+        "ru": "Куртка Cuba",
+        "en": "Giacca Cuba",
+        "hy": "Բաճկոն Cuba"
+      },
       "category": "universal",
       "type": "giacche",
       "model": "jacket",
       "gsm": 230,
       "composition": "100% polyester",
-      "sizes": ["6XS", "5XS", "4XS", "3XS", "2XS", "XS", "S", "M", "L", "XL", "2XL"],
-      "features": ["EMBROIDERED LOGO", "FABRIC INSERTS", "POCKET ON SIDE", "FULL ZIP"],
-      "tech": ["POLFRESH"],
-      "colorways": ["0012", "0007", "0008", "0001", "0013", "0003", "0002", "0006", "0004", "0010"],
+      "sizes": [
+        "6XS",
+        "5XS",
+        "4XS",
+        "3XS",
+        "2XS",
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "features": [
+        "EMBROIDERED LOGO",
+        "FABRIC INSERTS",
+        "POCKET ON SIDE",
+        "FULL ZIP"
+      ],
+      "tech": [
+        "POLFRESH"
+      ],
+      "colorways": [
+        "0012",
+        "0007",
+        "0008",
+        "0001",
+        "0013",
+        "0003",
+        "0002",
+        "0006",
+        "0004",
+        "0010"
+      ],
       "priceLevel": 2,
       "basePrice": null,
       "moq": 10,
       "brandable": true,
-      "brandingZones": ["chest-left", "back-top", "sleeve-left"],
+      "brandingZones": [
+        "chest-left",
+        "back-top",
+        "sleeve-left"
+      ],
       "oversizeId": "M1147B"
     },
     {
       "id": "M1166",
-      "name": { "ru": "Куртка Alabama", "en": "Giacca Alabama", "hy": "Куртка Alabama" },
+      "name": {
+        "ru": "Куртка Alabama",
+        "en": "Giacca Alabama",
+        "hy": "Բաճկոն Alabama"
+      },
       "category": "universal",
       "type": "giacche",
       "model": "jacket",
       "gsm": 240,
       "composition": "100% polyester",
-      "sizes": ["3XS", "2XS", "XS", "S", "M", "L", "XL", "2XL"],
-      "features": ["EMBROIDERED LOGO", "PRINTED LOGO VELA", "FABRIC INSERTS", "POCKET ON SIDE", "FULL ZIP"],
-      "tech": ["POLFRESH"],
-      "colorways": ["0012", "0013", "0002", "0024", "0008", "0007", "0003", "0603", "0004", "0010"],
+      "sizes": [
+        "3XS",
+        "2XS",
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "features": [
+        "EMBROIDERED LOGO",
+        "PRINTED LOGO VELA",
+        "FABRIC INSERTS",
+        "POCKET ON SIDE",
+        "FULL ZIP"
+      ],
+      "tech": [
+        "POLFRESH"
+      ],
+      "colorways": [
+        "0012",
+        "0013",
+        "0002",
+        "0024",
+        "0008",
+        "0007",
+        "0003",
+        "0603",
+        "0004",
+        "0010"
+      ],
       "priceLevel": 2,
       "basePrice": null,
       "moq": 10,
       "brandable": true,
-      "brandingZones": ["chest-left", "back-top", "sleeve-left"],
+      "brandingZones": [
+        "chest-left",
+        "back-top",
+        "sleeve-left"
+      ],
       "oversizeId": "M1166B"
     },
     {
       "id": "M1121",
-      "name": { "ru": "Куртка Calcutta", "en": "Giacca Calcutta", "hy": "Куртка Calcutta" },
+      "name": {
+        "ru": "Куртка Calcutta",
+        "en": "Giacca Calcutta",
+        "hy": "Բաճկոն Calcutta"
+      },
       "category": "universal",
       "type": "giacche",
       "model": "jacket",
       "gsm": 245,
       "composition": "100% polyester",
-      "sizes": ["3XS", "2XS", "XS", "S", "M", "L", "XL", "2XL"],
-      "features": ["EMBROIDERED LOGO", "FABRIC INSERTS", "POCKET"],
-      "tech": ["POLFRESH", "BREATHVENT"],
-      "colorways": ["0403", "1003"],
+      "sizes": [
+        "3XS",
+        "2XS",
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "features": [
+        "EMBROIDERED LOGO",
+        "FABRIC INSERTS",
+        "POCKET"
+      ],
+      "tech": [
+        "POLFRESH",
+        "BREATHVENT"
+      ],
+      "colorways": [
+        "0403",
+        "1003"
+      ],
       "priceLevel": 2,
       "basePrice": null,
       "moq": 10,
       "brandable": true,
-      "brandingZones": ["chest-left", "back-top", "sleeve-left"]
+      "brandingZones": [
+        "chest-left",
+        "back-top",
+        "sleeve-left"
+      ]
     },
     {
       "id": "M1122",
-      "name": { "ru": "Куртка Mosca", "en": "Giacca Mosca", "hy": "Куртка Mosca" },
+      "name": {
+        "ru": "Куртка Mosca",
+        "en": "Giacca Mosca",
+        "hy": "Բաճկոն Mosca"
+      },
       "category": "universal",
       "type": "giacche",
       "model": "jacket",
       "gsm": 245,
       "composition": "100% polyester",
-      "sizes": ["3XS", "2XS", "XS", "S", "M", "L", "XL", "2XL"],
-      "features": ["EMBROIDERED LOGO", "FABRIC INSERTS", "POCKET", "FULL ZIP"],
-      "tech": ["POLFRESH", "BREATHVENT"],
-      "colorways": ["0203", "1203", "0704", "1303", "0803", "0403", "1003"],
+      "sizes": [
+        "3XS",
+        "2XS",
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "features": [
+        "EMBROIDERED LOGO",
+        "FABRIC INSERTS",
+        "POCKET",
+        "FULL ZIP"
+      ],
+      "tech": [
+        "POLFRESH",
+        "BREATHVENT"
+      ],
+      "colorways": [
+        "0203",
+        "1203",
+        "0704",
+        "1303",
+        "0803",
+        "0403",
+        "1003"
+      ],
       "priceLevel": 2,
       "basePrice": null,
       "moq": 10,
       "brandable": true,
-      "brandingZones": ["chest-left", "back-top", "sleeve-left"]
+      "brandingZones": [
+        "chest-left",
+        "back-top",
+        "sleeve-left"
+      ]
     },
     {
       "id": "M1174",
-      "name": { "ru": "Куртка Petra", "en": "Giacca Petra", "hy": "Куртка Petra" },
+      "name": {
+        "ru": "Куртка Petra",
+        "en": "Giacca Petra",
+        "hy": "Բաճկոն Petra"
+      },
       "category": "universal",
       "type": "giacche",
       "model": "jacket",
       "gsm": 245,
       "composition": "100% polyester",
-      "sizes": ["3XS", "2XS", "XS", "S", "M", "L", "XL", "2XL"],
-      "features": ["IRIDESCENT PATTERN LUXIOM", "EMBROIDERED LOGO", "YUKO COLLAR AND CUFF", "POCKETS ZIP ON SIDE"],
-      "tech": ["POLFRESH", "LUXIOM"],
-      "colorways": ["1075", "2324", "0476", "1010", "0404"],
+      "sizes": [
+        "3XS",
+        "2XS",
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "features": [
+        "IRIDESCENT PATTERN LUXIOM",
+        "EMBROIDERED LOGO",
+        "YUKO COLLAR AND CUFF",
+        "POCKETS ZIP ON SIDE"
+      ],
+      "tech": [
+        "POLFRESH",
+        "LUXIOM"
+      ],
+      "colorways": [
+        "1075",
+        "2324",
+        "0476",
+        "1010",
+        "0404"
+      ],
       "priceLevel": 3,
       "basePrice": null,
       "moq": 10,
       "brandable": true,
-      "brandingZones": ["chest-left", "back-top"]
+      "brandingZones": [
+        "chest-left",
+        "back-top"
+      ]
     },
     {
       "id": "M1173",
-      "name": { "ru": "Куртка Manila", "en": "Giacca Manila", "hy": "Куртка Manila" },
+      "name": {
+        "ru": "Куртка Manila",
+        "en": "Giacca Manila",
+        "hy": "Բաճկոն Manila"
+      },
       "category": "universal",
       "type": "giacche",
       "model": "jacket",
       "gsm": 245,
       "composition": "100% polyester",
-      "sizes": ["3XS", "2XS", "XS", "S", "M", "L", "XL", "2XL"],
-      "features": ["IRIDESCENT PATTERN LUXIOM", "EMBROIDERED LOGO", "YUKO COLLAR AND CUFF", "POCKETS ZIP ON SIDE", "FULL ZIP"],
-      "tech": ["POLFRESH", "LUXIOM"],
-      "colorways": ["1075", "2324", "0476", "1010", "0404"],
+      "sizes": [
+        "3XS",
+        "2XS",
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "features": [
+        "IRIDESCENT PATTERN LUXIOM",
+        "EMBROIDERED LOGO",
+        "YUKO COLLAR AND CUFF",
+        "POCKETS ZIP ON SIDE",
+        "FULL ZIP"
+      ],
+      "tech": [
+        "POLFRESH",
+        "LUXIOM"
+      ],
+      "colorways": [
+        "1075",
+        "2324",
+        "0476",
+        "1010",
+        "0404"
+      ],
       "priceLevel": 3,
       "basePrice": null,
       "moq": 10,
       "brandable": true,
-      "brandingZones": ["chest-left", "back-top"],
+      "brandingZones": [
+        "chest-left",
+        "back-top"
+      ],
       "oversizeId": "M1173B"
     },
     {
       "id": "M1144",
-      "name": { "ru": "Свитшот Zagabria", "en": "Felpa Zagabria", "hy": "Свитшот Zagabria" },
+      "name": {
+        "ru": "Свитшот Zagabria",
+        "en": "Felpa Zagabria",
+        "hy": "Սվիտշոտ Zagabria"
+      },
       "category": "universal",
       "type": "felpe",
       "model": "hoodie",
       "gsm": 295,
       "composition": "80% polyester, 20% cotton",
-      "sizes": ["3XS", "2XS", "XS", "S", "M", "L", "XL", "2XL"],
-      "features": ["EMBROIDERED LOGO", "FRESH WINTER FLEECE", "LEGEA VELA LOGO EMBROIDERY ON BACK"],
-      "tech": ["POLCOTTON", "FRESH WINTER FLEECE"],
-      "colorways": ["0404", "1010", "0044"],
+      "sizes": [
+        "3XS",
+        "2XS",
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "features": [
+        "EMBROIDERED LOGO",
+        "FRESH WINTER FLEECE",
+        "LEGEA VELA LOGO EMBROIDERY ON BACK"
+      ],
+      "tech": [
+        "POLCOTTON",
+        "FRESH WINTER FLEECE"
+      ],
+      "colorways": [
+        "0404",
+        "1010",
+        "0044"
+      ],
       "priceLevel": 2,
       "basePrice": null,
       "moq": 10,
       "brandable": true,
-      "brandingZones": ["chest-left", "back-top", "sleeve-left"],
+      "brandingZones": [
+        "chest-left",
+        "back-top",
+        "sleeve-left"
+      ],
       "oversizeId": "M1144B",
       "juniorId": "M1144J"
     },
     {
       "id": "M1143",
-      "name": { "ru": "Худи Spalato", "en": "Felpa Spalato", "hy": "Худи Spalato" },
+      "name": {
+        "ru": "Худи Spalato",
+        "en": "Felpa Spalato",
+        "hy": "Հուդի Spalato"
+      },
       "category": "universal",
       "type": "felpe",
       "model": "hoodie",
       "gsm": 295,
       "composition": "80% polyester, 20% cotton",
-      "sizes": ["3XS", "2XS", "XS", "S", "M", "L", "XL", "2XL"],
-      "features": ["EMBROIDERED LOGO", "FRESH WINTER FLEECE", "HOOD", "FRONT POCKET"],
-      "tech": ["POLCOTTON", "FRESH WINTER FLEECE"],
-      "colorways": ["0012", "0013", "0002", "0008", "0007", "0404", "1010", "0044"],
+      "sizes": [
+        "3XS",
+        "2XS",
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "features": [
+        "EMBROIDERED LOGO",
+        "FRESH WINTER FLEECE",
+        "HOOD",
+        "FRONT POCKET"
+      ],
+      "tech": [
+        "POLCOTTON",
+        "FRESH WINTER FLEECE"
+      ],
+      "colorways": [
+        "0012",
+        "0013",
+        "0002",
+        "0008",
+        "0007",
+        "0404",
+        "1010",
+        "0044"
+      ],
       "priceLevel": 2,
       "basePrice": null,
       "moq": 10,
       "brandable": true,
-      "brandingZones": ["chest-left", "back-top", "sleeve-left"],
+      "brandingZones": [
+        "chest-left",
+        "back-top",
+        "sleeve-left"
+      ],
       "oversizeId": "M1143B",
       "juniorId": "M1143J"
     },
     {
       "id": "M1146",
-      "name": { "ru": "Худи Sarajevo (на молнии)", "en": "Felpa Sarajevo", "hy": "Худи Sarajevo" },
+      "name": {
+        "ru": "Худи Sarajevo (на молнии)",
+        "en": "Felpa Sarajevo",
+        "hy": "Հուդի Sarajevo (կայծակաճարմանդով)"
+      },
       "category": "universal",
       "type": "felpe",
       "model": "hoodie",
       "gsm": 295,
       "composition": "80% polyester, 20% cotton",
-      "sizes": ["3XS", "2XS", "XS", "S", "M", "L", "XL", "2XL"],
-      "features": ["EMBROIDERED LOGO", "FRESH WINTER FLEECE", "HOOD ZIP", "FRONT POCKET"],
-      "tech": ["POLCOTTON", "FRESH WINTER FLEECE"],
-      "colorways": ["0012", "0013", "0002", "0008", "0007", "0404", "1010", "0044"],
+      "sizes": [
+        "3XS",
+        "2XS",
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "features": [
+        "EMBROIDERED LOGO",
+        "FRESH WINTER FLEECE",
+        "HOOD ZIP",
+        "FRONT POCKET"
+      ],
+      "tech": [
+        "POLCOTTON",
+        "FRESH WINTER FLEECE"
+      ],
+      "colorways": [
+        "0012",
+        "0013",
+        "0002",
+        "0008",
+        "0007",
+        "0404",
+        "1010",
+        "0044"
+      ],
       "priceLevel": 2,
       "basePrice": null,
       "moq": 10,
       "brandable": true,
-      "brandingZones": ["chest-left", "back-top", "sleeve-left"],
+      "brandingZones": [
+        "chest-left",
+        "back-top",
+        "sleeve-left"
+      ],
       "oversizeId": "M1146B",
       "juniorId": "M1146J"
     },
     {
       "id": "P203",
-      "name": { "ru": "Шорты Seul", "en": "Bermuda Seul", "hy": "Шорты Seul" },
+      "name": {
+        "ru": "Шорты Seul",
+        "en": "Bermuda Seul",
+        "hy": "Շորտեր Seul"
+      },
       "category": "universal",
       "type": "pantaloncini",
       "model": "shorts",
       "gsm": 230,
       "composition": "85% polyester, 15% cotton",
-      "sizes": ["3XS", "2XS", "XS", "S", "M", "L", "XL", "2XL"],
-      "features": ["EMBROIDERED LOGO", "POCKETS"],
-      "tech": ["POLCOTTON"],
-      "colorways": ["0004", "0010"],
+      "sizes": [
+        "3XS",
+        "2XS",
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "features": [
+        "EMBROIDERED LOGO",
+        "POCKETS"
+      ],
+      "tech": [
+        "POLCOTTON"
+      ],
+      "colorways": [
+        "0004",
+        "0010"
+      ],
       "priceLevel": 1,
       "basePrice": null,
       "moq": 10,
       "brandable": true,
-      "brandingZones": ["shorts-left", "shorts-right"]
+      "brandingZones": [
+        "shorts-left",
+        "shorts-right"
+      ]
     },
     {
       "id": "T074",
-      "name": { "ru": "Бриджи Pitt", "en": "Pinocchietto Pitt", "hy": "Бриджи Pitt" },
+      "name": {
+        "ru": "Бриджи Pitt",
+        "en": "Pinocchietto Pitt",
+        "hy": "Բրիջներ Pitt"
+      },
       "category": "universal",
       "type": "pantaloni",
       "model": "pants",
       "gsm": 230,
       "composition": "85% polyester, 15% cotton",
-      "sizes": ["3XS", "2XS", "XS", "S", "M", "L", "XL", "2XL"],
-      "features": ["EMBROIDERED LOGO", "POCKETS"],
-      "tech": ["POLCOTTON"],
-      "colorways": ["0004", "0010"],
+      "sizes": [
+        "3XS",
+        "2XS",
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "features": [
+        "EMBROIDERED LOGO",
+        "POCKETS"
+      ],
+      "tech": [
+        "POLCOTTON"
+      ],
+      "colorways": [
+        "0004",
+        "0010"
+      ],
       "priceLevel": 1,
       "basePrice": null,
       "moq": 10,
@@ -563,16 +1519,40 @@
     },
     {
       "id": "P187",
-      "name": { "ru": "Брюки Cuba", "en": "Pant Cuba", "hy": "Брюки Cuba" },
+      "name": {
+        "ru": "Брюки Cuba",
+        "en": "Pant Cuba",
+        "hy": "Տաբատ Cuba"
+      },
       "category": "universal",
       "type": "pantaloni",
       "model": "pants",
       "gsm": 235,
       "composition": "100% polyester (acetate fabric)",
-      "sizes": ["6XS", "5XS", "4XS", "3XS", "2XS", "XS", "S", "M", "L", "XL", "2XL"],
-      "features": ["POCKETS", "ELASTIC BOTTOM"],
-      "tech": ["POLFRESH"],
-      "colorways": ["0004", "0010"],
+      "sizes": [
+        "6XS",
+        "5XS",
+        "4XS",
+        "3XS",
+        "2XS",
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "features": [
+        "POCKETS",
+        "ELASTIC BOTTOM"
+      ],
+      "tech": [
+        "POLFRESH"
+      ],
+      "colorways": [
+        "0004",
+        "0010"
+      ],
       "priceLevel": 1,
       "basePrice": null,
       "moq": 10,
@@ -582,16 +1562,39 @@
     },
     {
       "id": "P193",
-      "name": { "ru": "Брюки Messico", "en": "Pant Messico", "hy": "Брюки Messico" },
+      "name": {
+        "ru": "Брюки Messico",
+        "en": "Pant Messico",
+        "hy": "Տաբատ Messico"
+      },
       "category": "universal",
       "type": "pantaloni",
       "model": "pants",
       "gsm": 230,
       "composition": "85% polyester, 15% elastan",
-      "sizes": ["5XS", "4XS", "3XS", "2XS", "XS", "S", "M", "L", "XL", "2XL"],
-      "features": ["BACK EMBROIDERED LOGO", "POCKETS"],
-      "tech": ["POLCOTTON"],
-      "colorways": ["0004", "0010"],
+      "sizes": [
+        "5XS",
+        "4XS",
+        "3XS",
+        "2XS",
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "features": [
+        "BACK EMBROIDERED LOGO",
+        "POCKETS"
+      ],
+      "tech": [
+        "POLCOTTON"
+      ],
+      "colorways": [
+        "0004",
+        "0010"
+      ],
       "priceLevel": 1,
       "basePrice": null,
       "moq": 10,
@@ -601,16 +1604,39 @@
     },
     {
       "id": "P204",
-      "name": { "ru": "Брюки Bogota", "en": "Pant Bogota", "hy": "Брюки Bogota" },
+      "name": {
+        "ru": "Брюки Bogota",
+        "en": "Pant Bogota",
+        "hy": "Տաբատ Bogota"
+      },
       "category": "universal",
       "type": "pantaloni",
       "model": "pants",
       "gsm": 295,
       "composition": "100% polyester",
-      "sizes": ["3XS", "2XS", "XS", "S", "M", "L", "XL", "2XL"],
-      "features": ["EMBROIDERED LOGO", "PIQUET FABRIC", "POCKETS ON PANT", "YUKO ON PANT BOTTOM"],
-      "tech": ["PIQUETPOLY"],
-      "colorways": ["0004", "0010"],
+      "sizes": [
+        "3XS",
+        "2XS",
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "features": [
+        "EMBROIDERED LOGO",
+        "PIQUET FABRIC",
+        "POCKETS ON PANT",
+        "YUKO ON PANT BOTTOM"
+      ],
+      "tech": [
+        "PIQUETPOLY"
+      ],
+      "colorways": [
+        "0004",
+        "0010"
+      ],
       "priceLevel": 2,
       "basePrice": null,
       "moq": 10,
@@ -619,16 +1645,36 @@
     },
     {
       "id": "P189",
-      "name": { "ru": "Брюки Osaka", "en": "Pant Osaka", "hy": "Брюки Osaka" },
+      "name": {
+        "ru": "Брюки Osaka",
+        "en": "Pant Osaka",
+        "hy": "Տաբատ Osaka"
+      },
       "category": "universal",
       "type": "pantaloni",
       "model": "pants",
       "gsm": 235,
       "composition": "100% polyester",
-      "sizes": ["3XS", "2XS", "XS", "S", "M", "L", "XL", "2XL"],
-      "features": ["POCKETS"],
-      "tech": ["POLFRESH"],
-      "colorways": ["0004", "0010"],
+      "sizes": [
+        "3XS",
+        "2XS",
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "features": [
+        "POCKETS"
+      ],
+      "tech": [
+        "POLFRESH"
+      ],
+      "colorways": [
+        "0004",
+        "0010"
+      ],
       "priceLevel": 1,
       "basePrice": null,
       "moq": 10,
@@ -637,16 +1683,38 @@
     },
     {
       "id": "P229",
-      "name": { "ru": "Брюки Tokyo", "en": "Pant Tokyo", "hy": "Брюки Tokyo" },
+      "name": {
+        "ru": "Брюки Tokyo",
+        "en": "Pant Tokyo",
+        "hy": "Տաբատ Tokyo"
+      },
       "category": "universal",
       "type": "pantaloni",
       "model": "pants",
       "gsm": 245,
       "composition": "100% polyester (interlock)",
-      "sizes": ["3XS", "2XS", "XS", "S", "M", "L", "XL", "2XL"],
-      "features": ["EMBROIDERED LOGO", "INTERLOCK", "POCKETS"],
-      "tech": ["POLFRESH"],
-      "colorways": ["0004", "0010"],
+      "sizes": [
+        "3XS",
+        "2XS",
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "features": [
+        "EMBROIDERED LOGO",
+        "INTERLOCK",
+        "POCKETS"
+      ],
+      "tech": [
+        "POLFRESH"
+      ],
+      "colorways": [
+        "0004",
+        "0010"
+      ],
       "priceLevel": 2,
       "basePrice": null,
       "moq": 10,
@@ -655,16 +1723,40 @@
     },
     {
       "id": "P188",
-      "name": { "ru": "Брюки Sofia", "en": "Pant Sofia", "hy": "Брюки Sofia" },
+      "name": {
+        "ru": "Брюки Sofia",
+        "en": "Pant Sofia",
+        "hy": "Տաբատ Sofia"
+      },
       "category": "universal",
       "type": "pantaloni",
       "model": "pants",
       "gsm": 295,
       "composition": "80% polyester, 20% cotton",
-      "sizes": ["3XS", "2XS", "XS", "S", "M", "L", "XL", "2XL"],
-      "features": ["EMBROIDERED LOGO", "FRESH WINTER FLEECE", "POCKETS ON PANT", "YUKO ON PANT BOTTOM"],
-      "tech": ["FRESHCOTTON"],
-      "colorways": ["0404", "0044", "1010"],
+      "sizes": [
+        "3XS",
+        "2XS",
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "features": [
+        "EMBROIDERED LOGO",
+        "FRESH WINTER FLEECE",
+        "POCKETS ON PANT",
+        "YUKO ON PANT BOTTOM"
+      ],
+      "tech": [
+        "FRESHCOTTON"
+      ],
+      "colorways": [
+        "0404",
+        "0044",
+        "1010"
+      ],
       "priceLevel": 2,
       "basePrice": null,
       "moq": 10,
@@ -674,16 +1766,33 @@
     },
     {
       "id": "P352",
-      "name": { "ru": "Мяч Superior 2", "en": "Pallone Superior 2", "hy": "Мяч Superior 2" },
+      "name": {
+        "ru": "Мяч Superior 2",
+        "en": "Pallone Superior 2",
+        "hy": "Գնդակ Superior 2"
+      },
       "category": "calcio",
       "type": "palloni",
       "model": "ball",
       "gsm": null,
       "composition": "PU, 3 lining PU-cotton",
-      "sizes": ["3", "4", "5"],
-      "features": ["12 PANELS", "MACHINE SEWN", "PRINTED LOGO"],
-      "tech": ["ACT"],
-      "colorways": ["0003", "0007"],
+      "sizes": [
+        "3",
+        "4",
+        "5"
+      ],
+      "features": [
+        "12 PANELS",
+        "MACHINE SEWN",
+        "PRINTED LOGO"
+      ],
+      "tech": [
+        "ACT"
+      ],
+      "colorways": [
+        "0003",
+        "0007"
+      ],
       "priceLevel": 1,
       "basePrice": null,
       "moq": 5,
@@ -692,16 +1801,33 @@
     },
     {
       "id": "351277",
-      "name": { "ru": "Мяч Roboro 2.0", "en": "Pallone Roboro 2.0", "hy": "Мяч Roboro 2.0" },
+      "name": {
+        "ru": "Мяч Roboro 2.0",
+        "en": "Pallone Roboro 2.0",
+        "hy": "Գնդակ Roboro 2.0"
+      },
       "category": "calcio",
       "type": "palloni",
       "model": "ball",
       "gsm": null,
       "composition": "PU, 3 lining PU-cotton",
-      "sizes": ["3", "4", "5"],
-      "features": ["32 PANELS", "HAND SEWN", "PRINTED LOGO"],
-      "tech": ["ACT"],
-      "colorways": ["0302", "0313"],
+      "sizes": [
+        "3",
+        "4",
+        "5"
+      ],
+      "features": [
+        "32 PANELS",
+        "HAND SEWN",
+        "PRINTED LOGO"
+      ],
+      "tech": [
+        "ACT"
+      ],
+      "colorways": [
+        "0302",
+        "0313"
+      ],
       "priceLevel": 2,
       "basePrice": null,
       "moq": 5,
@@ -710,16 +1836,30 @@
     },
     {
       "id": "P278",
-      "name": { "ru": "Мяч Augusto", "en": "Pallone Augusto", "hy": "Мяч Augusto" },
+      "name": {
+        "ru": "Мяч Augusto",
+        "en": "Pallone Augusto",
+        "hy": "Գնդակ Augusto"
+      },
       "category": "calcio",
       "type": "palloni",
       "model": "ball",
       "gsm": null,
       "composition": "PU, 3 lining PU-cotton",
-      "sizes": ["4", "5"],
-      "features": ["32 PANELS", "EMBOSSED LOGO", "HAND SEWN"],
+      "sizes": [
+        "4",
+        "5"
+      ],
+      "features": [
+        "32 PANELS",
+        "EMBOSSED LOGO",
+        "HAND SEWN"
+      ],
       "tech": [],
-      "colorways": ["0302", "0307"],
+      "colorways": [
+        "0302",
+        "0307"
+      ],
       "priceLevel": 2,
       "basePrice": null,
       "moq": 5,
@@ -728,16 +1868,31 @@
     },
     {
       "id": "P281",
-      "name": { "ru": "Мяч Tiberio", "en": "Pallone Tiberio", "hy": "Мяч Tiberio" },
+      "name": {
+        "ru": "Мяч Tiberio",
+        "en": "Pallone Tiberio",
+        "hy": "Գնդակ Tiberio"
+      },
       "category": "calcio",
       "type": "palloni",
       "model": "ball",
       "gsm": null,
       "composition": "PU, 3 lining PU-cotton",
-      "sizes": ["4", "5"],
-      "features": ["32 PANELS", "HYBRID SEWN", "PRINTED LOGO"],
-      "tech": ["ACT"],
-      "colorways": ["0304"],
+      "sizes": [
+        "4",
+        "5"
+      ],
+      "features": [
+        "32 PANELS",
+        "HYBRID SEWN",
+        "PRINTED LOGO"
+      ],
+      "tech": [
+        "ACT"
+      ],
+      "colorways": [
+        "0304"
+      ],
       "priceLevel": 3,
       "basePrice": null,
       "moq": 5,
@@ -746,112 +1901,274 @@
     },
     {
       "id": "M1037",
-      "name": { "ru": "Волейбольная майка Cilento", "en": "Maglia Cilento Volley", "hy": "Волейбольная майка Cilento" },
+      "name": {
+        "ru": "Волейбольная майка Cilento",
+        "en": "Maglia Cilento Volley",
+        "hy": "Վոլեյբոլի շապիկ Cilento"
+      },
       "category": "volley",
       "type": "maglie",
       "model": "volley_top",
       "gsm": 135,
       "composition": "100% polyester",
-      "sizes": ["2XS", "XS", "S", "M", "L", "XL"],
-      "features": ["SUBLIMATIC PRINT", "EMBROIDERED LOGO", "FABRIC INSERTS"],
-      "tech": ["POLFRESH", "WOMAN"],
+      "sizes": [
+        "2XS",
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "features": [
+        "SUBLIMATIC PRINT",
+        "EMBROIDERED LOGO",
+        "FABRIC INSERTS"
+      ],
+      "tech": [
+        "POLFRESH",
+        "WOMAN"
+      ],
       "gender": "woman",
-      "colorways": ["0203", "1203", "0604", "0704", "1303", "0403", "0910"],
+      "colorways": [
+        "0203",
+        "1203",
+        "0604",
+        "0704",
+        "1303",
+        "0403",
+        "0910"
+      ],
       "priceLevel": 1,
       "basePrice": null,
       "moq": 10,
       "brandable": true,
-      "brandingZones": ["chest-center", "chest-left", "back-top", "back-number"]
+      "brandingZones": [
+        "chest-center",
+        "chest-left",
+        "back-top",
+        "back-number"
+      ]
     },
     {
       "id": "P186",
-      "name": { "ru": "Волейбольные шорты Veneto", "en": "Pant Veneto Volley", "hy": "Волейбольные шорты Veneto" },
+      "name": {
+        "ru": "Волейбольные шорты Veneto",
+        "en": "Pant Veneto Volley",
+        "hy": "Վոլեյբոլի շորտեր Veneto"
+      },
       "category": "volley",
       "type": "pantaloncini",
       "model": "shorts",
       "gsm": 135,
       "composition": "100% polyester",
-      "sizes": ["2XS", "XS", "S", "M", "L", "XL"],
-      "features": ["EMBROIDERED LOGO"],
-      "tech": ["POLFRESH", "WOMAN"],
+      "sizes": [
+        "2XS",
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "features": [
+        "EMBROIDERED LOGO"
+      ],
+      "tech": [
+        "POLFRESH",
+        "WOMAN"
+      ],
       "gender": "woman",
-      "colorways": ["0002", "0012", "0004", "0010"],
+      "colorways": [
+        "0002",
+        "0012",
+        "0004",
+        "0010"
+      ],
       "priceLevel": 1,
       "basePrice": null,
       "moq": 10,
       "brandable": true,
-      "brandingZones": ["shorts-left", "shorts-right"]
+      "brandingZones": [
+        "shorts-left",
+        "shorts-right"
+      ]
     },
     {
       "id": "KITV6060",
-      "name": { "ru": "Волейбольный комплект Pechino", "en": "Kit Pechino Volley", "hy": "Волейбольный комплект Pechino" },
+      "name": {
+        "ru": "Волейбольный комплект Pechino",
+        "en": "Kit Pechino Volley",
+        "hy": "Վոլեյբոլի հավաքածու Pechino"
+      },
       "category": "volley",
       "type": "kit",
       "model": "volley_top",
       "gsm": 135,
       "composition": "100% polyester",
-      "sizes": ["2XS", "XS", "S", "M", "L", "XL"],
-      "features": ["HALF-ELASTIC FABRIC", "EMBROIDERED LOGO", "MESH INSERTS"],
-      "tech": ["POLFRESH", "WOMAN"],
+      "sizes": [
+        "2XS",
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "features": [
+        "HALF-ELASTIC FABRIC",
+        "EMBROIDERED LOGO",
+        "MESH INSERTS"
+      ],
+      "tech": [
+        "POLFRESH",
+        "WOMAN"
+      ],
       "gender": "woman",
-      "colorways": ["0203", "1203", "0704", "1303", "0403", "1003"],
+      "colorways": [
+        "0203",
+        "1203",
+        "0704",
+        "1303",
+        "0403",
+        "1003"
+      ],
       "priceLevel": 2,
       "basePrice": null,
       "moq": 10,
       "brandable": true,
-      "brandingZones": ["chest-center", "chest-left", "back-top", "back-number"]
+      "brandingZones": [
+        "chest-center",
+        "chest-left",
+        "back-top",
+        "back-number"
+      ]
     },
     {
       "id": "KITV0008",
-      "name": { "ru": "Волейбольный комплект Romagna", "en": "Kit Romagna Volley", "hy": "Волейбольный комплект Romagna" },
+      "name": {
+        "ru": "Волейбольный комплект Romagna",
+        "en": "Kit Romagna Volley",
+        "hy": "Վոլեյբոլի հավաքածու Romagna"
+      },
       "category": "volley",
       "type": "kit",
       "model": "volley_top",
       "gsm": 135,
       "composition": "100% polyester",
-      "sizes": ["2XS", "XS", "S", "M", "L", "XL"],
-      "features": ["EMBROIDERED LOGO", "HALF-ELASTIC FABRIC"],
-      "tech": ["POLFRESH", "WOMAN", "SLIMLINE"],
+      "sizes": [
+        "2XS",
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "features": [
+        "EMBROIDERED LOGO",
+        "HALF-ELASTIC FABRIC"
+      ],
+      "tech": [
+        "POLFRESH",
+        "WOMAN",
+        "SLIMLINE"
+      ],
       "gender": "woman",
-      "colorways": ["0203", "1203", "0704", "0402", "0403"],
+      "colorways": [
+        "0203",
+        "1203",
+        "0704",
+        "0402",
+        "0403"
+      ],
       "priceLevel": 2,
       "basePrice": null,
       "moq": 10,
       "brandable": true,
-      "brandingZones": ["chest-center", "chest-left", "back-top", "back-number"]
+      "brandingZones": [
+        "chest-center",
+        "chest-left",
+        "back-top",
+        "back-number"
+      ]
     },
     {
       "id": "KITV6090",
-      "name": { "ru": "Волейбольный комплект Vilnius", "en": "Kit Vilnius Volley", "hy": "Волейбольный комплект Vilnius" },
+      "name": {
+        "ru": "Волейбольный комплект Vilnius",
+        "en": "Kit Vilnius Volley",
+        "hy": "Վոլեյբոլի հավաքածու Vilnius"
+      },
       "category": "volley",
       "type": "kit",
       "model": "volley_top",
       "gsm": 135,
       "composition": "100% polyester",
-      "sizes": ["XS", "S", "M", "L", "XL", "2XL"],
-      "features": ["EMBROIDERED LOGO", "HALF-ELASTIC FABRIC", "MESH INSERTS"],
-      "tech": ["POLFRESH", "MAN"],
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "features": [
+        "EMBROIDERED LOGO",
+        "HALF-ELASTIC FABRIC",
+        "MESH INSERTS"
+      ],
+      "tech": [
+        "POLFRESH",
+        "MAN"
+      ],
       "gender": "man",
-      "colorways": ["0203", "1203", "0704", "1303", "0403", "1003"],
+      "colorways": [
+        "0203",
+        "1203",
+        "0704",
+        "1303",
+        "0403",
+        "1003"
+      ],
       "priceLevel": 2,
       "basePrice": null,
       "moq": 10,
       "brandable": true,
-      "brandingZones": ["chest-center", "chest-left", "back-top", "back-number"]
+      "brandingZones": [
+        "chest-center",
+        "chest-left",
+        "back-top",
+        "back-number"
+      ]
     },
     {
       "id": "CA01",
-      "name": { "ru": "Плавки-шорты Atletica", "en": "Coulotte Atletica Volley", "hy": "Плавки-шорты Atletica" },
+      "name": {
+        "ru": "Плавки-шорты Atletica",
+        "en": "Coulotte Atletica Volley",
+        "hy": "Լողի շորտեր Atletica"
+      },
       "category": "volley",
       "type": "accessori",
       "model": null,
       "gsm": 240,
       "composition": "82% polyester, 18% elastan",
-      "sizes": ["S", "M", "L"],
-      "features": ["EMBROIDERED LOGO"],
-      "tech": ["POLFRESH", "ELASTICFABRIC", "WOMAN"],
+      "sizes": [
+        "S",
+        "M",
+        "L"
+      ],
+      "features": [
+        "EMBROIDERED LOGO"
+      ],
+      "tech": [
+        "POLFRESH",
+        "ELASTICFABRIC",
+        "WOMAN"
+      ],
       "gender": "woman",
-      "colorways": ["0002", "0012", "0010"],
+      "colorways": [
+        "0002",
+        "0012",
+        "0010"
+      ],
       "priceLevel": 1,
       "basePrice": null,
       "moq": 10,
@@ -860,17 +2177,37 @@
     },
     {
       "id": "CA02",
-      "name": { "ru": "Шорты Athletic Volley", "en": "Short Athletic Volley", "hy": "Шорты Athletic Volley" },
+      "name": {
+        "ru": "Шорты Athletic Volley",
+        "en": "Short Athletic Volley",
+        "hy": "Շորտեր Athletic Volley"
+      },
       "category": "volley",
       "type": "pantaloncini",
       "model": "shorts",
       "gsm": 240,
       "composition": "87% polyester, 13% elastan",
-      "sizes": ["S", "M", "L", "XL"],
-      "features": ["EMBROIDERED LOGO"],
-      "tech": ["POLFRESH", "ELASTICFABRIC", "WOMAN"],
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "features": [
+        "EMBROIDERED LOGO"
+      ],
+      "tech": [
+        "POLFRESH",
+        "ELASTICFABRIC",
+        "WOMAN"
+      ],
       "gender": "woman",
-      "colorways": ["0002", "0012", "0004", "0010"],
+      "colorways": [
+        "0002",
+        "0012",
+        "0004",
+        "0010"
+      ],
       "priceLevel": 1,
       "basePrice": null,
       "moq": 10,
@@ -879,198 +2216,528 @@
     },
     {
       "id": "M1106",
-      "name": { "ru": "Баскетбольная майка Portland", "en": "Canotta Portland Basket", "hy": "Баскетбольная майка Portland" },
+      "name": {
+        "ru": "Баскетбольная майка Portland",
+        "en": "Canotta Portland Basket",
+        "hy": "Բասկետբոլի շապիկ Portland"
+      },
       "category": "basket",
       "type": "maglie",
       "model": "basket_top",
       "gsm": 145,
       "composition": "100% polyester",
-      "sizes": ["3XS", "2XS", "XS", "S", "M", "L", "XL", "2XL", "3XL", "4XL"],
-      "features": ["MICROMESH FABRIC", "EMBROIDERED LOGO"],
-      "tech": ["POLFRESH"],
-      "colorways": ["0002", "0012", "0003", "0007", "0013", "0004", "0010"],
+      "sizes": [
+        "3XS",
+        "2XS",
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL",
+        "3XL",
+        "4XL"
+      ],
+      "features": [
+        "MICROMESH FABRIC",
+        "EMBROIDERED LOGO"
+      ],
+      "tech": [
+        "POLFRESH"
+      ],
+      "colorways": [
+        "0002",
+        "0012",
+        "0003",
+        "0007",
+        "0013",
+        "0004",
+        "0010"
+      ],
       "priceLevel": 1,
       "basePrice": null,
       "moq": 10,
       "brandable": true,
-      "brandingZones": ["chest-center", "back-top", "back-number"]
+      "brandingZones": [
+        "chest-center",
+        "back-top",
+        "back-number"
+      ]
     },
     {
       "id": "P192",
-      "name": { "ru": "Баскетбольные шорты Portland", "en": "Pant Portland Basket", "hy": "Баскетбольные шорты Portland" },
+      "name": {
+        "ru": "Баскетбольные шорты Portland",
+        "en": "Pant Portland Basket",
+        "hy": "Բասկետբոլի շորտեր Portland"
+      },
       "category": "basket",
       "type": "pantaloncini",
       "model": "shorts",
       "gsm": 145,
       "composition": "100% polyester",
-      "sizes": ["3XS", "2XS", "XS", "S", "M", "L", "XL", "2XL", "3XL", "4XL"],
-      "features": ["MICROMESH FABRIC", "EMBROIDERED LOGO", "LACES INSIDE"],
-      "tech": ["POLFRESH"],
-      "colorways": ["0002", "0012", "0003", "0007", "0013", "0004", "0010"],
+      "sizes": [
+        "3XS",
+        "2XS",
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL",
+        "3XL",
+        "4XL"
+      ],
+      "features": [
+        "MICROMESH FABRIC",
+        "EMBROIDERED LOGO",
+        "LACES INSIDE"
+      ],
+      "tech": [
+        "POLFRESH"
+      ],
+      "colorways": [
+        "0002",
+        "0012",
+        "0003",
+        "0007",
+        "0013",
+        "0004",
+        "0010"
+      ],
       "priceLevel": 1,
       "basePrice": null,
       "moq": 10,
       "brandable": true,
-      "brandingZones": ["shorts-left", "shorts-right"]
+      "brandingZones": [
+        "shorts-left",
+        "shorts-right"
+      ]
     },
     {
       "id": "KITB1000",
-      "name": { "ru": "Баскетбольный комплект Double (двусторонний)", "en": "Kit Double Basket", "hy": "Баскетбольный комплект Double" },
+      "name": {
+        "ru": "Баскетбольный комплект Double (двусторонний)",
+        "en": "Kit Double Basket",
+        "hy": "Բասկետբոլի հավաքածու Double (երկկողմանի)"
+      },
       "category": "basket",
       "type": "kit",
       "model": "basket_top",
       "gsm": 70,
       "composition": "100% polyester",
-      "sizes": ["3XS", "2XS", "XS", "S", "M", "L", "XL", "2XL", "3XL"],
-      "features": ["MESH FABRIC", "PVC LOGO", "REVERSIBLE"],
-      "tech": ["POLFRESH", "T-MESH", "DOUBLE"],
-      "colorways": ["0203", "1203", "0702", "1303", "0412", "0403", "1003"],
+      "sizes": [
+        "3XS",
+        "2XS",
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL",
+        "3XL"
+      ],
+      "features": [
+        "MESH FABRIC",
+        "PVC LOGO",
+        "REVERSIBLE"
+      ],
+      "tech": [
+        "POLFRESH",
+        "T-MESH",
+        "DOUBLE"
+      ],
+      "colorways": [
+        "0203",
+        "1203",
+        "0702",
+        "1303",
+        "0412",
+        "0403",
+        "1003"
+      ],
       "priceLevel": 2,
       "basePrice": null,
       "moq": 10,
       "brandable": true,
-      "brandingZones": ["chest-center", "back-number"]
+      "brandingZones": [
+        "chest-center",
+        "back-number"
+      ]
     },
     {
       "id": "KITB0001",
-      "name": { "ru": "Баскетбольный комплект Jackson", "en": "Kit Jackson Basket", "hy": "Баскетбольный комплект Jackson" },
+      "name": {
+        "ru": "Баскетбольный комплект Jackson",
+        "en": "Kit Jackson Basket",
+        "hy": "Բասկետբոլի հավաքածու Jackson"
+      },
       "category": "basket",
       "type": "kit",
       "model": "basket_top",
       "gsm": 135,
       "composition": "100% polyester",
-      "sizes": ["3XS", "2XS", "XS", "S", "M", "L", "XL", "2XL", "3XL", "4XL"],
-      "features": ["EMBROIDERED LOGO", "YUKO COLLAR", "MICROMESH FABRIC"],
-      "tech": ["POLFRESH", "MICROMESH"],
-      "colorways": ["0203", "1203", "0704", "1303", "0403", "1003"],
+      "sizes": [
+        "3XS",
+        "2XS",
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL",
+        "3XL",
+        "4XL"
+      ],
+      "features": [
+        "EMBROIDERED LOGO",
+        "YUKO COLLAR",
+        "MICROMESH FABRIC"
+      ],
+      "tech": [
+        "POLFRESH",
+        "MICROMESH"
+      ],
+      "colorways": [
+        "0203",
+        "1203",
+        "0704",
+        "1303",
+        "0403",
+        "1003"
+      ],
       "priceLevel": 2,
       "basePrice": null,
       "moq": 10,
       "brandable": true,
-      "brandingZones": ["chest-center", "back-top", "back-number"]
+      "brandingZones": [
+        "chest-center",
+        "back-top",
+        "back-number"
+      ]
     },
     {
       "id": "KITB7000",
-      "name": { "ru": "Баскетбольный комплект Las Vegas", "en": "Kit Las Vegas Basket", "hy": "Баскетбольный комплект Las Vegas" },
+      "name": {
+        "ru": "Баскетбольный комплект Las Vegas",
+        "en": "Kit Las Vegas Basket",
+        "hy": "Բասկետբոլի հավաքածու Las Vegas"
+      },
       "category": "basket",
       "type": "kit",
       "model": "basket_top",
       "gsm": 135,
       "composition": "100% polyester",
-      "sizes": ["L", "XL", "2XL", "3XL", "4XL"],
-      "features": ["EMBROIDERED LOGO", "YUKO COLLAR"],
-      "tech": ["POLFRESH", "TRIS"],
-      "colorways": ["1204", "0302", "0312", "0313", "0304", "0310", "0704"],
+      "sizes": [
+        "L",
+        "XL",
+        "2XL",
+        "3XL",
+        "4XL"
+      ],
+      "features": [
+        "EMBROIDERED LOGO",
+        "YUKO COLLAR"
+      ],
+      "tech": [
+        "POLFRESH",
+        "TRIS"
+      ],
+      "colorways": [
+        "1204",
+        "0302",
+        "0312",
+        "0313",
+        "0304",
+        "0310",
+        "0704"
+      ],
       "priceLevel": 2,
       "basePrice": null,
       "moq": 10,
       "brandable": true,
-      "brandingZones": ["chest-center", "back-top", "back-number"]
+      "brandingZones": [
+        "chest-center",
+        "back-top",
+        "back-number"
+      ]
     },
     {
       "id": "SMB2000",
-      "name": { "ru": "Разминочная футболка Indiana", "en": "Sopramaglia Indiana Basket", "hy": "Разминочная футболка Indiana" },
+      "name": {
+        "ru": "Разминочная футболка Indiana",
+        "en": "Sopramaglia Indiana Basket",
+        "hy": "Տաքացման շապիկ Indiana"
+      },
       "category": "basket",
       "type": "maglie",
       "model": "jersey_ss",
       "gsm": 140,
       "composition": "100% polyester",
-      "sizes": ["S", "M", "L", "XL", "2XL", "3XL", "4XL"],
-      "features": ["EMBROIDERED LOGO"],
-      "tech": ["POLFRESH"],
-      "colorways": ["0203", "1203", "0304", "1303", "0403", "0407"],
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL",
+        "3XL",
+        "4XL"
+      ],
+      "features": [
+        "EMBROIDERED LOGO"
+      ],
+      "tech": [
+        "POLFRESH"
+      ],
+      "colorways": [
+        "0203",
+        "1203",
+        "0304",
+        "1303",
+        "0403",
+        "0407"
+      ],
       "priceLevel": 1,
       "basePrice": null,
       "moq": 10,
       "brandable": true,
-      "brandingZones": ["chest-center", "chest-left", "back-top"]
+      "brandingZones": [
+        "chest-center",
+        "chest-left",
+        "back-top"
+      ]
     },
     {
       "id": "SMB3000",
-      "name": { "ru": "Разминочная футболка Los Angeles", "en": "Sopramaglia Los Angeles Basket", "hy": "Разминочная футболка Los Angeles" },
+      "name": {
+        "ru": "Разминочная футболка Los Angeles",
+        "en": "Sopramaglia Los Angeles Basket",
+        "hy": "Տաքացման շապիկ Los Angeles"
+      },
       "category": "basket",
       "type": "maglie",
       "model": "jersey_ss",
       "gsm": 140,
       "composition": "100% polyester",
-      "sizes": ["3XS", "2XS", "XS", "S", "M", "L", "XL", "2XL", "3XL", "4XL"],
-      "features": ["EMBROIDERED LOGO"],
-      "tech": ["POLFRESH"],
-      "colorways": ["0203", "1203", "0704", "1303", "0403", "1003"],
+      "sizes": [
+        "3XS",
+        "2XS",
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL",
+        "3XL",
+        "4XL"
+      ],
+      "features": [
+        "EMBROIDERED LOGO"
+      ],
+      "tech": [
+        "POLFRESH"
+      ],
+      "colorways": [
+        "0203",
+        "1203",
+        "0704",
+        "1303",
+        "0403",
+        "1003"
+      ],
       "priceLevel": 1,
       "basePrice": null,
       "moq": 10,
       "brandable": true,
-      "brandingZones": ["chest-center", "chest-left", "back-top"]
+      "brandingZones": [
+        "chest-center",
+        "chest-left",
+        "back-top"
+      ]
     },
     {
       "id": "TS010",
-      "name": { "ru": "Футболка Aria", "en": "T-Shirt Aria", "hy": "Футболка Aria" },
+      "name": {
+        "ru": "Футболка Aria",
+        "en": "T-Shirt Aria",
+        "hy": "Շապիկ Aria"
+      },
       "category": "universal",
       "type": "tshirt",
       "model": "jersey_ss",
       "gsm": 130,
       "composition": "100% cotton",
-      "sizes": ["5XS", "4XS", "3XS", "2XS", "XS", "S", "M", "L", "XL", "2XL"],
-      "features": ["PRINTED LOGO ON SLEEVE"],
-      "tech": ["COTTON"],
-      "colorways": ["0002", "0012", "0003", "0007", "0013", "0004", "0006", "0010"],
+      "sizes": [
+        "5XS",
+        "4XS",
+        "3XS",
+        "2XS",
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "features": [
+        "PRINTED LOGO ON SLEEVE"
+      ],
+      "tech": [
+        "COTTON"
+      ],
+      "colorways": [
+        "0002",
+        "0012",
+        "0003",
+        "0007",
+        "0013",
+        "0004",
+        "0006",
+        "0010"
+      ],
       "priceLevel": 1,
       "basePrice": null,
       "moq": 10,
       "brandable": true,
-      "brandingZones": ["chest-center", "chest-left", "back-top", "sleeve-left"]
+      "brandingZones": [
+        "chest-center",
+        "chest-left",
+        "back-top",
+        "sleeve-left"
+      ]
     },
     {
       "id": "PR102",
-      "name": { "ru": "Поло Sud Silver (женское)", "en": "Polo Sud Silver", "hy": "Поло Sud Silver" },
+      "name": {
+        "ru": "Поло Sud Silver (женское)",
+        "en": "Polo Sud Silver",
+        "hy": "Պոլո Sud Silver (կանացի)"
+      },
       "category": "universal",
       "type": "polo",
       "model": null,
       "gsm": 180,
       "composition": "100% cotton, 5% elastan",
-      "sizes": ["XS", "S", "M", "L", "XL"],
-      "features": ["EMBROIDERED SLEEVE LOGO", "5 BUTTONS COLLAR", "YUKO COLLAR"],
-      "tech": ["TEIFABRIC", "PIQUETCOTT", "WOMAN"],
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "features": [
+        "EMBROIDERED SLEEVE LOGO",
+        "5 BUTTONS COLLAR",
+        "YUKO COLLAR"
+      ],
+      "tech": [
+        "TEIFABRIC",
+        "PIQUETCOTT",
+        "WOMAN"
+      ],
       "gender": "woman",
-      "colorways": ["0002", "0012", "0003", "0004"],
+      "colorways": [
+        "0002",
+        "0012",
+        "0003",
+        "0004"
+      ],
       "priceLevel": 2,
       "basePrice": null,
       "moq": 10,
       "brandable": true,
-      "brandingZones": ["chest-left", "sleeve-left"]
+      "brandingZones": [
+        "chest-left",
+        "sleeve-left"
+      ]
     },
     {
       "id": "PR200",
-      "name": { "ru": "Поло Ariete", "en": "Polo Ariete", "hy": "Поло Ariete" },
+      "name": {
+        "ru": "Поло Ariete",
+        "en": "Polo Ariete",
+        "hy": "Պոլո Ariete"
+      },
       "category": "universal",
       "type": "polo",
       "model": null,
       "gsm": 200,
       "composition": "100% cotton",
-      "sizes": ["5XS", "4XS", "3XS", "2XS", "XS", "S", "M", "L", "XL", "2XL"],
-      "features": ["EMBROIDERED SLEEVE LOGO", "2 BUTTONS COLLAR", "YUKO COLLAR", "YUKO BOARD SLEEVES"],
-      "tech": ["COTTON", "PIQUETCOTT"],
-      "colorways": ["0012", "0007", "0013", "0008", "0044", "0002", "0004", "0010", "0003"],
+      "sizes": [
+        "5XS",
+        "4XS",
+        "3XS",
+        "2XS",
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "features": [
+        "EMBROIDERED SLEEVE LOGO",
+        "2 BUTTONS COLLAR",
+        "YUKO COLLAR",
+        "YUKO BOARD SLEEVES"
+      ],
+      "tech": [
+        "COTTON",
+        "PIQUETCOTT"
+      ],
+      "colorways": [
+        "0012",
+        "0007",
+        "0013",
+        "0008",
+        "0044",
+        "0002",
+        "0004",
+        "0010",
+        "0003"
+      ],
       "priceLevel": 2,
       "basePrice": null,
       "moq": 10,
       "brandable": true,
-      "brandingZones": ["chest-left", "sleeve-left"],
+      "brandingZones": [
+        "chest-left",
+        "sleeve-left"
+      ],
       "oversizeId": "PR201"
     },
     {
       "id": "PF003",
-      "name": { "ru": "Шорты Land", "en": "Bermuda Land", "hy": "Шорты Land" },
+      "name": {
+        "ru": "Шорты Land",
+        "en": "Bermuda Land",
+        "hy": "Շորտեր Land"
+      },
       "category": "universal",
       "type": "pantaloncini",
       "model": "shorts",
       "gsm": 210,
       "composition": "65% polyester, 35% cotton",
-      "sizes": ["XS", "S", "M", "L", "XL", "2XL"],
-      "features": ["EMBROIDERED LOGO", "POCKETS ON PANT", "POCKETS ON BACK"],
-      "tech": ["POLCOTTON"],
-      "colorways": ["0004", "0010"],
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "features": [
+        "EMBROIDERED LOGO",
+        "POCKETS ON PANT",
+        "POCKETS ON BACK"
+      ],
+      "tech": [
+        "POLCOTTON"
+      ],
+      "colorways": [
+        "0004",
+        "0010"
+      ],
       "priceLevel": 1,
       "basePrice": null,
       "moq": 10,
@@ -1079,16 +2746,38 @@
     },
     {
       "id": "B111",
-      "name": { "ru": "Шорты Olimpia Passeggio", "en": "Bermuda Olimpia Passeggio", "hy": "Шорты Olimpia Passeggio" },
+      "name": {
+        "ru": "Шорты Olimpia Passeggio",
+        "en": "Bermuda Olimpia Passeggio",
+        "hy": "Շորտեր Olimpia Passeggio"
+      },
       "category": "universal",
       "type": "pantaloncini",
       "model": "shorts",
       "gsm": 120,
       "composition": "100% polyester",
-      "sizes": ["3XS", "2XS", "XS", "S", "M", "L", "XL", "2XL"],
-      "features": ["EMBROIDERED LOGO", "POCKETS ON PANT", "POCKETS ON BACK"],
-      "tech": ["MICROFIBRA"],
-      "colorways": ["0004", "0010"],
+      "sizes": [
+        "3XS",
+        "2XS",
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "features": [
+        "EMBROIDERED LOGO",
+        "POCKETS ON PANT",
+        "POCKETS ON BACK"
+      ],
+      "tech": [
+        "MICROFIBRA"
+      ],
+      "colorways": [
+        "0004",
+        "0010"
+      ],
       "priceLevel": 1,
       "basePrice": null,
       "moq": 10,
@@ -1098,183 +2787,446 @@
     },
     {
       "id": "K201B",
-      "name": { "ru": "Ветровка Italia", "en": "Rain Jacket Italia", "hy": "Ветровка Italia" },
+      "name": {
+        "ru": "Ветровка Italia",
+        "en": "Rain Jacket Italia",
+        "hy": "Հողմապաշտպան բաճկոն Italia"
+      },
       "category": "universal",
       "type": "capispalla",
       "model": "jacket",
       "gsm": null,
       "composition": "100% polyester, 210T",
-      "sizes": ["3XS", "2XS", "XS", "S", "M", "L", "XL", "2XL"],
-      "features": ["EMBROIDERED LOGO", "HIDDEN HOOD", "FULL ZIP", "POCKETS ON JACKET"],
-      "tech": ["POLFRESH", "WATERPROOF"],
-      "colorways": ["0002", "0012", "0013", "0008", "0004", "0010"],
+      "sizes": [
+        "3XS",
+        "2XS",
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "features": [
+        "EMBROIDERED LOGO",
+        "HIDDEN HOOD",
+        "FULL ZIP",
+        "POCKETS ON JACKET"
+      ],
+      "tech": [
+        "POLFRESH",
+        "WATERPROOF"
+      ],
+      "colorways": [
+        "0002",
+        "0012",
+        "0013",
+        "0008",
+        "0004",
+        "0010"
+      ],
       "priceLevel": 2,
       "basePrice": null,
       "moq": 10,
       "brandable": true,
-      "brandingZones": ["chest-left", "back-top"]
+      "brandingZones": [
+        "chest-left",
+        "back-top"
+      ]
     },
     {
       "id": "K200",
-      "name": { "ru": "Ветровка Atacama", "en": "Rain Jacket Atacama", "hy": "Ветровка Atacama" },
+      "name": {
+        "ru": "Ветровка Atacama",
+        "en": "Rain Jacket Atacama",
+        "hy": "Հողմապաշտպան բաճկոն Atacama"
+      },
       "category": "universal",
       "type": "capispalla",
       "model": "jacket",
       "gsm": null,
       "composition": "100% polyester, 210T",
-      "sizes": ["3XS", "2XS", "XS", "S", "M", "L", "XL", "2XL"],
-      "features": ["IRIDESCENT LOGO", "HOOD", "FULL ZIP TONE ON TONE", "POCKETS ON JACKET"],
-      "tech": ["POLFRESH", "WATERPROOF"],
-      "colorways": ["0002", "0012", "0013", "0008", "0004", "0010", "0036", "0040", "0028"],
+      "sizes": [
+        "3XS",
+        "2XS",
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "features": [
+        "IRIDESCENT LOGO",
+        "HOOD",
+        "FULL ZIP TONE ON TONE",
+        "POCKETS ON JACKET"
+      ],
+      "tech": [
+        "POLFRESH",
+        "WATERPROOF"
+      ],
+      "colorways": [
+        "0002",
+        "0012",
+        "0013",
+        "0008",
+        "0004",
+        "0010",
+        "0036",
+        "0040",
+        "0028"
+      ],
       "priceLevel": 2,
       "basePrice": null,
       "moq": 10,
       "brandable": true,
-      "brandingZones": ["chest-left", "back-top"]
+      "brandingZones": [
+        "chest-left",
+        "back-top"
+      ]
     },
     {
       "id": "K212",
-      "name": { "ru": "Ветровка Wind Stop", "en": "Wind Stop Jacket", "hy": "Ветровка Wind Stop" },
+      "name": {
+        "ru": "Ветровка Wind Stop",
+        "en": "Wind Stop Jacket",
+        "hy": "Հողմապաշտպան բաճկոն Wind Stop"
+      },
       "category": "universal",
       "type": "capispalla",
       "model": "jacket",
       "gsm": null,
       "composition": "100% polyester, 210T",
-      "sizes": ["3XS", "2XS", "XS", "S", "M", "L", "XL", "2XL"],
-      "features": ["IRIDESCENT LOGO", "HOOD", "FULL ZIP TONE ON TONE", "INTERNAL MESH FABRIC"],
-      "tech": ["POLFRESH", "WATERPROOF"],
-      "colorways": ["0010", "0004"],
+      "sizes": [
+        "3XS",
+        "2XS",
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "features": [
+        "IRIDESCENT LOGO",
+        "HOOD",
+        "FULL ZIP TONE ON TONE",
+        "INTERNAL MESH FABRIC"
+      ],
+      "tech": [
+        "POLFRESH",
+        "WATERPROOF"
+      ],
+      "colorways": [
+        "0010",
+        "0004"
+      ],
       "priceLevel": 3,
       "basePrice": null,
       "moq": 10,
       "brandable": true,
-      "brandingZones": ["chest-left", "back-top"]
+      "brandingZones": [
+        "chest-left",
+        "back-top"
+      ]
     },
     {
       "id": "K206",
-      "name": { "ru": "Ветровка Andalusia", "en": "Rain Jacket Andalusia", "hy": "Ветровка Andalusia" },
+      "name": {
+        "ru": "Ветровка Andalusia",
+        "en": "Rain Jacket Andalusia",
+        "hy": "Հողմապաշտպան բաճկոն Andalusia"
+      },
       "category": "universal",
       "type": "capispalla",
       "model": "jacket",
       "gsm": null,
       "composition": "100% polyester, 210T",
-      "sizes": ["3XS", "2XS", "XS", "S", "M", "L", "XL", "2XL"],
-      "features": ["MESH INSIDE", "EMBROIDERED LOGO", "POCKETS WITH ZIP INSIDE", "BREATHABLE BACK INSERT"],
-      "tech": ["POLFRESH", "WATERPROOF"],
-      "colorways": ["0004", "0010", "0027", "0040"],
+      "sizes": [
+        "3XS",
+        "2XS",
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "features": [
+        "MESH INSIDE",
+        "EMBROIDERED LOGO",
+        "POCKETS WITH ZIP INSIDE",
+        "BREATHABLE BACK INSERT"
+      ],
+      "tech": [
+        "POLFRESH",
+        "WATERPROOF"
+      ],
+      "colorways": [
+        "0004",
+        "0010",
+        "0027",
+        "0040"
+      ],
       "priceLevel": 2,
       "basePrice": null,
       "moq": 10,
       "brandable": true,
-      "brandingZones": ["chest-left", "back-top"]
+      "brandingZones": [
+        "chest-left",
+        "back-top"
+      ]
     },
     {
       "id": "K207",
-      "name": { "ru": "Ветровка Cairo", "en": "Rain Jacket Cairo", "hy": "Ветровка Cairo" },
+      "name": {
+        "ru": "Ветровка Cairo",
+        "en": "Rain Jacket Cairo",
+        "hy": "Հողմապաշտպան բաճկոն Cairo"
+      },
       "category": "universal",
       "type": "capispalla",
       "model": "jacket",
       "gsm": null,
       "composition": "100% polyester, 210T",
-      "sizes": ["3XS", "2XS", "XS", "S", "M", "L", "XL", "2XL"],
-      "features": ["EMBROIDERED LOGO", "HIDDEN HOOD", "FULL CONTRAST ZIP", "POCKETS ON JACKET"],
-      "tech": ["POLFRESH", "WATERPROOF"],
-      "colorways": ["3610", "4004"],
+      "sizes": [
+        "3XS",
+        "2XS",
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "features": [
+        "EMBROIDERED LOGO",
+        "HIDDEN HOOD",
+        "FULL CONTRAST ZIP",
+        "POCKETS ON JACKET"
+      ],
+      "tech": [
+        "POLFRESH",
+        "WATERPROOF"
+      ],
+      "colorways": [
+        "3610",
+        "4004"
+      ],
       "priceLevel": 2,
       "basePrice": null,
       "moq": 10,
       "brandable": true,
-      "brandingZones": ["chest-left", "back-top"]
+      "brandingZones": [
+        "chest-left",
+        "back-top"
+      ]
     },
     {
       "id": "G030",
-      "name": { "ru": "Жилет Bormio", "en": "Smanicato Bormio", "hy": "Жилет Bormio" },
+      "name": {
+        "ru": "Жилет Bormio",
+        "en": "Smanicato Bormio",
+        "hy": "Ժիլետ Bormio"
+      },
       "category": "universal",
       "type": "capispalla",
       "model": "jacket",
       "gsm": null,
       "composition": "100% polyester (outside, inside, padding)",
-      "sizes": ["2XS/XS", "S/M", "L/XL"],
-      "features": ["EMBROIDERED LOGO ON BACK", "FULL ZIP"],
-      "tech": ["POLCOAT"],
-      "colorways": ["0004", "0010"],
+      "sizes": [
+        "2XS/XS",
+        "S/M",
+        "L/XL"
+      ],
+      "features": [
+        "EMBROIDERED LOGO ON BACK",
+        "FULL ZIP"
+      ],
+      "tech": [
+        "POLCOAT"
+      ],
+      "colorways": [
+        "0004",
+        "0010"
+      ],
       "priceLevel": 3,
       "basePrice": null,
       "moq": 10,
       "brandable": true,
-      "brandingZones": ["chest-left", "back-top"],
+      "brandingZones": [
+        "chest-left",
+        "back-top"
+      ],
       "oversizeId": "G026B"
     },
     {
       "id": "G027",
-      "name": { "ru": "Куртка Lapponia", "en": "Giubbotto Lapponia", "hy": "Куртка Lapponia" },
+      "name": {
+        "ru": "Куртка Lapponia",
+        "en": "Giubbotto Lapponia",
+        "hy": "Բաճկոն Lapponia"
+      },
       "category": "universal",
       "type": "capispalla",
       "model": "jacket",
       "gsm": null,
       "composition": "woven 100% polyester, knitted 95% polyester 5% spandex",
-      "sizes": ["3XS", "2XS", "XS", "S", "M", "L", "XL", "2XL"],
-      "features": ["PRINTED LOGO ON SLEEVE", "ZIP CLOSER", "HOOD (NOT REMOVABLE)"],
-      "tech": ["POLCOAT", "ALL SEASON"],
-      "colorways": ["0004", "0010"],
+      "sizes": [
+        "3XS",
+        "2XS",
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "features": [
+        "PRINTED LOGO ON SLEEVE",
+        "ZIP CLOSER",
+        "HOOD (NOT REMOVABLE)"
+      ],
+      "tech": [
+        "POLCOAT",
+        "ALL SEASON"
+      ],
+      "colorways": [
+        "0004",
+        "0010"
+      ],
       "priceLevel": 3,
       "basePrice": null,
       "moq": 10,
       "brandable": true,
-      "brandingZones": ["chest-left", "back-top", "sleeve-left"],
+      "brandingZones": [
+        "chest-left",
+        "back-top",
+        "sleeve-left"
+      ],
       "oversizeId": "G027B"
     },
     {
       "id": "G022",
-      "name": { "ru": "Куртка Montreal", "en": "Giubbotto Montreal", "hy": "Куртка Montreal" },
+      "name": {
+        "ru": "Куртка Montreal",
+        "en": "Giubbotto Montreal",
+        "hy": "Բաճկոն Montreal"
+      },
       "category": "universal",
       "type": "capispalla",
       "model": "jacket",
       "gsm": null,
       "composition": "100% polyester (outside, inside, padding)",
-      "sizes": ["3XS", "2XS", "XS", "S", "M", "L", "XL", "2XL"],
-      "features": ["EMBROIDERED LOGO", "ZIP CLOSER", "HOOD (NOT REMOVABLE)"],
-      "tech": ["POLYESTER", "LIGHT"],
-      "colorways": ["0004", "0010"],
+      "sizes": [
+        "3XS",
+        "2XS",
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "features": [
+        "EMBROIDERED LOGO",
+        "ZIP CLOSER",
+        "HOOD (NOT REMOVABLE)"
+      ],
+      "tech": [
+        "POLYESTER",
+        "LIGHT"
+      ],
+      "colorways": [
+        "0004",
+        "0010"
+      ],
       "priceLevel": 3,
       "basePrice": null,
       "moq": 10,
       "brandable": true,
-      "brandingZones": ["chest-left", "back-top"],
+      "brandingZones": [
+        "chest-left",
+        "back-top"
+      ],
       "oversizeId": "G022B"
     },
     {
       "id": "G028",
-      "name": { "ru": "Куртка Ande", "en": "Giubbotto Ande", "hy": "Куртка Ande" },
+      "name": {
+        "ru": "Куртка Ande",
+        "en": "Giubbotto Ande",
+        "hy": "Բաճկոն Ande"
+      },
       "category": "universal",
       "type": "capispalla",
       "model": "jacket",
       "gsm": null,
       "composition": "100% polyester (outside, inside, padding)",
-      "sizes": ["3XS", "2XS", "XS", "S", "M", "L", "XL", "2XL"],
-      "features": ["PRINTED LOGO ON SLEEVE", "ZIP CLOSER", "HOOD (NOT REMOVABLE)"],
-      "tech": ["POLCOAT", "ALL-AROUND"],
-      "colorways": ["0004", "0010"],
+      "sizes": [
+        "3XS",
+        "2XS",
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "features": [
+        "PRINTED LOGO ON SLEEVE",
+        "ZIP CLOSER",
+        "HOOD (NOT REMOVABLE)"
+      ],
+      "tech": [
+        "POLCOAT",
+        "ALL-AROUND"
+      ],
+      "colorways": [
+        "0004",
+        "0010"
+      ],
       "priceLevel": 3,
       "basePrice": null,
       "moq": 10,
       "brandable": true,
-      "brandingZones": ["chest-left", "back-top", "sleeve-left"],
+      "brandingZones": [
+        "chest-left",
+        "back-top",
+        "sleeve-left"
+      ],
       "oversizeId": "G028B"
     },
     {
       "id": "B303",
-      "name": { "ru": "Мешок для обуви Soft New", "en": "Sacchetto Soft New", "hy": "Мешок для обуви Soft New" },
+      "name": {
+        "ru": "Мешок для обуви Soft New",
+        "en": "Sacchetto Soft New",
+        "hy": "Կոշիկի պայուսակ Soft New"
+      },
       "category": "universal",
       "type": "borse",
       "model": null,
       "gsm": null,
       "composition": "100% polyester",
       "dimensions": "45 x 33 cm",
-      "sizes": ["UNI"],
-      "features": ["DRAW CORD CLOSURE", "PRINTED LOGO"],
-      "tech": ["POLYESTER"],
-      "colorways": ["0405", "0427", "0440", "0428"],
+      "sizes": [
+        "UNI"
+      ],
+      "features": [
+        "DRAW CORD CLOSURE",
+        "PRINTED LOGO"
+      ],
+      "tech": [
+        "POLYESTER"
+      ],
+      "colorways": [
+        "0405",
+        "0427",
+        "0440",
+        "0428"
+      ],
       "priceLevel": 1,
       "basePrice": null,
       "moq": 20,
@@ -1283,17 +3235,38 @@
     },
     {
       "id": "B302",
-      "name": { "ru": "Рюкзак Palermo", "en": "Zaino Palermo", "hy": "Рюкзак Palermo" },
+      "name": {
+        "ru": "Рюкзак Palermo",
+        "en": "Zaino Palermo",
+        "hy": "Ուսապարկ Palermo"
+      },
       "category": "universal",
       "type": "borse",
       "model": "backpack",
       "gsm": null,
       "composition": "100% polyester",
       "dimensions": "31 x 40 x 12 cm",
-      "sizes": ["UNI"],
-      "features": ["ADJUSTABLE PADDED SHOULDERSTRAP", "EMBROIDERED LOGO", "HANDGRIP ON TOP", "POCKET ON FRONT"],
-      "tech": ["POLYESTER"],
-      "colorways": ["0204", "1204", "0604", "7110", "0810", "0404", "1010"],
+      "sizes": [
+        "UNI"
+      ],
+      "features": [
+        "ADJUSTABLE PADDED SHOULDERSTRAP",
+        "EMBROIDERED LOGO",
+        "HANDGRIP ON TOP",
+        "POCKET ON FRONT"
+      ],
+      "tech": [
+        "POLYESTER"
+      ],
+      "colorways": [
+        "0204",
+        "1204",
+        "0604",
+        "7110",
+        "0810",
+        "0404",
+        "1010"
+      ],
       "priceLevel": 1,
       "basePrice": null,
       "moq": 10,
@@ -1302,17 +3275,33 @@
     },
     {
       "id": "B312",
-      "name": { "ru": "Рюкзак Procida", "en": "Zaino Procida", "hy": "Рюкзак Procida" },
+      "name": {
+        "ru": "Рюкзак Procida",
+        "en": "Zaino Procida",
+        "hy": "Ուսապարկ Procida"
+      },
       "category": "universal",
       "type": "borse",
       "model": "backpack",
       "gsm": null,
       "composition": "100% polyester",
       "dimensions": "44 x 31 x 19 cm",
-      "sizes": ["UNI"],
-      "features": ["DOUBLE POCKET", "TWO COMPARTMENTS", "HANDGRIP ON TOP", "PRINTED LOGO"],
-      "tech": ["POXD600"],
-      "colorways": ["0004", "0010"],
+      "sizes": [
+        "UNI"
+      ],
+      "features": [
+        "DOUBLE POCKET",
+        "TWO COMPARTMENTS",
+        "HANDGRIP ON TOP",
+        "PRINTED LOGO"
+      ],
+      "tech": [
+        "POXD600"
+      ],
+      "colorways": [
+        "0004",
+        "0010"
+      ],
       "priceLevel": 2,
       "basePrice": null,
       "moq": 10,
@@ -1321,17 +3310,34 @@
     },
     {
       "id": "B313",
-      "name": { "ru": "Рюкзак Ischia", "en": "Zaino Ischia", "hy": "Рюкзак Ischia" },
+      "name": {
+        "ru": "Рюкзак Ischia",
+        "en": "Zaino Ischia",
+        "hy": "Ուսապարկ Ischia"
+      },
       "category": "universal",
       "type": "borse",
       "model": "backpack",
       "gsm": null,
       "composition": "100% polyester",
       "dimensions": "45 x 36 x 21 cm",
-      "sizes": ["UNI"],
-      "features": ["PADDED BAG BOTTOM", "EMBROIDERED LOGO", "ERGONOMIC SLIDER", "HANDGRIP ON TOP", "LATERAL POCKETS"],
-      "tech": ["POXD600"],
-      "colorways": ["0004", "0010"],
+      "sizes": [
+        "UNI"
+      ],
+      "features": [
+        "PADDED BAG BOTTOM",
+        "EMBROIDERED LOGO",
+        "ERGONOMIC SLIDER",
+        "HANDGRIP ON TOP",
+        "LATERAL POCKETS"
+      ],
+      "tech": [
+        "POXD600"
+      ],
+      "colorways": [
+        "0004",
+        "0010"
+      ],
       "priceLevel": 2,
       "basePrice": null,
       "moq": 10,
@@ -1340,17 +3346,34 @@
     },
     {
       "id": "B319",
-      "name": { "ru": "Сумка Bari 44", "en": "Borsa Bari 44", "hy": "Сумка Bari 44" },
+      "name": {
+        "ru": "Сумка Bari 44",
+        "en": "Borsa Bari 44",
+        "hy": "Պայուսակ Bari 44"
+      },
       "category": "universal",
       "type": "borse",
       "model": "backpack",
       "gsm": null,
       "composition": "100% polyester",
       "dimensions": "45 x 36 x 21 cm",
-      "sizes": ["UNI"],
-      "features": ["PADDED BAG BOTTOM", "EMBROIDERED LOGO", "ERGONOMIC SLIDER", "HANDGRIP ON TOP", "LATERAL POCKETS"],
-      "tech": ["POLYESTER"],
-      "colorways": ["0004", "0010"],
+      "sizes": [
+        "UNI"
+      ],
+      "features": [
+        "PADDED BAG BOTTOM",
+        "EMBROIDERED LOGO",
+        "ERGONOMIC SLIDER",
+        "HANDGRIP ON TOP",
+        "LATERAL POCKETS"
+      ],
+      "tech": [
+        "POLYESTER"
+      ],
+      "colorways": [
+        "0004",
+        "0010"
+      ],
       "priceLevel": 2,
       "basePrice": null,
       "moq": 10,
@@ -1359,17 +3382,33 @@
     },
     {
       "id": "B318",
-      "name": { "ru": "Сумка Taranto 54 (с отделением для обуви)", "en": "Borsa Taranto 54", "hy": "Сумка Taranto 54" },
+      "name": {
+        "ru": "Сумка Taranto 54 (с отделением для обуви)",
+        "en": "Borsa Taranto 54",
+        "hy": "Պայուսակ Taranto 54 (կոշիկի բաժանմամբ)"
+      },
       "category": "universal",
       "type": "borse",
       "model": "backpack",
       "gsm": null,
       "composition": "100% polyester",
       "dimensions": "52 x 33 x 29 cm",
-      "sizes": ["UNI"],
-      "features": ["ADJUSTABLE PADDED SHOULDERSTRAP", "HANDGRIP ON TOP", "PADDED BAG BOTTOM", "PRINTED LOGO ON SIDE"],
-      "tech": ["POLYESTER"],
-      "colorways": ["0004", "0010"],
+      "sizes": [
+        "UNI"
+      ],
+      "features": [
+        "ADJUSTABLE PADDED SHOULDERSTRAP",
+        "HANDGRIP ON TOP",
+        "PADDED BAG BOTTOM",
+        "PRINTED LOGO ON SIDE"
+      ],
+      "tech": [
+        "POLYESTER"
+      ],
+      "colorways": [
+        "0004",
+        "0010"
+      ],
       "priceLevel": 2,
       "basePrice": null,
       "moq": 10,
@@ -1378,59 +3417,121 @@
     },
     {
       "id": "B315",
-      "name": { "ru": "Сумка Oristano Small (без дна)", "en": "Borsa Oristano Small", "hy": "Сумка Oristano Small" },
+      "name": {
+        "ru": "Сумка Oristano Small (без дна)",
+        "en": "Borsa Oristano Small",
+        "hy": "Պայուսակ Oristano Small (առանց հատակի)"
+      },
       "category": "universal",
       "type": "borse",
       "model": null,
       "gsm": null,
       "composition": "100% polyester",
       "dimensions": "50 x 27,5 x 56 cm",
-      "sizes": ["UNI"],
-      "features": ["ADJUSTABLE PADDED SHOULDERSTRAP", "EMBROIDERED LOGO", "ERGONOMIC SLIDER", "HANDGRIP ON TOP", "LATERAL POCKETS", "WITHOUT BOTTOM"],
-      "tech": ["POXD600", "BIG"],
-      "colorways": ["0002", "0012", "0013", "0008", "0004", "0010"],
+      "sizes": [
+        "UNI"
+      ],
+      "features": [
+        "ADJUSTABLE PADDED SHOULDERSTRAP",
+        "EMBROIDERED LOGO",
+        "ERGONOMIC SLIDER",
+        "HANDGRIP ON TOP",
+        "LATERAL POCKETS",
+        "WITHOUT BOTTOM"
+      ],
+      "tech": [
+        "POXD600",
+        "BIG"
+      ],
+      "colorways": [
+        "0002",
+        "0012",
+        "0013",
+        "0008",
+        "0004",
+        "0010"
+      ],
       "priceLevel": 2,
       "basePrice": null,
       "moq": 10,
       "brandable": false,
       "brandingZones": [],
-      "requiresAccessory": ["FON11", "FON14"],
+      "requiresAccessory": [
+        "FON11",
+        "FON14"
+      ],
       "note": "Продаётся только в комплекте с дном FON11 (жёсткое) или FON14 (складное)"
     },
     {
       "id": "B314",
-      "name": { "ru": "Сумка Nuoro Big (без дна)", "en": "Borsa Nuoro Big", "hy": "Сумка Nuoro Big" },
+      "name": {
+        "ru": "Сумка Nuoro Big (без дна)",
+        "en": "Borsa Nuoro Big",
+        "hy": "Պայուսակ Nuoro Big (առանց հատակի)"
+      },
       "category": "universal",
       "type": "borse",
       "model": null,
       "gsm": null,
       "composition": "100% polyester",
       "dimensions": "50 x 36 x 56 cm",
-      "sizes": ["UNI"],
-      "features": ["ADJUSTABLE PADDED SHOULDERSTRAP", "EMBROIDERED LOGO", "ERGONOMIC SLIDER", "HANDGRIP ON TOP", "LATERAL POCKETS", "WITHOUT BOTTOM"],
-      "tech": ["POXD600", "BIG"],
-      "colorways": ["0002", "0012", "0013", "0008", "0004", "0010"],
+      "sizes": [
+        "UNI"
+      ],
+      "features": [
+        "ADJUSTABLE PADDED SHOULDERSTRAP",
+        "EMBROIDERED LOGO",
+        "ERGONOMIC SLIDER",
+        "HANDGRIP ON TOP",
+        "LATERAL POCKETS",
+        "WITHOUT BOTTOM"
+      ],
+      "tech": [
+        "POXD600",
+        "BIG"
+      ],
+      "colorways": [
+        "0002",
+        "0012",
+        "0013",
+        "0008",
+        "0004",
+        "0010"
+      ],
       "priceLevel": 2,
       "basePrice": null,
       "moq": 10,
       "brandable": false,
       "brandingZones": [],
-      "requiresAccessory": ["FON13", "FON10"],
+      "requiresAccessory": [
+        "FON13",
+        "FON10"
+      ],
       "note": "Продаётся только в комплекте с дном FON13 (жёсткое) или FON10 (складное)"
     },
     {
       "id": "FON11",
-      "name": { "ru": "Дно жёсткое Oristano Small", "en": "Fondo Rigido Oristano Small", "hy": "Дно жёсткое Oristano Small" },
+      "name": {
+        "ru": "Дно жёсткое Oristano Small",
+        "en": "Fondo Rigido Oristano Small",
+        "hy": "Կոշտ հատակ Oristano Small"
+      },
       "category": "universal",
       "type": "accessori",
       "model": null,
       "gsm": null,
       "composition": null,
       "dimensions": "27 x 49 x 16 cm",
-      "sizes": ["UNI"],
-      "features": ["HARD BOTTOM"],
+      "sizes": [
+        "UNI"
+      ],
+      "features": [
+        "HARD BOTTOM"
+      ],
       "tech": [],
-      "colorways": ["0010"],
+      "colorways": [
+        "0010"
+      ],
       "priceLevel": 1,
       "basePrice": null,
       "moq": 10,
@@ -1439,17 +3540,27 @@
     },
     {
       "id": "FON14",
-      "name": { "ru": "Дно складное Oristano Small", "en": "Fondo Pieghevole Oristano Small", "hy": "Дно складное Oristano Small" },
+      "name": {
+        "ru": "Дно складное Oristano Small",
+        "en": "Fondo Pieghevole Oristano Small",
+        "hy": "Ծալվող հատակ Oristano Small"
+      },
       "category": "universal",
       "type": "accessori",
       "model": null,
       "gsm": null,
       "composition": null,
       "dimensions": "27 x 49 x 16 cm",
-      "sizes": ["UNI"],
-      "features": ["FOLDABLE BOTTOM"],
+      "sizes": [
+        "UNI"
+      ],
+      "features": [
+        "FOLDABLE BOTTOM"
+      ],
       "tech": [],
-      "colorways": ["0010"],
+      "colorways": [
+        "0010"
+      ],
       "priceLevel": 1,
       "basePrice": null,
       "moq": 10,
@@ -1458,17 +3569,27 @@
     },
     {
       "id": "FON13",
-      "name": { "ru": "Дно жёсткое Nuoro Big", "en": "Fondo Rigido Nuoro Big", "hy": "Дно жёсткое Nuoro Big" },
+      "name": {
+        "ru": "Дно жёсткое Nuoro Big",
+        "en": "Fondo Rigido Nuoro Big",
+        "hy": "Կոշտ հատակ Nuoro Big"
+      },
       "category": "universal",
       "type": "accessori",
       "model": null,
       "gsm": null,
       "composition": null,
       "dimensions": "35 x 49 x 16,5 cm",
-      "sizes": ["UNI"],
-      "features": ["HARD BOTTOM"],
+      "sizes": [
+        "UNI"
+      ],
+      "features": [
+        "HARD BOTTOM"
+      ],
       "tech": [],
-      "colorways": ["0010"],
+      "colorways": [
+        "0010"
+      ],
       "priceLevel": 1,
       "basePrice": null,
       "moq": 10,
@@ -1477,17 +3598,27 @@
     },
     {
       "id": "FON10",
-      "name": { "ru": "Дно складное Nuoro Big", "en": "Fondo Pieghevole Nuoro Big", "hy": "Дно складное Nuoro Big" },
+      "name": {
+        "ru": "Дно складное Nuoro Big",
+        "en": "Fondo Pieghevole Nuoro Big",
+        "hy": "Ծալվող հատակ Nuoro Big"
+      },
       "category": "universal",
       "type": "accessori",
       "model": null,
       "gsm": null,
       "composition": null,
       "dimensions": "35 x 49 x 16,5 cm",
-      "sizes": ["UNI"],
-      "features": ["FOLDABLE BOTTOM"],
+      "sizes": [
+        "UNI"
+      ],
+      "features": [
+        "FOLDABLE BOTTOM"
+      ],
       "tech": [],
-      "colorways": ["0010"],
+      "colorways": [
+        "0010"
+      ],
       "priceLevel": 1,
       "basePrice": null,
       "moq": 10,
@@ -1496,325 +3627,1184 @@
     },
     {
       "id": "TXM1147P187",
-      "name": { "ru": "Костюм Cuba", "en": "Tuta Cuba", "hy": "Костюм Cuba" },
+      "name": {
+        "ru": "Костюм Cuba",
+        "en": "Tuta Cuba",
+        "hy": "Կոստյում Cuba"
+      },
       "category": "universal",
       "type": "tute",
       "model": "jacket",
-      "components": ["M1147", "P187"],
+      "components": [
+        "M1147",
+        "P187"
+      ],
       "colorwayFormat": "kit",
       "gsm": null,
       "composition": "Куртка 230 г/м² 100% polyester, брюки 235 г/м² ацетат 100% polyester",
-      "sizes": ["6XS", "5XS", "4XS", "3XS", "2XS", "XS", "S", "M", "L", "XL", "2XL"],
-      "features": ["FABRIC INSERTS", "EMBROIDERED LOGO", "SIDE POCKETS", "FULL ZIP"],
-      "tech": ["POLFRESH"],
-      "colorways": ["0010-0010", "0004-0004", "0002-0004", "0002-0010", "0003-0010", "0003-0004", "0006-0010", "0006-0004", "0012-0010", "0012-0004", "0008-0010", "0008-0004", "0007-0010", "0007-0004", "0013-0010", "0013-0004", "0001-0010", "0001-0004"],
+      "sizes": [
+        "6XS",
+        "5XS",
+        "4XS",
+        "3XS",
+        "2XS",
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "features": [
+        "FABRIC INSERTS",
+        "EMBROIDERED LOGO",
+        "SIDE POCKETS",
+        "FULL ZIP"
+      ],
+      "tech": [
+        "POLFRESH"
+      ],
+      "colorways": [
+        "0010-0010",
+        "0004-0004",
+        "0002-0004",
+        "0002-0010",
+        "0003-0010",
+        "0003-0004",
+        "0006-0010",
+        "0006-0004",
+        "0012-0010",
+        "0012-0004",
+        "0008-0010",
+        "0008-0004",
+        "0007-0010",
+        "0007-0004",
+        "0013-0010",
+        "0013-0004",
+        "0001-0010",
+        "0001-0004"
+      ],
       "priceLevel": 2,
       "basePrice": null,
       "moq": 10,
       "brandable": true,
-      "brandingZones": ["chest-left", "back-top", "sleeve-left"],
+      "brandingZones": [
+        "chest-left",
+        "back-top",
+        "sleeve-left"
+      ],
       "oversizeId": "TXM1147BP187BC"
     },
     {
       "id": "TXM1152P187",
-      "name": { "ru": "Костюм Bolivia Cuba", "en": "Tuta Bolivia Cuba", "hy": "Костюм Bolivia Cuba" },
+      "name": {
+        "ru": "Костюм Bolivia Cuba",
+        "en": "Tuta Bolivia Cuba",
+        "hy": "Կոստյում Bolivia Cuba"
+      },
       "category": "universal",
       "type": "tute",
       "model": "jacket",
-      "components": ["M1152", "P187"],
+      "components": [
+        "M1152",
+        "P187"
+      ],
       "colorwayFormat": "kit",
       "gsm": null,
       "composition": "Куртка 230 г/м² 100% polyester, брюки 235 г/м² ацетат 100% polyester",
-      "sizes": ["3XS", "2XS", "XS", "S", "M", "L", "XL", "2XL"],
-      "features": ["EMBROIDERED LOGO", "SLEEVE INSERTS", "SIDE POCKETS", "FULL ZIP"],
-      "tech": ["POLFRESH"],
-      "colorways": ["1204-0004", "1304-0004", "0704-0004", "0204-0004", "0304-0004"],
+      "sizes": [
+        "3XS",
+        "2XS",
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "features": [
+        "EMBROIDERED LOGO",
+        "SLEEVE INSERTS",
+        "SIDE POCKETS",
+        "FULL ZIP"
+      ],
+      "tech": [
+        "POLFRESH"
+      ],
+      "colorways": [
+        "1204-0004",
+        "1304-0004",
+        "0704-0004",
+        "0204-0004",
+        "0304-0004"
+      ],
       "priceLevel": 2,
       "basePrice": null,
       "moq": 10,
       "brandable": true,
-      "brandingZones": ["chest-left", "back-top", "sleeve-left"],
+      "brandingZones": [
+        "chest-left",
+        "back-top",
+        "sleeve-left"
+      ],
       "oversizeId": "TXM1152BP187BC"
     },
     {
       "id": "TXM1166P193",
-      "name": { "ru": "Костюм Alabama Messico", "en": "Tuta Alabama Messico", "hy": "Костюм Alabama Messico" },
+      "name": {
+        "ru": "Костюм Alabama Messico",
+        "en": "Tuta Alabama Messico",
+        "hy": "Կոստյում Alabama Messico"
+      },
       "category": "universal",
       "type": "tute",
       "model": "jacket",
-      "components": ["M1166", "P193"],
+      "components": [
+        "M1166",
+        "P193"
+      ],
       "colorwayFormat": "kit",
       "gsm": null,
       "composition": "Куртка 240 г/м² 100% polyester, брюки 230 г/м² 85% polyester 15% cotton",
-      "sizes": ["3XS", "2XS", "XS", "S", "M", "L", "XL", "2XL"],
-      "features": ["PRINTED VELA LOGO", "FABRIC INSERTS", "RIBBED CUFFS", "SIDE POCKETS"],
-      "tech": ["POLFRESH", "POLCOTTON"],
-      "colorways": ["0012-0004", "0012-0010", "0013-0004", "0013-0010", "0002-0004", "0002-0010", "0024-0004", "0024-0010", "0008-0004", "0008-0010", "0006-0004", "0006-0010", "0004-0004", "0007-0004", "0007-0010", "0003-0004", "0003-0010", "0010-0010"],
+      "sizes": [
+        "3XS",
+        "2XS",
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "features": [
+        "PRINTED VELA LOGO",
+        "FABRIC INSERTS",
+        "RIBBED CUFFS",
+        "SIDE POCKETS"
+      ],
+      "tech": [
+        "POLFRESH",
+        "POLCOTTON"
+      ],
+      "colorways": [
+        "0012-0004",
+        "0012-0010",
+        "0013-0004",
+        "0013-0010",
+        "0002-0004",
+        "0002-0010",
+        "0024-0004",
+        "0024-0010",
+        "0008-0004",
+        "0008-0010",
+        "0006-0004",
+        "0006-0010",
+        "0004-0004",
+        "0007-0004",
+        "0007-0010",
+        "0003-0004",
+        "0003-0010",
+        "0010-0010"
+      ],
       "priceLevel": 2,
       "basePrice": null,
       "moq": 10,
       "brandable": true,
-      "brandingZones": ["chest-left", "back-top", "sleeve-left"],
+      "brandingZones": [
+        "chest-left",
+        "back-top",
+        "sleeve-left"
+      ],
       "oversizeId": "TXM1166BP193B"
     },
     {
       "id": "TXM1166P229",
-      "name": { "ru": "Костюм Alabama Tokyo", "en": "Tuta Alabama Tokyo", "hy": "Костюм Alabama Tokyo" },
+      "name": {
+        "ru": "Костюм Alabama Tokyo",
+        "en": "Tuta Alabama Tokyo",
+        "hy": "Կոստյում Alabama Tokyo"
+      },
       "category": "universal",
       "type": "tute",
       "model": "jacket",
-      "components": ["M1166", "P229"],
+      "components": [
+        "M1166",
+        "P229"
+      ],
       "colorwayFormat": "kit",
       "gsm": null,
       "composition": "Куртка 240 г/м² 100% polyester, брюки 245 г/м² 100% polyester interlock",
-      "sizes": ["3XS", "2XS", "XS", "S", "M", "L", "XL", "2XL"],
-      "features": ["PRINTED VELA LOGO", "FABRIC INSERTS", "RIBBED CUFFS", "SIDE POCKETS"],
-      "tech": ["POLFRESH"],
-      "colorways": ["0012-0004", "0012-0010", "0013-0004", "0013-0010", "0002-0004", "0002-0010", "0024-0004", "0024-0010", "0008-0004", "0008-0010", "0603-0004", "0603-0010", "0004-0004", "0007-0004", "0007-0010", "0003-0004", "0003-0010", "0010-0010"],
+      "sizes": [
+        "3XS",
+        "2XS",
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "features": [
+        "PRINTED VELA LOGO",
+        "FABRIC INSERTS",
+        "RIBBED CUFFS",
+        "SIDE POCKETS"
+      ],
+      "tech": [
+        "POLFRESH"
+      ],
+      "colorways": [
+        "0012-0004",
+        "0012-0010",
+        "0013-0004",
+        "0013-0010",
+        "0002-0004",
+        "0002-0010",
+        "0024-0004",
+        "0024-0010",
+        "0008-0004",
+        "0008-0010",
+        "0603-0004",
+        "0603-0010",
+        "0004-0004",
+        "0007-0004",
+        "0007-0010",
+        "0003-0004",
+        "0003-0010",
+        "0010-0010"
+      ],
       "priceLevel": 2,
       "basePrice": null,
       "moq": 10,
       "brandable": true,
-      "brandingZones": ["chest-left", "back-top", "sleeve-left"]
+      "brandingZones": [
+        "chest-left",
+        "back-top",
+        "sleeve-left"
+      ]
     },
     {
       "id": "TXM1122P193",
-      "name": { "ru": "Костюм Mosca Messico", "en": "Tuta Mosca Messico", "hy": "Костюм Mosca Messico" },
+      "name": {
+        "ru": "Костюм Mosca Messico",
+        "en": "Tuta Mosca Messico",
+        "hy": "Կոստյում Mosca Messico"
+      },
       "category": "universal",
       "type": "tute",
       "model": "jacket",
-      "components": ["M1122", "P193"],
+      "components": [
+        "M1122",
+        "P193"
+      ],
       "colorwayFormat": "kit",
       "gsm": null,
       "composition": "Куртка 245 г/м² 100% polyester, брюки 230 г/м² 85% polyester 15% cotton",
-      "sizes": ["3XS", "2XS", "XS", "S", "M", "L", "XL", "2XL"],
-      "features": ["EMBROIDERED LOGO", "FABRIC INSERTS", "RIBBED CUFFS", "SIDE POCKETS"],
-      "tech": ["POLFRESH", "BREATHVENT", "POLCOTTON"],
-      "colorways": ["0203-0004", "0203-0010", "1203-0004", "1203-0010", "1303-0004", "1303-0010", "0803-0004", "0803-0010", "0403-0004", "1003-0010", "0704-0004"],
+      "sizes": [
+        "3XS",
+        "2XS",
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "features": [
+        "EMBROIDERED LOGO",
+        "FABRIC INSERTS",
+        "RIBBED CUFFS",
+        "SIDE POCKETS"
+      ],
+      "tech": [
+        "POLFRESH",
+        "BREATHVENT",
+        "POLCOTTON"
+      ],
+      "colorways": [
+        "0203-0004",
+        "0203-0010",
+        "1203-0004",
+        "1203-0010",
+        "1303-0004",
+        "1303-0010",
+        "0803-0004",
+        "0803-0010",
+        "0403-0004",
+        "1003-0010",
+        "0704-0004"
+      ],
       "priceLevel": 2,
       "basePrice": null,
       "moq": 10,
       "brandable": true,
-      "brandingZones": ["chest-left", "back-top", "sleeve-left"]
+      "brandingZones": [
+        "chest-left",
+        "back-top",
+        "sleeve-left"
+      ]
     },
     {
       "id": "TXM1122P229",
-      "name": { "ru": "Костюм Mosca Tokyo", "en": "Tuta Mosca Tokyo", "hy": "Костюм Mosca Tokyo" },
+      "name": {
+        "ru": "Костюм Mosca Tokyo",
+        "en": "Tuta Mosca Tokyo",
+        "hy": "Կոստյում Mosca Tokyo"
+      },
       "category": "universal",
       "type": "tute",
       "model": "jacket",
-      "components": ["M1122", "P229"],
+      "components": [
+        "M1122",
+        "P229"
+      ],
       "colorwayFormat": "kit",
       "gsm": null,
       "composition": "Куртка 245 г/м² 100% polyester, брюки 245 г/м² 100% polyester interlock",
-      "sizes": ["3XS", "2XS", "XS", "S", "M", "L", "XL", "2XL"],
-      "features": ["EMBROIDERED LOGO", "FABRIC INSERTS", "RIBBED CUFFS", "SIDE POCKETS"],
-      "tech": ["POLFRESH", "BREATHVENT"],
-      "colorways": ["0203-0004", "0203-0010", "1203-0004", "1203-0010", "1303-0004", "1303-0010", "0803-0004", "0803-0010", "0403-0004", "1003-0010", "0704-0004"],
+      "sizes": [
+        "3XS",
+        "2XS",
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "features": [
+        "EMBROIDERED LOGO",
+        "FABRIC INSERTS",
+        "RIBBED CUFFS",
+        "SIDE POCKETS"
+      ],
+      "tech": [
+        "POLFRESH",
+        "BREATHVENT"
+      ],
+      "colorways": [
+        "0203-0004",
+        "0203-0010",
+        "1203-0004",
+        "1203-0010",
+        "1303-0004",
+        "1303-0010",
+        "0803-0004",
+        "0803-0010",
+        "0403-0004",
+        "1003-0010",
+        "0704-0004"
+      ],
       "priceLevel": 2,
       "basePrice": null,
       "moq": 10,
       "brandable": true,
-      "brandingZones": ["chest-left", "back-top", "sleeve-left"]
+      "brandingZones": [
+        "chest-left",
+        "back-top",
+        "sleeve-left"
+      ]
     },
     {
       "id": "TXM1121P229",
-      "name": { "ru": "Костюм Calcutta Tokyo", "en": "Tuta Calcutta Tokyo", "hy": "Костюм Calcutta Tokyo" },
+      "name": {
+        "ru": "Костюм Calcutta Tokyo",
+        "en": "Tuta Calcutta Tokyo",
+        "hy": "Կոստյում Calcutta Tokyo"
+      },
       "category": "universal",
       "type": "tute",
       "model": "jacket",
-      "components": ["M1121", "P229"],
+      "components": [
+        "M1121",
+        "P229"
+      ],
       "colorwayFormat": "kit",
       "gsm": null,
       "composition": "Куртка 245 г/м² 100% polyester, брюки 245 г/м² 100% polyester interlock",
-      "sizes": ["3XS", "2XS", "XS", "S", "M", "L", "XL", "2XL"],
-      "features": ["EMBROIDERED LOGO", "FABRIC INSERTS", "RIBBED CUFFS", "SIDE POCKETS"],
-      "tech": ["POLFRESH", "BREATHVENT"],
-      "colorways": ["0203-0004", "0203-0010", "1203-0004", "1203-0010", "1303-0004", "1303-0010", "0803-0004", "0803-0010", "0403-0004", "1003-0010", "0704-0004"],
+      "sizes": [
+        "3XS",
+        "2XS",
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "features": [
+        "EMBROIDERED LOGO",
+        "FABRIC INSERTS",
+        "RIBBED CUFFS",
+        "SIDE POCKETS"
+      ],
+      "tech": [
+        "POLFRESH",
+        "BREATHVENT"
+      ],
+      "colorways": [
+        "0203-0004",
+        "0203-0010",
+        "1203-0004",
+        "1203-0010",
+        "1303-0004",
+        "1303-0010",
+        "0803-0004",
+        "0803-0010",
+        "0403-0004",
+        "1003-0010",
+        "0704-0004"
+      ],
       "priceLevel": 2,
       "basePrice": null,
       "moq": 10,
       "brandable": true,
-      "brandingZones": ["chest-left", "back-top", "sleeve-left"]
+      "brandingZones": [
+        "chest-left",
+        "back-top",
+        "sleeve-left"
+      ]
     },
     {
       "id": "TXM1174P193",
-      "name": { "ru": "Костюм Petra Messico", "en": "Tuta Petra Messico", "hy": "Костюм Petra Messico" },
+      "name": {
+        "ru": "Костюм Petra Messico",
+        "en": "Tuta Petra Messico",
+        "hy": "Կոստյում Petra Messico"
+      },
       "category": "universal",
       "type": "tute",
       "model": "jacket",
-      "components": ["M1174", "P193"],
+      "components": [
+        "M1174",
+        "P193"
+      ],
       "colorwayFormat": "kit",
       "gsm": null,
       "composition": "Куртка 245 г/м² 100% polyester, брюки 230 г/м² 85% polyester 15% cotton",
-      "sizes": ["3XS", "2XS", "XS", "S", "M", "L", "XL", "2XL"],
-      "features": ["EMBROIDERED LOGO", "FABRIC INSERTS", "RIBBED CUFFS", "SIDE POCKETS", "LUXIOM PATTERN"],
-      "tech": ["POLFRESH", "LUXIOM", "POLCOTTON"],
-      "colorways": ["2324-0004", "2324-0010", "1075-0010", "0404-0004", "0476-0004", "1010-0010"],
+      "sizes": [
+        "3XS",
+        "2XS",
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "features": [
+        "EMBROIDERED LOGO",
+        "FABRIC INSERTS",
+        "RIBBED CUFFS",
+        "SIDE POCKETS",
+        "LUXIOM PATTERN"
+      ],
+      "tech": [
+        "POLFRESH",
+        "LUXIOM",
+        "POLCOTTON"
+      ],
+      "colorways": [
+        "2324-0004",
+        "2324-0010",
+        "1075-0010",
+        "0404-0004",
+        "0476-0004",
+        "1010-0010"
+      ],
       "priceLevel": 3,
       "basePrice": null,
       "moq": 10,
       "brandable": true,
-      "brandingZones": ["chest-left", "back-top"]
+      "brandingZones": [
+        "chest-left",
+        "back-top"
+      ]
     },
     {
       "id": "TXM1174P229",
-      "name": { "ru": "Костюм Petra Tokyo", "en": "Tuta Petra Tokyo", "hy": "Костюм Petra Tokyo" },
+      "name": {
+        "ru": "Костюм Petra Tokyo",
+        "en": "Tuta Petra Tokyo",
+        "hy": "Կոստյում Petra Tokyo"
+      },
       "category": "universal",
       "type": "tute",
       "model": "jacket",
-      "components": ["M1174", "P229"],
+      "components": [
+        "M1174",
+        "P229"
+      ],
       "colorwayFormat": "kit",
       "gsm": null,
       "composition": "Куртка 245 г/м² 100% polyester, брюки 245 г/м² 100% polyester interlock",
-      "sizes": ["3XS", "2XS", "XS", "S", "M", "L", "XL", "2XL"],
-      "features": ["EMBROIDERED LOGO", "FABRIC INSERTS", "RIBBED CUFFS", "SIDE POCKETS", "LUXIOM PATTERN"],
-      "tech": ["POLFRESH", "LUXIOM"],
-      "colorways": ["2324-0004", "2324-0010", "1075-0010", "0404-0004", "0476-0004", "1010-0010"],
+      "sizes": [
+        "3XS",
+        "2XS",
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "features": [
+        "EMBROIDERED LOGO",
+        "FABRIC INSERTS",
+        "RIBBED CUFFS",
+        "SIDE POCKETS",
+        "LUXIOM PATTERN"
+      ],
+      "tech": [
+        "POLFRESH",
+        "LUXIOM"
+      ],
+      "colorways": [
+        "2324-0004",
+        "2324-0010",
+        "1075-0010",
+        "0404-0004",
+        "0476-0004",
+        "1010-0010"
+      ],
       "priceLevel": 3,
       "basePrice": null,
       "moq": 10,
       "brandable": true,
-      "brandingZones": ["chest-left", "back-top"]
+      "brandingZones": [
+        "chest-left",
+        "back-top"
+      ]
     },
     {
       "id": "TXM1173P193",
-      "name": { "ru": "Костюм Manila Messico", "en": "Tuta Manila Messico", "hy": "Костюм Manila Messico" },
+      "name": {
+        "ru": "Костюм Manila Messico",
+        "en": "Tuta Manila Messico",
+        "hy": "Կոստյում Manila Messico"
+      },
       "category": "universal",
       "type": "tute",
       "model": "jacket",
-      "components": ["M1173", "P193"],
+      "components": [
+        "M1173",
+        "P193"
+      ],
       "colorwayFormat": "kit",
       "gsm": null,
       "composition": "Куртка 245 г/м² 100% polyester, брюки 230 г/м² 85% polyester 15% cotton",
-      "sizes": ["3XS", "2XS", "XS", "S", "M", "L", "XL", "2XL"],
-      "features": ["EMBROIDERED LOGO", "FABRIC INSERTS", "RIBBED CUFFS", "SIDE POCKETS", "LUXIOM PATTERN"],
-      "tech": ["POLFRESH", "LUXIOM", "POLCOTTON"],
-      "colorways": ["2324-0004", "2324-0010", "1075-0010", "0404-0004", "0476-0004", "1010-0010"],
+      "sizes": [
+        "3XS",
+        "2XS",
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "features": [
+        "EMBROIDERED LOGO",
+        "FABRIC INSERTS",
+        "RIBBED CUFFS",
+        "SIDE POCKETS",
+        "LUXIOM PATTERN"
+      ],
+      "tech": [
+        "POLFRESH",
+        "LUXIOM",
+        "POLCOTTON"
+      ],
+      "colorways": [
+        "2324-0004",
+        "2324-0010",
+        "1075-0010",
+        "0404-0004",
+        "0476-0004",
+        "1010-0010"
+      ],
       "priceLevel": 3,
       "basePrice": null,
       "moq": 10,
       "brandable": true,
-      "brandingZones": ["chest-left", "back-top"],
+      "brandingZones": [
+        "chest-left",
+        "back-top"
+      ],
       "oversizeId": "TXM1173BP193B"
     },
     {
       "id": "TXM1173P229",
-      "name": { "ru": "Костюм Manila Tokyo", "en": "Tuta Manila Tokyo", "hy": "Костюм Manila Tokyo" },
+      "name": {
+        "ru": "Костюм Manila Tokyo",
+        "en": "Tuta Manila Tokyo",
+        "hy": "Կոստյում Manila Tokyo"
+      },
       "category": "universal",
       "type": "tute",
       "model": "jacket",
-      "components": ["M1173", "P229"],
+      "components": [
+        "M1173",
+        "P229"
+      ],
       "colorwayFormat": "kit",
       "gsm": null,
       "composition": "Куртка 245 г/м² 100% polyester, брюки 245 г/м² 100% polyester interlock",
-      "sizes": ["3XS", "2XS", "XS", "S", "M", "L", "XL", "2XL"],
-      "features": ["EMBROIDERED LOGO", "FABRIC INSERTS", "RIBBED CUFFS", "SIDE POCKETS", "LUXIOM PATTERN"],
-      "tech": ["POLFRESH", "LUXIOM"],
-      "colorways": ["2324-0004", "2324-0010", "1075-0010", "0404-0004", "0476-0004", "1010-0010"],
+      "sizes": [
+        "3XS",
+        "2XS",
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "features": [
+        "EMBROIDERED LOGO",
+        "FABRIC INSERTS",
+        "RIBBED CUFFS",
+        "SIDE POCKETS",
+        "LUXIOM PATTERN"
+      ],
+      "tech": [
+        "POLFRESH",
+        "LUXIOM"
+      ],
+      "colorways": [
+        "2324-0004",
+        "2324-0010",
+        "1075-0010",
+        "0404-0004",
+        "0476-0004",
+        "1010-0010"
+      ],
       "priceLevel": 3,
       "basePrice": null,
       "moq": 10,
       "brandable": true,
-      "brandingZones": ["chest-left", "back-top"]
+      "brandingZones": [
+        "chest-left",
+        "back-top"
+      ]
     },
     {
       "id": "TXM1144P188",
-      "name": { "ru": "Костюм Zagabria Sofia", "en": "Tuta Zagabria Sofia", "hy": "Костюм Zagabria Sofia" },
+      "name": {
+        "ru": "Костюм Zagabria Sofia",
+        "en": "Tuta Zagabria Sofia",
+        "hy": "Կոստյում Zagabria Sofia"
+      },
       "category": "universal",
       "type": "tute",
       "model": "hoodie",
-      "components": ["M1144", "P188"],
+      "components": [
+        "M1144",
+        "P188"
+      ],
       "colorwayFormat": "kit",
       "gsm": 295,
       "composition": "50% cotton, 50% polyester",
-      "sizes": ["S", "M", "L", "XL", "2XL"],
-      "features": ["EMBROIDERED LOGO", "FRESH WINTER FLEECE", "BRUSHED INSIDE", "SIDE POCKETS", "ELASTIC BOTTOM"],
-      "tech": ["FRESH WINTER FLEECE"],
-      "colorways": ["0044-0044", "0044-1010", "0044-0404", "0404-0404", "0404-0044", "1010-1010", "1010-0044"],
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "features": [
+        "EMBROIDERED LOGO",
+        "FRESH WINTER FLEECE",
+        "BRUSHED INSIDE",
+        "SIDE POCKETS",
+        "ELASTIC BOTTOM"
+      ],
+      "tech": [
+        "FRESH WINTER FLEECE"
+      ],
+      "colorways": [
+        "0044-0044",
+        "0044-1010",
+        "0044-0404",
+        "0404-0404",
+        "0404-0044",
+        "1010-1010",
+        "1010-0044"
+      ],
       "priceLevel": 2,
       "basePrice": null,
       "moq": 10,
       "brandable": true,
-      "brandingZones": ["chest-left", "back-top", "sleeve-left"],
+      "brandingZones": [
+        "chest-left",
+        "back-top",
+        "sleeve-left"
+      ],
       "oversizeId": "TXM1144P188B",
       "juniorId": "TXM1144JP188"
     },
     {
       "id": "TXM1143P188",
-      "name": { "ru": "Костюм Spalato Sofia", "en": "Tuta Spalato Sofia", "hy": "Костюм Spalato Sofia" },
+      "name": {
+        "ru": "Костюм Spalato Sofia",
+        "en": "Tuta Spalato Sofia",
+        "hy": "Կոստյում Spalato Sofia"
+      },
       "category": "universal",
       "type": "tute",
       "model": "hoodie",
-      "components": ["M1143", "P188"],
+      "components": [
+        "M1143",
+        "P188"
+      ],
       "colorwayFormat": "kit",
       "gsm": 295,
       "composition": "50% cotton, 50% polyester",
-      "sizes": ["S", "M", "L", "XL", "2XL"],
-      "features": ["EMBROIDERED LOGO", "FRESH WINTER FLEECE", "HOOD", "SIDE POCKETS", "ELASTIC BOTTOM"],
-      "tech": ["FRESH WINTER FLEECE"],
-      "colorways": ["0013-0044", "0013-1010", "0013-0404", "0008-0044", "0008-1010", "0008-0404", "0404-0044", "0404-0404", "0012-0044", "0012-1010", "0012-0404", "0007-0044", "0007-1010", "0007-0404", "1010-0044", "1010-1010", "0002-0044", "0002-1010", "0002-0404", "0044-0044", "0044-1010", "0044-0404"],
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "features": [
+        "EMBROIDERED LOGO",
+        "FRESH WINTER FLEECE",
+        "HOOD",
+        "SIDE POCKETS",
+        "ELASTIC BOTTOM"
+      ],
+      "tech": [
+        "FRESH WINTER FLEECE"
+      ],
+      "colorways": [
+        "0013-0044",
+        "0013-1010",
+        "0013-0404",
+        "0008-0044",
+        "0008-1010",
+        "0008-0404",
+        "0404-0044",
+        "0404-0404",
+        "0012-0044",
+        "0012-1010",
+        "0012-0404",
+        "0007-0044",
+        "0007-1010",
+        "0007-0404",
+        "1010-0044",
+        "1010-1010",
+        "0002-0044",
+        "0002-1010",
+        "0002-0404",
+        "0044-0044",
+        "0044-1010",
+        "0044-0404"
+      ],
       "priceLevel": 2,
       "basePrice": null,
       "moq": 10,
       "brandable": true,
-      "brandingZones": ["chest-left", "back-top", "sleeve-left"],
+      "brandingZones": [
+        "chest-left",
+        "back-top",
+        "sleeve-left"
+      ],
       "oversizeId": "TXM1143BP188B",
       "juniorId": "TXM1143JP188"
     },
     {
       "id": "TXM1146P188",
-      "name": { "ru": "Костюм Sarajevo Sofia", "en": "Tuta Sarajevo Sofia", "hy": "Костюм Sarajevo Sofia" },
+      "name": {
+        "ru": "Костюм Sarajevo Sofia",
+        "en": "Tuta Sarajevo Sofia",
+        "hy": "Կոստյում Sarajevo Sofia"
+      },
       "category": "universal",
       "type": "tute",
       "model": "hoodie",
-      "components": ["M1146", "P188"],
+      "components": [
+        "M1146",
+        "P188"
+      ],
       "colorwayFormat": "kit",
       "gsm": 295,
       "composition": "50% cotton, 50% polyester",
-      "sizes": ["S", "M", "L", "XL", "2XL"],
-      "features": ["EMBROIDERED LOGO", "FRESH WINTER FLEECE", "HOOD ZIP", "SIDE POCKETS", "ELASTIC BOTTOM"],
-      "tech": ["FRESH WINTER FLEECE"],
-      "colorways": ["0007-0044", "0007-1010", "0007-0404", "0008-0044", "0008-1010", "0008-0404", "0404-0044", "0404-0404", "0012-0044", "0012-1010", "0012-0404", "0013-0044", "0013-1010", "0013-0404", "1010-0044", "1010-1010", "0002-0044", "0002-1010", "0002-0404", "0044-0044", "0044-1010", "0044-0404"],
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "features": [
+        "EMBROIDERED LOGO",
+        "FRESH WINTER FLEECE",
+        "HOOD ZIP",
+        "SIDE POCKETS",
+        "ELASTIC BOTTOM"
+      ],
+      "tech": [
+        "FRESH WINTER FLEECE"
+      ],
+      "colorways": [
+        "0007-0044",
+        "0007-1010",
+        "0007-0404",
+        "0008-0044",
+        "0008-1010",
+        "0008-0404",
+        "0404-0044",
+        "0404-0404",
+        "0012-0044",
+        "0012-1010",
+        "0012-0404",
+        "0013-0044",
+        "0013-1010",
+        "0013-0404",
+        "1010-0044",
+        "1010-1010",
+        "0002-0044",
+        "0002-1010",
+        "0002-0404",
+        "0044-0044",
+        "0044-1010",
+        "0044-0404"
+      ],
       "priceLevel": 2,
       "basePrice": null,
       "moq": 10,
       "brandable": true,
-      "brandingZones": ["chest-left", "back-top", "sleeve-left"],
+      "brandingZones": [
+        "chest-left",
+        "back-top",
+        "sleeve-left"
+      ],
       "oversizeId": "TXM1146BP188B",
       "juniorId": "TXM1146JP188"
     }
   ],
   "variants": {
     "note": "Артикулы размерных вариантов. Не отдельные карточки — подменяют id в спецификации при выборе соответствующего размера (см. decisions.txt 5.5).",
-    "M1147B": { "parent": "M1147", "kind": "oversize", "sizes": ["3XL", "4XL"] },
-    "M1152B": { "parent": "M1152", "kind": "oversize", "sizes": ["3XL", "4XL"] },
-    "M1166B": { "parent": "M1166", "kind": "oversize", "sizes": ["3XL", "4XL"] },
-    "M1173B": { "parent": "M1173", "kind": "oversize", "sizes": ["3XL", "4XL"] },
-    "M1143B": { "parent": "M1143", "kind": "oversize", "sizes": ["3XL", "4XL"] },
-    "M1143J": { "parent": "M1143", "kind": "junior", "sizes": ["3XS", "2XS", "XS"] },
-    "M1144B": { "parent": "M1144", "kind": "oversize", "sizes": ["3XL", "4XL"] },
-    "M1144J": { "parent": "M1144", "kind": "junior", "sizes": ["3XS", "2XS", "XS"] },
-    "M1146B": { "parent": "M1146", "kind": "oversize", "sizes": ["3XL", "4XL"] },
-    "M1146J": { "parent": "M1146", "kind": "junior", "sizes": ["3XS", "2XS", "XS"] },
-    "P187B": { "parent": "P187", "kind": "oversize", "sizes": ["3XL", "4XL"] },
-    "P188B": { "parent": "P188", "kind": "oversize", "sizes": ["3XL", "4XL"] },
-    "P193B": { "parent": "P193", "kind": "oversize", "sizes": ["3XL", "4XL", "5XL", "6XL"] },
-    "B111B": { "parent": "B111", "kind": "oversize", "sizes": ["3XL"] },
-    "PR201": { "parent": "PR200", "kind": "oversize", "sizes": ["3XL", "4XL", "5XL", "6XL"] },
-    "G022B": { "parent": "G022", "kind": "oversize", "sizes": ["3XL", "4XL"] },
-    "G026B": { "parent": "G030", "kind": "oversize", "sizes": ["3XL", "4XL"] },
-    "G027B": { "parent": "G027", "kind": "oversize", "sizes": ["3XL", "4XL"] },
-    "G028B": { "parent": "G028", "kind": "oversize", "sizes": ["3XL", "4XL"] },
-    "TXM1147BP187BC": { "parent": "TXM1147P187", "kind": "oversize", "sizes": ["3XL", "4XL"], "colorways": ["0010-0010", "0004-0004"] },
-    "TXM1152BP187BC": { "parent": "TXM1152P187", "kind": "oversize", "sizes": ["3XL", "4XL"], "colorways": ["0204-0004", "0304-0004"] },
-    "TXM1166BP193B": { "parent": "TXM1166P193", "kind": "oversize", "sizes": ["3XL", "4XL"], "colorways": ["0004-0004", "0010-0010"] },
-    "TXM1173BP193B": { "parent": "TXM1173P193", "kind": "oversize", "sizes": ["3XL", "4XL"], "colorways": ["2324-0004", "2324-0010", "1075-0010", "0404-0004", "0476-0004", "1010-0010"] },
-    "TXM1144P188B": { "parent": "TXM1144P188", "kind": "oversize", "sizes": ["3XL", "4XL"], "colorways": ["0044-0044", "0044-1010", "0044-0404", "0404-0404", "0404-0044", "1010-1010", "1010-0044"] },
-    "TXM1144JP188": { "parent": "TXM1144P188", "kind": "junior", "sizes": ["3XS", "2XS", "XS"], "colorways": ["0044-0010", "0044-0004", "0010-0010", "0004-0004"] },
-    "TXM1143BP188B": { "parent": "TXM1143P188", "kind": "oversize", "sizes": ["3XL", "4XL"], "colorways": ["1010-1010", "1010-0044", "0404-0044", "0404-0404", "0044-0044", "0044-0404", "0044-1010"] },
-    "TXM1143JP188": { "parent": "TXM1143P188", "kind": "junior", "sizes": ["3XS", "2XS", "XS"], "colorways": ["0012-0010", "0012-0004", "0002-0010", "0002-0004", "0013-0010", "0013-0004", "0044-0010", "0044-0004", "0010-0010", "0004-0004"] },
-    "TXM1146BP188B": { "parent": "TXM1146P188", "kind": "oversize", "sizes": ["3XL", "4XL"], "colorways": ["1010-1010", "1010-0044", "0404-0044", "0404-0404", "0044-0044", "0044-0404", "0044-1010"] },
-    "TXM1146JP188": { "parent": "TXM1146P188", "kind": "junior", "sizes": ["3XS", "2XS", "XS"], "colorways": ["0012-0010", "0012-0004", "0002-0010", "0002-0004", "0013-0010", "0013-0004", "0007-0004", "0008-0010", "0008-0004", "0044-0010", "0044-0004", "0010-0010", "0004-0004"] }
+    "M1147B": {
+      "parent": "M1147",
+      "kind": "oversize",
+      "sizes": [
+        "3XL",
+        "4XL"
+      ]
+    },
+    "M1152B": {
+      "parent": "M1152",
+      "kind": "oversize",
+      "sizes": [
+        "3XL",
+        "4XL"
+      ]
+    },
+    "M1166B": {
+      "parent": "M1166",
+      "kind": "oversize",
+      "sizes": [
+        "3XL",
+        "4XL"
+      ]
+    },
+    "M1173B": {
+      "parent": "M1173",
+      "kind": "oversize",
+      "sizes": [
+        "3XL",
+        "4XL"
+      ]
+    },
+    "M1143B": {
+      "parent": "M1143",
+      "kind": "oversize",
+      "sizes": [
+        "3XL",
+        "4XL"
+      ]
+    },
+    "M1143J": {
+      "parent": "M1143",
+      "kind": "junior",
+      "sizes": [
+        "3XS",
+        "2XS",
+        "XS"
+      ]
+    },
+    "M1144B": {
+      "parent": "M1144",
+      "kind": "oversize",
+      "sizes": [
+        "3XL",
+        "4XL"
+      ]
+    },
+    "M1144J": {
+      "parent": "M1144",
+      "kind": "junior",
+      "sizes": [
+        "3XS",
+        "2XS",
+        "XS"
+      ]
+    },
+    "M1146B": {
+      "parent": "M1146",
+      "kind": "oversize",
+      "sizes": [
+        "3XL",
+        "4XL"
+      ]
+    },
+    "M1146J": {
+      "parent": "M1146",
+      "kind": "junior",
+      "sizes": [
+        "3XS",
+        "2XS",
+        "XS"
+      ]
+    },
+    "P187B": {
+      "parent": "P187",
+      "kind": "oversize",
+      "sizes": [
+        "3XL",
+        "4XL"
+      ]
+    },
+    "P188B": {
+      "parent": "P188",
+      "kind": "oversize",
+      "sizes": [
+        "3XL",
+        "4XL"
+      ]
+    },
+    "P193B": {
+      "parent": "P193",
+      "kind": "oversize",
+      "sizes": [
+        "3XL",
+        "4XL",
+        "5XL",
+        "6XL"
+      ]
+    },
+    "B111B": {
+      "parent": "B111",
+      "kind": "oversize",
+      "sizes": [
+        "3XL"
+      ]
+    },
+    "PR201": {
+      "parent": "PR200",
+      "kind": "oversize",
+      "sizes": [
+        "3XL",
+        "4XL",
+        "5XL",
+        "6XL"
+      ]
+    },
+    "G022B": {
+      "parent": "G022",
+      "kind": "oversize",
+      "sizes": [
+        "3XL",
+        "4XL"
+      ]
+    },
+    "G026B": {
+      "parent": "G030",
+      "kind": "oversize",
+      "sizes": [
+        "3XL",
+        "4XL"
+      ]
+    },
+    "G027B": {
+      "parent": "G027",
+      "kind": "oversize",
+      "sizes": [
+        "3XL",
+        "4XL"
+      ]
+    },
+    "G028B": {
+      "parent": "G028",
+      "kind": "oversize",
+      "sizes": [
+        "3XL",
+        "4XL"
+      ]
+    },
+    "TXM1147BP187BC": {
+      "parent": "TXM1147P187",
+      "kind": "oversize",
+      "sizes": [
+        "3XL",
+        "4XL"
+      ],
+      "colorways": [
+        "0010-0010",
+        "0004-0004"
+      ]
+    },
+    "TXM1152BP187BC": {
+      "parent": "TXM1152P187",
+      "kind": "oversize",
+      "sizes": [
+        "3XL",
+        "4XL"
+      ],
+      "colorways": [
+        "0204-0004",
+        "0304-0004"
+      ]
+    },
+    "TXM1166BP193B": {
+      "parent": "TXM1166P193",
+      "kind": "oversize",
+      "sizes": [
+        "3XL",
+        "4XL"
+      ],
+      "colorways": [
+        "0004-0004",
+        "0010-0010"
+      ]
+    },
+    "TXM1173BP193B": {
+      "parent": "TXM1173P193",
+      "kind": "oversize",
+      "sizes": [
+        "3XL",
+        "4XL"
+      ],
+      "colorways": [
+        "2324-0004",
+        "2324-0010",
+        "1075-0010",
+        "0404-0004",
+        "0476-0004",
+        "1010-0010"
+      ]
+    },
+    "TXM1144P188B": {
+      "parent": "TXM1144P188",
+      "kind": "oversize",
+      "sizes": [
+        "3XL",
+        "4XL"
+      ],
+      "colorways": [
+        "0044-0044",
+        "0044-1010",
+        "0044-0404",
+        "0404-0404",
+        "0404-0044",
+        "1010-1010",
+        "1010-0044"
+      ]
+    },
+    "TXM1144JP188": {
+      "parent": "TXM1144P188",
+      "kind": "junior",
+      "sizes": [
+        "3XS",
+        "2XS",
+        "XS"
+      ],
+      "colorways": [
+        "0044-0010",
+        "0044-0004",
+        "0010-0010",
+        "0004-0004"
+      ]
+    },
+    "TXM1143BP188B": {
+      "parent": "TXM1143P188",
+      "kind": "oversize",
+      "sizes": [
+        "3XL",
+        "4XL"
+      ],
+      "colorways": [
+        "1010-1010",
+        "1010-0044",
+        "0404-0044",
+        "0404-0404",
+        "0044-0044",
+        "0044-0404",
+        "0044-1010"
+      ]
+    },
+    "TXM1143JP188": {
+      "parent": "TXM1143P188",
+      "kind": "junior",
+      "sizes": [
+        "3XS",
+        "2XS",
+        "XS"
+      ],
+      "colorways": [
+        "0012-0010",
+        "0012-0004",
+        "0002-0010",
+        "0002-0004",
+        "0013-0010",
+        "0013-0004",
+        "0044-0010",
+        "0044-0004",
+        "0010-0010",
+        "0004-0004"
+      ]
+    },
+    "TXM1146BP188B": {
+      "parent": "TXM1146P188",
+      "kind": "oversize",
+      "sizes": [
+        "3XL",
+        "4XL"
+      ],
+      "colorways": [
+        "1010-1010",
+        "1010-0044",
+        "0404-0044",
+        "0404-0404",
+        "0044-0044",
+        "0044-0404",
+        "0044-1010"
+      ]
+    },
+    "TXM1146JP188": {
+      "parent": "TXM1146P188",
+      "kind": "junior",
+      "sizes": [
+        "3XS",
+        "2XS",
+        "XS"
+      ],
+      "colorways": [
+        "0012-0010",
+        "0012-0004",
+        "0002-0010",
+        "0002-0004",
+        "0013-0010",
+        "0013-0004",
+        "0007-0004",
+        "0008-0010",
+        "0008-0004",
+        "0044-0010",
+        "0044-0004",
+        "0010-0010",
+        "0004-0004"
+      ]
+    }
   }
 }

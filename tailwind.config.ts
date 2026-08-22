@@ -17,8 +17,8 @@ const config: Config = {
         muted: colors.muted,
       },
       fontFamily: {
-        display: ["var(--font-anton)", "sans-serif"],
-        sans: ["var(--font-inter)", "sans-serif"],
+        display: ["var(--font-anton)", "var(--font-armenian)", "sans-serif"],
+        sans: ["var(--font-inter)", "var(--font-armenian)", "sans-serif"],
         mono: ["var(--font-jetbrains)", "monospace"],
       },
       letterSpacing: {
