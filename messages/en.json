@@ -226,7 +226,8 @@
     "photoPrev": "Previous colorway",
     "photoNext": "Next colorway",
     "showFashion": "Fashion",
-    "showProductPhoto": "Product photo"
+    "showProductPhoto": "Product photo",
+    "backToCatalog": "← Back to catalog"
   },
   "branding": {
     "title": "Branding",

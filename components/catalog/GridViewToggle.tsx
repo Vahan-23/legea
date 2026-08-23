@@ -11,22 +11,22 @@ type GridViewToggleProps = {
 };
 
 function GridIcon({ columns }: { columns: CatalogGridColumns }) {
-  const rows = columns === 2 ? 2 : 2;
   const cols = columns;
+  const rows = 2;
+  const gap = 1.4;
+  const cellW = (20 - gap * (cols - 1)) / cols;
+  const cellH = (14 - gap * (rows - 1)) / rows;
 
   return (
     <svg
       aria-hidden
-      viewBox="0 0 20 16"
-      className="h-4 w-5"
+      viewBox="0 0 20 14"
+      className="h-3.5 w-5"
       fill="currentColor"
     >
       {Array.from({ length: rows * cols }).map((_, index) => {
         const row = Math.floor(index / cols);
         const col = index % cols;
-        const gap = 1.2;
-        const cellW = (20 - gap * (cols - 1)) / cols;
-        const cellH = (16 - gap * (rows - 1)) / rows;
         return (
           <rect
             key={index}
@@ -34,7 +34,7 @@ function GridIcon({ columns }: { columns: CatalogGridColumns }) {
             y={row * (cellH + gap)}
             width={cellW}
             height={cellH}
-            rx={0.6}
+            rx={0.5}
           />
         );
       })}
@@ -42,7 +42,7 @@ function GridIcon({ columns }: { columns: CatalogGridColumns }) {
   );
 }
 
-/** Переключатель плотности сетки каталога (desktop). */
+/** Переключатель плотности сетки — 2 / 3 / 4 колонки реально отличаются. */
 export function GridViewToggle({ value, onChange }: GridViewToggleProps) {
   const t = useTranslations("catalog");
 
@@ -66,11 +66,12 @@ export function GridViewToggle({ value, onChange }: GridViewToggleProps) {
               onClick={() => onChange(columns)}
               className={
                 active
-                  ? "flex items-center justify-center bg-navy px-2.5 py-2 text-white"
-                  : "flex items-center justify-center px-2.5 py-2 text-muted transition-colors hover:bg-off-white hover:text-navy"
+                  ? "flex min-w-[2.75rem] flex-col items-center justify-center gap-0.5 bg-navy px-2 py-1.5 text-white"
+                  : "flex min-w-[2.75rem] flex-col items-center justify-center gap-0.5 px-2 py-1.5 text-muted transition-colors hover:bg-off-white hover:text-navy"
               }
             >
               <GridIcon columns={columns} />
+              <span className="font-mono text-[9px] leading-none">{columns}</span>
               <span className="sr-only">{t(`gridCols${columns}`)}</span>
             </button>
           );

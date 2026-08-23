@@ -140,69 +140,71 @@ export function CatalogView({
   );
 
   return (
-    <div className="mx-auto grid max-w-6xl gap-8 overflow-x-hidden px-4 py-8 sm:px-6 sm:py-12 lg:grid-cols-[240px_1fr] lg:gap-10">
-      <FilterSidebar
-        filters={filtersLive}
-        colorKeys={colorKeys}
-        onChange={handleFiltersChange}
-      />
-
-      <div className="min-w-0 space-y-5 overflow-x-hidden sm:space-y-6">
-        <div className="flex flex-col gap-3 sm:gap-4">
-          <SearchBar value={qDraft} onChange={setQDraft} />
-
-          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-            <button
-              type="button"
-              onClick={() => setFiltersOpen(true)}
-              className="inline-flex w-full shrink-0 items-center justify-center gap-2 border border-navy bg-white px-4 py-2.5 font-sans text-xs font-medium uppercase tracking-wide text-navy sm:w-auto lg:hidden"
-            >
-              {t("filters")}
-              {facetCount > 0 ? (
-                <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-blue px-1 font-mono text-[10px] text-white">
-                  {facetCount}
-                </span>
-              ) : null}
-            </button>
-
-            <div className="flex w-full min-w-0 items-center justify-end gap-3 sm:ml-auto sm:w-auto">
-              <GridViewToggle value={gridColumns} onChange={setGridColumns} />
-              <SortSelect
-                value={filters.sort}
-                onChange={(sort) =>
-                  pushFilters({ ...filters, q: qDraft.trim(), sort })
-                }
-              />
-            </div>
-          </div>
-        </div>
-
-        <ActiveFilters
+    <div className="w-full overflow-x-hidden py-6 sm:py-8 lg:py-10">
+      <div className="lg:grid lg:grid-cols-[minmax(11rem,20%)_minmax(0,80%)] lg:items-start">
+        <FilterSidebar
           filters={filtersLive}
+          colorKeys={colorKeys}
           onChange={handleFiltersChange}
-          onReset={reset}
         />
 
-        <p className="font-mono text-xs uppercase tracking-widest text-muted">
-          {t("results", { count: deferredFiltered.length })}
-          {listPending ? " …" : null}
-        </p>
+        <div className="min-w-0 space-y-5 px-4 sm:space-y-6 sm:px-6 lg:px-8 xl:px-10">
+          <div className="flex flex-col gap-3 sm:gap-4">
+            <SearchBar value={qDraft} onChange={setQDraft} />
 
-        {deferredFiltered.length === 0 ? (
-          <div className="border border-blue/20 bg-off-white px-6 py-16 text-center">
-            <p className="text-lg text-graphite">{t("empty")}</p>
-            <div className="mt-6">
-              <Button onClick={reset}>{t("reset")}</Button>
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+              <button
+                type="button"
+                onClick={() => setFiltersOpen(true)}
+                className="inline-flex w-full shrink-0 items-center justify-center gap-2 border border-navy bg-white px-4 py-2.5 font-sans text-xs font-medium uppercase tracking-wide text-navy sm:w-auto lg:hidden"
+              >
+                {t("filters")}
+                {facetCount > 0 ? (
+                  <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-blue px-1 font-mono text-[10px] text-white">
+                    {facetCount}
+                  </span>
+                ) : null}
+              </button>
+
+              <div className="flex w-full min-w-0 items-center justify-end gap-3 sm:ml-auto sm:w-auto">
+                <GridViewToggle value={gridColumns} onChange={setGridColumns} />
+                <SortSelect
+                  value={filters.sort}
+                  onChange={(sort) =>
+                    pushFilters({ ...filters, q: qDraft.trim(), sort })
+                  }
+                />
+              </div>
             </div>
           </div>
-        ) : (
-          <ProductGrid
-            products={deferredFiltered}
-            cardPhotos={cardPhotos}
-            fashionModels={fashionModels}
-            columns={gridColumns}
+
+          <ActiveFilters
+            filters={filtersLive}
+            onChange={handleFiltersChange}
+            onReset={reset}
           />
-        )}
+
+          <p className="font-mono text-xs uppercase tracking-widest text-muted">
+            {t("results", { count: deferredFiltered.length })}
+            {listPending ? " …" : null}
+          </p>
+
+          {deferredFiltered.length === 0 ? (
+            <div className="border border-blue/20 bg-off-white px-6 py-16 text-center">
+              <p className="text-lg text-graphite">{t("empty")}</p>
+              <div className="mt-6">
+                <Button onClick={reset}>{t("reset")}</Button>
+              </div>
+            </div>
+          ) : (
+            <ProductGrid
+              products={deferredFiltered}
+              cardPhotos={cardPhotos}
+              fashionModels={fashionModels}
+              columns={gridColumns}
+            />
+          )}
+        </div>
       </div>
 
       <MobileFilterSheet

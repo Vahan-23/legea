@@ -4,6 +4,7 @@ import { isLocale } from "@/i18n/routing";
 import { notFound } from "next/navigation";
 import { BrandLogo } from "@/components/ui/BrandLogo";
 import { LangSwitcher } from "@/components/ui/LangSwitcher";
+import { StickyHeader } from "@/components/ui/StickyHeader";
 import { SpecNavButton } from "@/components/spec/SpecNavButton";
 import { SpecDrawer } from "@/components/spec/SpecDrawer";
 
@@ -37,36 +38,38 @@ export async function Header({ locale }: HeaderProps) {
 
   return (
     <>
-      <header className="border-b border-blue/30 bg-white">
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-6 px-6 py-4">
-          <Link href="/" className="shrink-0" aria-label="Legea">
-            <BrandLogo
-              height={40}
-              priority
-              className="h-10 w-auto object-contain"
-            />
-          </Link>
-          <nav className="hidden items-center gap-6 md:flex" aria-label="Main">
-            {navKeys.map((key) => (
-              <Link
-                key={key}
-                href={navHrefs[key]}
-                className="text-sm uppercase tracking-wide text-graphite hover:text-blue"
-              >
-                {t(key)}
-              </Link>
-            ))}
-            <SpecNavButton />
-          </nav>
-          <div className="flex items-center gap-4">
-            <div className="md:hidden">
+      <StickyHeader>
+        <header className="border-b border-blue/30 bg-white/95 backdrop-blur-sm">
+          <div className="mx-auto flex max-w-6xl items-center justify-between gap-6 px-6 py-4">
+            <Link href="/" className="shrink-0" aria-label="Legea">
+              <BrandLogo
+                height={40}
+                priority
+                className="h-10 w-auto object-contain"
+              />
+            </Link>
+            <nav className="hidden items-center gap-6 md:flex" aria-label="Main">
+              {navKeys.map((key) => (
+                <Link
+                  key={key}
+                  href={navHrefs[key]}
+                  className="text-sm uppercase tracking-wide text-graphite hover:text-blue"
+                >
+                  {t(key)}
+                </Link>
+              ))}
               <SpecNavButton />
+            </nav>
+            <div className="flex items-center gap-4">
+              <div className="md:hidden">
+                <SpecNavButton />
+              </div>
+              <LangSwitcher />
             </div>
-            <LangSwitcher />
           </div>
-        </div>
-        <div className="section-rule" />
-      </header>
+          <div className="section-rule" />
+        </header>
+      </StickyHeader>
       <SpecDrawer />
     </>
   );

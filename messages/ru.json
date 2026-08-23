@@ -226,7 +226,8 @@
     "photoPrev": "Предыдущая расцветка",
     "photoNext": "Следующая расцветка",
     "showFashion": "Fashion",
-    "showProductPhoto": "Фото продукта"
+    "showProductPhoto": "Фото продукта",
+    "backToCatalog": "← В каталог"
   },
   "branding": {
     "title": "Брендирование",

@@ -226,7 +226,8 @@
     "photoPrev": "Նախորդ գունային տարբերակ",
     "photoNext": "Հաջորդ գունային տարբերակ",
     "showFashion": "Fashion",
-    "showProductPhoto": "Ապրանքի լուսանկար"
+    "showProductPhoto": "Ապրանքի լուսանկար",
+    "backToCatalog": "← Դեպի կատալոգ"
   },
   "branding": {
     "title": "Բրենդավորում",

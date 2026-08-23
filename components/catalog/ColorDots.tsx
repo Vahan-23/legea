@@ -69,10 +69,10 @@ export function ColorDots({
     event.stopPropagation();
   };
 
-  /** Фиксированный слот — компактнее, чтобы ряд не вылезал из карточки */
+  /** Фиксированный слот — крупнее для каталога */
   const slotClass = interactive
-    ? "flex h-7 w-7 shrink-0 items-center justify-center sm:h-5 sm:w-5"
-    : "flex h-5 w-5 shrink-0 items-center justify-center sm:h-3.5 sm:w-3.5";
+    ? "flex h-9 w-9 shrink-0 items-center justify-center sm:h-7 sm:w-7"
+    : "flex h-7 w-7 shrink-0 items-center justify-center sm:h-5 sm:w-5";
 
   const buttonClass = (active: boolean) => {
     const base =
@@ -88,7 +88,7 @@ export function ColorDots({
 
   return (
     <ul
-      className={`flex max-w-full min-w-0 flex-wrap items-center gap-1.5 sm:gap-1.5 ${className}`}
+      className={`flex max-w-full min-w-0 flex-wrap items-center gap-2 sm:gap-2 ${className}`}
       role="list"
       onMouseLeave={onPreviewEnd}
     >
@@ -174,7 +174,7 @@ export function ColorDots({
         );
       })}
       {rest > 0 ? (
-        <li className="flex h-7 shrink-0 items-center font-mono text-[10px] text-muted sm:h-5">
+        <li className="flex h-9 shrink-0 items-center font-mono text-[10px] text-muted sm:h-7">
           +{rest}
         </li>
       ) : null}

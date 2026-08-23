@@ -158,7 +158,7 @@ function ProductCardInner({
 
   return (
     <article
-      className="group flex min-w-0 flex-col overflow-hidden"
+      className="group flex min-w-0 flex-col overflow-hidden md:rounded-sm md:bg-white md:p-3 md:ring-1 md:ring-navy/10"
       onMouseEnter={warmProductPage}
       onTouchStart={warmProductPage}
     >
@@ -192,7 +192,7 @@ function ProductCardInner({
         </div>
       </Link>
 
-      <div className="flex min-w-0 flex-1 flex-col gap-2.5 overflow-hidden pt-3">
+      <div className="flex min-w-0 flex-1 flex-col overflow-hidden pt-2">
         {showSwatches ? (
           <ColorDots
             colorways={colorwaysWithPhoto}
@@ -204,9 +204,14 @@ function ProductCardInner({
             onPreviewFashion={hasFashion ? handleSelectFashion : undefined}
             onPreview={canSlide ? handlePreview : undefined}
             onPreviewEnd={canSlide ? restoreMain : undefined}
+            className="mb-2.5"
           />
         ) : product.colorways.length > 0 ? (
-          <ColorDots colorways={product.colorways} limit={6} />
+          <ColorDots
+            colorways={product.colorways}
+            limit={6}
+            className="mb-2.5"
+          />
         ) : null}
 
         <Link
@@ -215,7 +220,7 @@ function ProductCardInner({
           className="block min-w-0 space-y-1"
           onClick={handleLinkClick}
         >
-          <h3 className="font-sans text-sm font-medium normal-case tracking-normal text-graphite transition-colors group-hover:text-navy sm:text-[15px]">
+          <h3 className="font-sans text-[15px] font-medium leading-snug normal-case tracking-normal text-graphite transition-colors group-hover:text-navy sm:text-base">
             {name}
           </h3>
           <p className="font-mono text-[11px] uppercase tracking-widest text-muted">

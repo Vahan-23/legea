@@ -52,7 +52,7 @@ function useIsMobile(): boolean {
 }
 
 /**
- * Фото сразу; 3D готовится в фоне после открытия карточки.
+ * Сразу fashion/фото; если есть 3D — всегда видна кнопка (не прячется).
  */
 export function ProductViewer({
   productId,
@@ -85,10 +85,7 @@ export function ProductViewer({
   const hasPhotos = hasFront || hasBack;
   const has3d = productHasViewer3d(productId, model);
 
-  const [mode, setMode] = useState<ViewMode>(
-    hasFront ? "front" : has3d ? "3d" : "front",
-  );
-  const [mobile3d, setMobile3d] = useState(false);
+  const [mode, setMode] = useState<ViewMode>("front");
   const [displaySrc, setDisplaySrc] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [SceneComp, setSceneComp] = useState<ComponentType<SceneProps> | null>(
@@ -97,17 +94,30 @@ export function ProductViewer({
   const [sceneLoading, setSceneLoading] = useState(false);
 
   useEffect(() => {
+    setMode(hasPhotos || fashionSrc ? "front" : has3d ? "3d" : "front");
+    setSceneComp(null);
+  }, [productId, has3d, hasPhotos, fashionSrc]);
+
+  useEffect(() => {
     if (mode === "back" && !hasBack) {
       setMode(hasFront ? "front" : has3d ? "3d" : "front");
-    } else if (mode === "front" && !hasFront) {
+    } else if (mode === "front" && !hasFront && !fashionActive && !fashionSrc) {
       setMode(hasBack ? "back" : has3d ? "3d" : "front");
     } else if (mode === "3d" && !has3d) {
       setMode(hasFront ? "front" : hasBack ? "back" : "front");
-    } else if (mode !== "3d" && !hasPhotos && has3d) {
+    } else if (!hasPhotos && !fashionSrc && has3d) {
       setMode("3d");
     }
-    setMobile3d(false);
-  }, [colorway, hasFront, hasBack, hasPhotos, has3d, mode]);
+  }, [
+    colorway,
+    hasFront,
+    hasBack,
+    hasPhotos,
+    has3d,
+    mode,
+    fashionActive,
+    fashionSrc,
+  ]);
 
   const swatchColorways = useMemo(() => {
     const fromPhotos = colorways.filter(
@@ -163,7 +173,7 @@ export function ProductViewer({
         ? active.front
         : null;
 
-  const show3d = has3d && (hasPhotos ? mode === "3d" : !mobile || mobile3d);
+  const show3d = has3d && mode === "3d";
 
   const branding = useProductStore((s) => (show3d ? s.branding : null));
   const preserveMaterials = preserveGlbMaterials(productId);
@@ -195,8 +205,14 @@ export function ProductViewer({
   );
 
   const selectMode = (next: ViewMode) => {
+    if (next === "3d") onFashionOff?.();
     if (next === "front" || next === "back") onFashionOff?.();
     setMode(next);
+  };
+
+  const open3d = () => {
+    onFashionOff?.();
+    setMode("3d");
   };
 
   useEffect(() => {
@@ -342,23 +358,18 @@ export function ProductViewer({
                 </span>
               </div>
             ) : null}
-            {!hasPhotos && has3d && mobile ? (
-              <div className="absolute inset-x-0 bottom-0 z-20 flex justify-center p-3 sm:p-4">
-                <Button type="button" onClick={() => setMobile3d(true)}>
-                  {t("view3d")}
-                </Button>
-              </div>
-            ) : null}
           </>
         )}
       </div>
 
-      {hasPhotos && !fashionActive ? (
+      {hasPhotos || has3d ? (
         <div className="flex flex-wrap gap-2">
           {hasFront ? (
             <Button
               type="button"
-              variant={mode === "front" ? "primary" : "secondary"}
+              variant={
+                mode === "front" && !fashionActive ? "primary" : "secondary"
+              }
               className="px-4 py-2 text-xs sm:px-6 sm:py-3 sm:text-sm"
               onClick={() => selectMode("front")}
             >
@@ -380,9 +391,9 @@ export function ProductViewer({
               type="button"
               variant={mode === "3d" ? "primary" : "secondary"}
               className="px-4 py-2 text-xs sm:px-6 sm:py-3 sm:text-sm"
-              onClick={() => selectMode("3d")}
+              onClick={open3d}
             >
-              {t("view3d")}
+              3D
             </Button>
           ) : null}
         </div>

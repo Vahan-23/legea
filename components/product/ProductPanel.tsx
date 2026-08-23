@@ -10,6 +10,11 @@ import { SizeMatrix } from "@/components/product/SizeMatrix";
 import { SpecTable } from "@/components/product/SpecTable";
 import { TechBadges } from "@/components/product/TechBadges";
 import { Button } from "@/components/ui/Button";
+import { Link } from "@/i18n/navigation";
+import {
+  catalogHrefFromFocus,
+  peekCatalogFocus,
+} from "@/lib/catalogScroll";
 import {
   getMatrixSizes,
   partitionQuantitiesBySku,
@@ -53,6 +58,11 @@ export function ProductPanel({
 
   const [addedFlash, setAddedFlash] = useState(false);
   const [fashionActive, setFashionActive] = useState(Boolean(fashionSrc));
+  const [catalogHref, setCatalogHref] = useState("/catalog");
+
+  useEffect(() => {
+    setCatalogHref(catalogHrefFromFocus(peekCatalogFocus()));
+  }, []);
 
   useEffect(() => {
     initProduct({
@@ -101,93 +111,102 @@ export function ProductPanel({
   };
 
   return (
-    <div className="mx-auto grid w-full max-w-6xl gap-8 overflow-x-hidden px-4 py-8 sm:gap-10 sm:px-6 sm:py-12 lg:grid-cols-2">
-      <div className="min-w-0 space-y-4 lg:sticky lg:top-6 lg:self-start">
-        <ProductViewer
-          productId={product.id}
-          model={product.model}
-          colorway={colorway}
-          colorways={product.colorways}
-          onColorwayChange={(code) => {
-            setFashionActive(false);
-            setColorway(code);
-          }}
-          alt={name}
-          photos={photos}
-          fashionSrc={fashionSrc}
-          fashionActive={fashionActive}
-          onFashionOff={() => setFashionActive(false)}
-          onFashionOn={() => setFashionActive(true)}
-        />
-      </div>
+    <div className="mx-auto w-full max-w-6xl overflow-x-hidden px-4 py-8 sm:px-6 sm:py-12">
+      <Link
+        href={catalogHref}
+        className="mb-6 inline-flex items-center text-sm text-muted transition-colors hover:text-navy sm:mb-8"
+      >
+        {t("backToCatalog")}
+      </Link>
 
-      <div className="min-w-0 space-y-6 sm:space-y-8">
-        <div className="space-y-4">
-          <p className="font-mono text-2xl tracking-tight text-navy sm:text-3xl">
-            {product.id}
-          </p>
-          <h1 className="break-words text-display-sm normal-case tracking-display">
-            {name}
-          </h1>
-
-          <div className="flex flex-wrap items-center gap-3 sm:gap-4">
-            <PriceLevel level={product.priceLevel} />
-            {product.oversizeId ? (
-              <span className="border border-navy/20 px-2 py-1 font-mono text-[10px] uppercase text-navy">
-                {t("badgeOversize")}
-              </span>
-            ) : null}
-            {product.juniorId ? (
-              <span className="border border-navy/20 px-2 py-1 font-mono text-[10px] uppercase text-navy">
-                {t("badgeJunior")}
-              </span>
-            ) : null}
-          </div>
-        </div>
-
-        <div className="section-rule" />
-
-        <TechBadges tech={product.tech} />
-
-        <div className="space-y-3">
-          <ColorSwatches
+      <div className="grid gap-8 sm:gap-10 lg:grid-cols-2">
+        <div className="min-w-0 space-y-4 lg:sticky lg:top-6 lg:self-start">
+          <ProductViewer
+            productId={product.id}
+            model={product.model}
+            colorway={colorway}
             colorways={product.colorways}
-            value={colorway}
-            fashionSrc={fashionSrc}
-            fashionActive={fashionActive}
-            onSelectFashion={() => setFashionActive(true)}
-            onChange={(code) => {
+            onColorwayChange={(code) => {
               setFashionActive(false);
               setColorway(code);
             }}
-            onPreview={previewColorway}
+            alt={name}
+            photos={photos}
+            fashionSrc={fashionSrc}
+            fashionActive={fashionActive}
+            onFashionOff={() => setFashionActive(false)}
+            onFashionOn={() => setFashionActive(true)}
           />
         </div>
 
-        <SizeMatrix
-          sizes={sizes}
-          quantities={quantities}
-          moq={product.moq}
-          onChange={setQuantity}
-          onApplyPreset={(preset) => applyPreset(preset, sizes)}
-        />
+        <div className="min-w-0 space-y-6 sm:space-y-8">
+          <div className="space-y-4">
+            <p className="font-mono text-2xl tracking-tight text-navy sm:text-3xl">
+              {product.id}
+            </p>
+            <h1 className="break-words text-display-sm normal-case tracking-display">
+              {name}
+            </h1>
 
-        {product.brandable && product.brandingZones.length > 0 ? (
-          <BrandingPanel zones={product.brandingZones} />
-        ) : null}
+            <div className="flex flex-wrap items-center gap-3 sm:gap-4">
+              <PriceLevel level={product.priceLevel} />
+              {product.oversizeId ? (
+                <span className="border border-navy/20 px-2 py-1 font-mono text-[10px] uppercase text-navy">
+                  {t("badgeOversize")}
+                </span>
+              ) : null}
+              {product.juniorId ? (
+                <span className="border border-navy/20 px-2 py-1 font-mono text-[10px] uppercase text-navy">
+                  {t("badgeJunior")}
+                </span>
+              ) : null}
+            </div>
+          </div>
 
-        <div className="flex flex-wrap items-center gap-3 sm:gap-4">
-          <Button onClick={handleAdd} disabled={!canAdd}>
-            {t("addToSpec")}
-          </Button>
-          {addedFlash ? (
-            <span className="text-sm text-success">{t("added")}</span>
+          <div className="section-rule" />
+
+          <TechBadges tech={product.tech} />
+
+          <div className="space-y-3">
+            <ColorSwatches
+              colorways={product.colorways}
+              value={colorway}
+              fashionSrc={fashionSrc}
+              fashionActive={fashionActive}
+              onSelectFashion={() => setFashionActive(true)}
+              onChange={(code) => {
+                setFashionActive(false);
+                setColorway(code);
+              }}
+              onPreview={previewColorway}
+            />
+          </div>
+
+          <SizeMatrix
+            sizes={sizes}
+            quantities={quantities}
+            moq={product.moq}
+            onChange={setQuantity}
+            onApplyPreset={(preset) => applyPreset(preset, sizes)}
+          />
+
+          {product.brandable && product.brandingZones.length > 0 ? (
+            <BrandingPanel zones={product.brandingZones} />
           ) : null}
+
+          <div className="flex flex-wrap items-center gap-3 sm:gap-4">
+            <Button onClick={handleAdd} disabled={!canAdd}>
+              {t("addToSpec")}
+            </Button>
+            {addedFlash ? (
+              <span className="text-sm text-success">{t("added")}</span>
+            ) : null}
+          </div>
+
+          <div className="section-rule" />
+
+          <SpecTable product={product} />
         </div>
-
-        <div className="section-rule" />
-
-        <SpecTable product={product} />
       </div>
     </div>
   );

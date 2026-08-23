@@ -42,7 +42,7 @@ export default async function CatalogPage({ params }: PageProps) {
   return (
     <div className="hex-bg-muted min-h-screen">
       <header className="border-b border-blue bg-white">
-        <div className="mx-auto max-w-6xl px-6 py-10">
+        <div className="px-4 py-8 sm:px-6 lg:px-8 xl:px-10">
           <h1 className="text-display-sm text-navy">{t("title")}</h1>
           <p className="mt-3 max-w-2xl text-muted">{t("subtitle")}</p>
         </div>
@@ -52,7 +52,7 @@ export default async function CatalogPage({ params }: PageProps) {
       {/* Suspense: useSearchParams в CatalogView */}
       <Suspense
         fallback={
-          <div className="mx-auto max-w-6xl px-6 py-16 font-mono text-xs uppercase tracking-widest text-muted">
+          <div className="px-4 py-16 font-mono text-xs uppercase tracking-widest text-muted sm:px-6 lg:px-8">
             …
           </div>
         }

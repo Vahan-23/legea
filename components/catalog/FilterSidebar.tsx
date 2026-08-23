@@ -188,8 +188,8 @@ export function FilterSidebar({
   const t = useTranslations("catalog");
 
   return (
-    <aside className="hidden space-y-8 border-r border-blue/20 pr-8 lg:block">
-      <h2 className="font-display text-lg uppercase tracking-display text-navy">
+    <aside className="sticky top-4 hidden max-h-[calc(100dvh-2rem)] space-y-6 overflow-y-auto border-r border-navy/10 px-3 pb-8 pt-1 lg:block xl:px-5">
+      <h2 className="font-display text-base uppercase tracking-display text-navy xl:text-lg">
         {t("filters")}
       </h2>
       <CatalogFilterFields
