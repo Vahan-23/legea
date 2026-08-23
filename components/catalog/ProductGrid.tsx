@@ -67,7 +67,6 @@ export function ProductGrid({
             photos={cardPhotos?.[product.id]}
             fashionSrc={fashionModels?.[product.id] ?? null}
             eager={index === 0}
-            gridColumns={columns}
           />
         </li>
       ))}

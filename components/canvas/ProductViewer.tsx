@@ -15,6 +15,7 @@ import {
   prefetchImage,
   prefetchImagesQueued,
 } from "@/lib/prefetchImages";
+import { prefetchProduct3d, prefetchSceneModule } from "@/lib/prefetchGlb";
 import type { SceneProps } from "@/components/canvas/Scene";
 import { preserveGlbMaterials, productHasViewer3d } from "@/lib/models";
 import { useProductStore } from "@/store/useProductStore";
@@ -51,7 +52,7 @@ function useIsMobile(): boolean {
 }
 
 /**
- * Одно фото в DOM + 3D только по клику (three.js не грузится заранее).
+ * Фото сразу; 3D готовится в фоне после открытия карточки.
  */
 export function ProductViewer({
   productId,
@@ -199,10 +200,15 @@ export function ProductViewer({
   };
 
   useEffect(() => {
+    if (!has3d || !productId) return;
+    return prefetchProduct3d(productId, model);
+  }, [has3d, productId, model]);
+
+  useEffect(() => {
     if (!show3d || SceneComp) return;
     let cancelled = false;
     setSceneLoading(true);
-    void import("@/components/canvas/Scene")
+    void prefetchSceneModule()
       .then((m) => {
         if (!cancelled) {
           setSceneComp((_prev: ComponentType<SceneProps> | null) => m.Scene);

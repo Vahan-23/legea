@@ -1,5 +1,9 @@
 export type CatalogGridColumns = 2 | 3 | 4;
 
+/** Фиксированный sizes — смена колонок не перезагружает фото */
+export const CATALOG_CARD_IMAGE_SIZES =
+  "(max-width: 767px) 100vw, 480px";
+
 export const CATALOG_GRID_STORAGE_KEY = "legea-catalog-grid";
 
 export const DEFAULT_GRID_COLUMNS: CatalogGridColumns = 2;
@@ -8,17 +12,6 @@ export function parseGridColumns(value: string | null): CatalogGridColumns {
   if (value === "3") return 3;
   if (value === "4") return 4;
   return 2;
-}
-
-export function gridImageSizes(columns: CatalogGridColumns): string {
-  switch (columns) {
-    case 4:
-      return "(max-width: 767px) 100vw, 25vw";
-    case 3:
-      return "(max-width: 767px) 100vw, 33vw";
-    default:
-      return "(max-width: 767px) 100vw, 50vw";
-  }
 }
 
 export function gridClassName(columns: CatalogGridColumns): string {

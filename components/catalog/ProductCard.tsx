@@ -9,7 +9,7 @@ import { Link } from "@/i18n/navigation";
 import { saveCatalogFocus } from "@/lib/catalogScroll";
 import { PRODUCT_IMAGE_PLACEHOLDER } from "@/lib/productImages";
 import { prefetchImage, prefetchImagesQueued } from "@/lib/prefetchImages";
-import { gridImageSizes, type CatalogGridColumns } from "@/lib/catalogGridView";
+import { CATALOG_CARD_IMAGE_SIZES } from "@/lib/catalogGridView";
 import { useIsMobile } from "@/lib/useIsMobile";
 import { productName } from "@/types/product";
 import type { Locale } from "@/i18n/routing";
@@ -23,7 +23,6 @@ type ProductCardProps = {
   fashionSrc?: string | null;
   /** Первая карточка на странице — грузим фото сразу */
   eager?: boolean;
-  gridColumns?: CatalogGridColumns;
 };
 
 function resolveDefaultFront(
@@ -43,12 +42,10 @@ function ProductCardInner({
   photos,
   fashionSrc = null,
   eager = false,
-  gridColumns = 2,
 }: ProductCardProps) {
   const locale = useLocale() as Locale;
   const mobile = useIsMobile();
   const name = productName(product, locale);
-  const imageSizes = gridImageSizes(gridColumns);
   const cardRef = useRef<HTMLElement>(null);
   const [inView, setInView] = useState(eager);
 
@@ -189,7 +186,7 @@ function ProductCardInner({
               index={slideIndex}
               onIndexChange={selectIndex}
               imagePriority={inView}
-              imageSizes={imageSizes}
+              imageSizes={CATALOG_CARD_IMAGE_SIZES}
               onSwipe={() => {
                 swipedRef.current = true;
               }}
@@ -200,7 +197,7 @@ function ProductCardInner({
               alt={name}
               fit={slides[0]?.fit}
               priority={inView}
-              sizes={imageSizes}
+              sizes={CATALOG_CARD_IMAGE_SIZES}
               className="transition-transform duration-500 group-hover:scale-[1.02]"
             />
           )}
