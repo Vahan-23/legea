@@ -8,6 +8,7 @@ import { Link } from "@/i18n/navigation";
 import { saveCatalogFocus } from "@/lib/catalogScroll";
 import { PRODUCT_IMAGE_PLACEHOLDER } from "@/lib/productImages";
 import { prefetchImage, prefetchImagesQueued } from "@/lib/prefetchImages";
+import { useIsMobile } from "@/lib/useIsMobile";
 import { productName } from "@/types/product";
 import type { Locale } from "@/i18n/routing";
 import type { Product } from "@/types/product";
@@ -39,6 +40,7 @@ function ProductCardInner({
 }: ProductCardProps) {
   const t = useTranslations("catalog");
   const locale = useLocale() as Locale;
+  const mobile = useIsMobile();
   const name = productName(product, locale);
   const sizeFrom = product.sizes[0];
   const sizeTo = product.sizes[product.sizes.length - 1];
@@ -104,6 +106,8 @@ function ProductCardInner({
   const fashionActive = activeSlide?.key === "fashion";
   const activeCode = fashionActive ? null : activeSlide?.key ?? null;
 
+  const defaultIndex = 0;
+
   const selectIndex = useCallback(
     (index: number) => {
       setSlideIndex(index);
@@ -112,6 +116,11 @@ function ProductCardInner({
     },
     [slides],
   );
+
+  const restoreMain = useCallback(() => {
+    if (mobile) return;
+    selectIndex(defaultIndex);
+  }, [mobile, selectIndex]);
 
   const handleSelectFashion = useCallback(() => {
     const idx = slides.findIndex((slide) => slide.key === "fashion");
@@ -182,7 +191,9 @@ function ProductCardInner({
             fashionSrc={fashionSrc}
             fashionActive={fashionActive}
             onSelectFashion={hasFashion ? handleSelectFashion : undefined}
+            onPreviewFashion={hasFashion ? handleSelectFashion : undefined}
             onPreview={canSlide ? handlePreview : undefined}
+            onPreviewEnd={canSlide ? restoreMain : undefined}
           />
         ) : (
           <ColorDots colorways={product.colorways} />

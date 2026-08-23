@@ -28,10 +28,14 @@ type ColorDotsProps = {
   fashionSrc?: string | null;
   fashionActive?: boolean;
   onSelectFashion?: () => void;
+  /** Desktop: hover fashion / уход мыши — вернуть главную */
+  onPreviewFashion?: () => void;
+  onPreviewEnd?: () => void;
 };
 
 /**
  * Свотчи расцветок (+ опционально fashion) для карточки каталога.
+ * На мобиле — крупные touch-таргеты; на desktop — компактные как раньше.
  */
 export function ColorDots({
   colorways,
@@ -42,6 +46,8 @@ export function ColorDots({
   fashionSrc = null,
   fashionActive = false,
   onSelectFashion,
+  onPreviewFashion,
+  onPreviewEnd,
 }: ColorDotsProps) {
   const t = useTranslations("product");
 
@@ -64,10 +70,25 @@ export function ColorDots({
     event.stopPropagation();
   };
 
+  const fashionClass = fashionActive
+    ? "flex h-9 w-9 items-center justify-center overflow-hidden rounded-full bg-white p-0.5 ring-2 ring-blue ring-offset-1 touch-manipulation sm:h-5 sm:w-5 sm:p-px sm:ring-offset-0"
+    : "flex h-9 w-9 items-center justify-center overflow-hidden rounded-full bg-white p-0.5 ring-1 ring-navy/30 hover:ring-blue touch-manipulation sm:h-5 sm:w-5 sm:p-px";
+
+  const swatchClass = (active: boolean) => {
+    if (!interactive) {
+      return "flex h-6 w-6 items-center justify-center rounded-full bg-white p-px ring-1 ring-navy/25 sm:h-3.5 sm:w-3.5";
+    }
+    if (active) {
+      return "flex h-9 w-9 items-center justify-center rounded-full bg-white p-0.5 ring-2 ring-blue ring-offset-1 touch-manipulation sm:h-5 sm:w-5 sm:p-px sm:ring-offset-0";
+    }
+    return "flex h-9 w-9 items-center justify-center rounded-full bg-white p-0.5 ring-1 ring-navy/25 hover:ring-blue touch-manipulation sm:h-5 sm:w-5 sm:p-px";
+  };
+
   return (
     <ul
-      className={`flex flex-wrap items-center gap-2.5 ${className}`}
+      className={`flex flex-wrap items-center gap-2.5 sm:gap-1.5 ${className}`}
       role="list"
+      onMouseLeave={onPreviewEnd}
     >
       {fashionSrc ? (
         <li>
@@ -80,11 +101,11 @@ export function ColorDots({
               stop(event);
               onSelectFashion?.();
             }}
-            className={
-              fashionActive
-                ? "flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-white p-[3px] ring-2 ring-blue ring-offset-2 touch-manipulation"
-                : "flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-white p-[3px] ring-1 ring-navy/30 hover:ring-blue touch-manipulation"
-            }
+            onMouseEnter={(event) => {
+              event.stopPropagation();
+              onPreviewFashion?.();
+            }}
+            className={fashionClass}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
@@ -134,13 +155,7 @@ export function ColorDots({
                     }
                   : undefined
               }
-              className={
-                interactive
-                  ? active
-                    ? "flex h-10 w-10 items-center justify-center rounded-full bg-white p-[3px] ring-2 ring-blue ring-offset-2 touch-manipulation"
-                    : "flex h-10 w-10 items-center justify-center rounded-full bg-white p-[3px] ring-1 ring-navy/30 hover:ring-blue touch-manipulation"
-                  : "flex h-6 w-6 items-center justify-center rounded-full bg-white p-px ring-1 ring-navy/25"
-              }
+              className={swatchClass(active)}
             >
               <span
                 className="block h-full w-full rounded-full"

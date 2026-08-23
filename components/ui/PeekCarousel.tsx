@@ -9,9 +9,10 @@ import {
 } from "react";
 
 const SWIPE_THRESHOLD_PX = 36;
-/** Ширина активного слайда — остальное уходит в peek слева/справа */
-const SLIDE_RATIO = 0.82;
-const GAP_PX = 10;
+/** Peek только на узких экранах — на desktop фото на всю ширину */
+const PEEK_MAX_WIDTH = 768;
+const SLIDE_RATIO_PEEK = 0.82;
+const GAP_PEEK = 10;
 
 export type PeekCarouselSlide = {
   key: string;
@@ -52,7 +53,10 @@ export function PeekCarousel({
   const safeIndex =
     count === 0 ? 0 : ((index % count) + count) % count;
 
-  const slideWidth = containerWidth * SLIDE_RATIO;
+  const peek = containerWidth > 0 && containerWidth < PEEK_MAX_WIDTH;
+  const slideRatio = peek ? SLIDE_RATIO_PEEK : 1;
+  const gap = peek ? GAP_PEEK : 0;
+  const slideWidth = containerWidth * slideRatio;
 
   useLayoutEffect(() => {
     const el = containerRef.current;
@@ -116,7 +120,7 @@ export function PeekCarousel({
     containerWidth > 0 && slideWidth > 0
       ? containerWidth / 2 -
         slideWidth / 2 -
-        safeIndex * (slideWidth + GAP_PX)
+        safeIndex * (slideWidth + gap)
       : 0;
 
   return (
@@ -129,7 +133,7 @@ export function PeekCarousel({
       <div
         className="flex h-full"
         style={{
-          gap: `${GAP_PX}px`,
+          gap: `${gap}px`,
           transform: `translateX(${offset}px)`,
           transition:
             containerWidth > 0 ? "transform 350ms ease-out" : undefined,
@@ -140,12 +144,16 @@ export function PeekCarousel({
           return (
             <div
               key={slide.key}
-              className="relative h-full shrink-0 overflow-hidden rounded-sm bg-off-white transition-[opacity,transform] duration-300 ease-out"
+              className="relative h-full shrink-0 overflow-hidden bg-off-white transition-[opacity,transform] duration-300 ease-out"
               style={{
                 width:
-                  slideWidth > 0 ? slideWidth : `${SLIDE_RATIO * 100}%`,
-                opacity: isActive ? 1 : 0.55,
-                transform: isActive ? "scale(1)" : "scale(0.96)",
+                  slideWidth > 0 ? slideWidth : `${slideRatio * 100}%`,
+                opacity: peek ? (isActive ? 1 : 0.55) : 1,
+                transform: peek
+                  ? isActive
+                    ? "scale(1)"
+                    : "scale(0.96)"
+                  : "scale(1)",
               }}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
