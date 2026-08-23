@@ -12,13 +12,13 @@
     "contactsDescription": "Phone, email and address of the Legea distributor in Armenia — request a quote.",
     "privacyTitle": "Privacy policy",
     "privacyDescription": "How Legea Armenia processes personal data when handling inquiries and quotes.",
-    "specTitle": "Specification",
-    "specDescription": "Build a Legea kit specification: articles, colorways, sizes and branding — no prices on the site."
+    "specTitle": "Cart",
+    "specDescription": "Build your Legea kit order: articles, colorways, sizes and branding — no prices on the site; a manager will send a quote."
   },
   "nav": {
     "catalog": "Catalog",
     "builder": "Kit builder",
-    "spec": "Specification",
+    "spec": "Cart",
     "about": "About",
     "delivery": "Delivery",
     "contacts": "Contacts",
@@ -47,11 +47,11 @@
     },
     "workflow": {
       "title": "How we work",
-      "subtitle": "From specification to delivery — clear steps and lead times",
+      "subtitle": "From cart to delivery — clear steps and lead times",
       "steps": {
         "specification": {
-          "title": "Specification",
-          "text": "Build line items, sizes and branding on the site",
+          "title": "Cart",
+          "text": "Add products, sizes and branding on the site",
           "duration": "1 day"
         },
         "sampleAndMockup": {
@@ -208,8 +208,8 @@
     "moq": "Min. order",
     "moqValue": "MOQ: {moq} pcs",
     "moqWarning": "Below minimum order quantity — the manager will confirm terms",
-    "addToSpec": "Add to specification",
-    "added": "Added to specification",
+    "addToSpec": "Add to cart",
+    "added": "Added to cart",
     "composition": "Composition",
     "features": "Features",
     "dimensions": "Dimensions",
@@ -270,19 +270,20 @@
     }
   },
   "spec": {
-    "title": "Specification",
-    "navCounter": "Specification ({count})",
+    "title": "Cart",
+    "navCounter": "Cart ({count})",
     "navPieces": "{count} pcs",
     "summary": "{positions} lines · {pieces} pcs",
-    "empty": "No items yet — add a product from the catalog",
+    "empty": "Your cart is empty — add a product from the catalog",
+    "openCatalog": "Open catalog",
     "remove": "Remove",
-    "clear": "Clear specification",
-    "clearConfirm": "Clear the entire specification?",
-    "checkout": "Continue to checkout",
+    "clear": "Clear cart",
+    "clearConfirm": "Clear the entire cart?",
+    "checkout": "Checkout",
     "closeDrawer": "Close",
     "pcs": "pcs",
-    "pageTitle": "Specification",
-    "pageSubtitle": "Technical brief for the manager — no prices",
+    "pageTitle": "Cart",
+    "pageSubtitle": "Build your order — a manager will send a quote; no payment on the site",
     "editOnProduct": "Edit on product page",
     "backToCatalog": "Back to catalog",
     "itemComment": "Line comment",
@@ -308,7 +309,7 @@
       "later": "I'll confirm later"
     },
     "actions": {
-      "downloadPdf": "Download specification (PDF)",
+      "downloadPdf": "Download order (PDF)",
       "getQuote": "Request quote",
       "sending": "Sending…"
     },
@@ -328,7 +329,7 @@
     },
     "success": {
       "title": "Quote within 24 hours",
-      "body": "We received your specification. Reference number:"
+      "body": "We received your order. Reference number:"
     },
     "errors": {
       "pdf": "Could not generate PDF",

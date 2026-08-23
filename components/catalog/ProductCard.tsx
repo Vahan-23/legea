@@ -1,7 +1,7 @@
 "use client";
 
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import { ColorDots } from "@/components/catalog/ColorDots";
 import { PeekCarousel, type PeekCarouselSlide } from "@/components/ui/PeekCarousel";
 import { Link } from "@/i18n/navigation";
@@ -38,12 +38,9 @@ function ProductCardInner({
   photos,
   fashionSrc = null,
 }: ProductCardProps) {
-  const t = useTranslations("catalog");
   const locale = useLocale() as Locale;
   const mobile = useIsMobile();
   const name = productName(product, locale);
-  const sizeFrom = product.sizes[0];
-  const sizeTo = product.sizes[product.sizes.length - 1];
 
   const productSrc = useMemo(
     () => resolveDefaultFront(product, photos),
@@ -106,8 +103,6 @@ function ProductCardInner({
   const fashionActive = activeSlide?.key === "fashion";
   const activeCode = fashionActive ? null : activeSlide?.key ?? null;
 
-  const defaultIndex = 0;
-
   const selectIndex = useCallback(
     (index: number) => {
       setSlideIndex(index);
@@ -119,7 +114,7 @@ function ProductCardInner({
 
   const restoreMain = useCallback(() => {
     if (mobile) return;
-    selectIndex(defaultIndex);
+    selectIndex(0);
   }, [mobile, selectIndex]);
 
   const handleSelectFashion = useCallback(() => {
@@ -148,8 +143,10 @@ function ProductCardInner({
     [product.id],
   );
 
+  const showSwatches = colorwaysWithPhoto.length > 0 || hasFashion;
+
   return (
-    <article className="group flex flex-col border border-transparent bg-white transition-all hover:-translate-y-1 hover:border-blue">
+    <article className="group flex flex-col">
       <Link
         href={`/catalog/${product.id}`}
         className="block"
@@ -175,16 +172,16 @@ function ProductCardInner({
               draggable={false}
               className={
                 slides[0]?.fit === "cover"
-                  ? "pointer-events-none absolute inset-0 h-full w-full object-cover"
-                  : "pointer-events-none absolute inset-0 h-full w-full object-contain p-4"
+                  ? "pointer-events-none absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                  : "pointer-events-none absolute inset-0 h-full w-full object-contain p-4 transition-transform duration-500 group-hover:scale-[1.02]"
               }
             />
           )}
         </div>
       </Link>
 
-      <div className="px-4 pt-2">
-        {colorwaysWithPhoto.length > 0 || hasFashion ? (
+      <div className="flex flex-1 flex-col gap-2.5 pt-3">
+        {showSwatches ? (
           <ColorDots
             colorways={colorwaysWithPhoto}
             activeCode={activeCode}
@@ -195,47 +192,23 @@ function ProductCardInner({
             onPreview={canSlide ? handlePreview : undefined}
             onPreviewEnd={canSlide ? restoreMain : undefined}
           />
-        ) : (
+        ) : product.colorways.length > 0 ? (
           <ColorDots colorways={product.colorways} />
-        )}
-      </div>
+        ) : null}
 
-      <Link href={`/catalog/${product.id}`} className="block">
-        <div className="flex flex-col gap-2 p-4 pt-3 pb-2">
-          <p className="font-mono text-lg tracking-tight text-navy">
-            {product.id}
-          </p>
-          <h3 className="font-sans text-base font-medium normal-case tracking-normal text-graphite">
+        <Link
+          href={`/catalog/${product.id}`}
+          className="block space-y-1"
+          onClick={handleLinkClick}
+        >
+          <h3 className="font-sans text-sm font-medium normal-case tracking-normal text-graphite transition-colors group-hover:text-navy sm:text-[15px]">
             {name}
           </h3>
-
-          <div className="space-y-1 text-sm text-muted">
-            <p>
-              {product.gsm != null
-                ? t("gsmValue", { gsm: product.gsm })
-                : t("gsmUnknown")}
-            </p>
-            {sizeFrom && sizeTo ? (
-              <p className="font-mono text-xs">
-                {t("sizeRange", { from: sizeFrom, to: sizeTo })}
-              </p>
-            ) : null}
-          </div>
-        </div>
-      </Link>
-
-      {product.tech.length > 0 ? (
-        <ul className="mt-auto flex flex-wrap gap-1.5 px-4 pb-4">
-          {product.tech.slice(0, 4).map((tech) => (
-            <li
-              key={tech}
-              className="border border-navy/15 px-1.5 py-0.5 font-mono text-[10px] uppercase tracking-wide text-navy"
-            >
-              {tech}
-            </li>
-          ))}
-        </ul>
-      ) : null}
+          <p className="font-mono text-[11px] uppercase tracking-widest text-muted">
+            {product.id}
+          </p>
+        </Link>
+      </div>
     </article>
   );
 }

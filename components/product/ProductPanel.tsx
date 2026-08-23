@@ -10,11 +10,6 @@ import { SizeMatrix } from "@/components/product/SizeMatrix";
 import { SpecTable } from "@/components/product/SpecTable";
 import { TechBadges } from "@/components/product/TechBadges";
 import { Button } from "@/components/ui/Button";
-import { Link } from "@/i18n/navigation";
-import {
-  catalogHrefFromFocus,
-  peekCatalogFocus,
-} from "@/lib/catalogScroll";
 import {
   getMatrixSizes,
   partitionQuantitiesBySku,
@@ -43,7 +38,6 @@ export function ProductPanel({
   fashionSrc = null,
 }: ProductPanelProps) {
   const t = useTranslations("product");
-  const tNav = useTranslations("nav");
   const name = productName(product, locale);
   const sizes = useMemo(() => getMatrixSizes(product), [product]);
 
@@ -59,7 +53,6 @@ export function ProductPanel({
 
   const [addedFlash, setAddedFlash] = useState(false);
   const [fashionActive, setFashionActive] = useState(Boolean(fashionSrc));
-  const [catalogBackHref, setCatalogBackHref] = useState("/catalog");
 
   useEffect(() => {
     initProduct({
@@ -72,10 +65,6 @@ export function ProductPanel({
   useEffect(() => {
     setFashionActive(Boolean(fashionSrc));
   }, [product.id, fashionSrc]);
-
-  useEffect(() => {
-    setCatalogBackHref(catalogHrefFromFocus(peekCatalogFocus()));
-  }, [product.id]);
 
   const pieces = totalPieces(quantities);
   const canAdd = pieces > 0 && colorway != null;
@@ -134,13 +123,6 @@ export function ProductPanel({
 
       <div className="min-w-0 space-y-6 sm:space-y-8">
         <div className="space-y-4">
-          <Link
-            href={catalogBackHref}
-            className="inline-block font-mono text-xs uppercase tracking-widest text-blue hover:text-navy"
-          >
-            ← {tNav("catalog")}
-          </Link>
-
           <p className="font-mono text-2xl tracking-tight text-navy sm:text-3xl">
             {product.id}
           </p>

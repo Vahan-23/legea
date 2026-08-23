@@ -7,7 +7,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useLocale, useTranslations } from "next-intl";
 import { Button } from "@/components/ui/Button";
 import { company } from "@/data/company";
-import { buildSpecPdf, downloadBlob } from "@/lib/pdf";
 import { generateSpecNumber, type SpecPdfLabels } from "@/lib/specHelpers";
 import {
   specContactSchema,
@@ -18,9 +17,11 @@ import type { Locale } from "@/i18n/routing";
 
 type ContactFormProps = {
   onSuccess: (specNumber: string) => void;
+  /** В drawer — без лишней рамки */
+  compact?: boolean;
 };
 
-export function ContactForm({ onSuccess }: ContactFormProps) {
+export function ContactForm({ onSuccess, compact = false }: ContactFormProps) {
   const t = useTranslations("spec");
   const tBrand = useTranslations("branding");
   const locale = useLocale() as Locale;
@@ -95,6 +96,7 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
   }
 
   const buildPdf = async (values: SpecContactSchema) => {
+    const { buildSpecPdf } = await import("@/lib/pdf");
     const specNumber = generateSpecNumber();
     const { blob, base64 } = await buildSpecPdf({
       specNumber,
@@ -125,6 +127,7 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
     setFormError(null);
     setSubmitting(true);
     try {
+      const { downloadBlob } = await import("@/lib/pdf");
       const { specNumber, blob } = await buildPdf(values);
       downloadBlob(blob, `${specNumber}.pdf`);
     } catch {
@@ -189,6 +192,7 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
             t("errors.sendFailed", { email: company.publicEmail }),
           );
         }
+        const { downloadBlob } = await import("@/lib/pdf");
         downloadBlob(blob, `${specNumber}.pdf`);
         return;
       }
@@ -205,12 +209,18 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
 
   return (
     <form
-      className="relative space-y-6 border border-navy/15 bg-white p-6"
+      className={
+        compact
+          ? "relative space-y-5"
+          : "relative space-y-6 border border-navy/15 bg-white p-6"
+      }
       noValidate
     >
-      <h2 className="font-display text-lg uppercase tracking-display text-navy">
-        {t("form.title")}
-      </h2>
+      {!compact ? (
+        <h2 className="font-display text-lg uppercase tracking-display text-navy">
+          {t("form.title")}
+        </h2>
+      ) : null}
 
       <div className="grid gap-4 sm:grid-cols-2">
         <Field
