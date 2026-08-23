@@ -192,10 +192,11 @@ function ProductCardInner({
         </div>
       </Link>
 
-      <div className="flex min-w-0 flex-1 flex-col gap-2.5 pt-3">
+      <div className="flex min-w-0 flex-1 flex-col gap-2.5 overflow-hidden pt-3">
         {showSwatches ? (
           <ColorDots
             colorways={colorwaysWithPhoto}
+            limit={6}
             activeCode={activeCode}
             fashionSrc={fashionSrc}
             fashionActive={fashionActive}
@@ -205,7 +206,7 @@ function ProductCardInner({
             onPreviewEnd={canSlide ? restoreMain : undefined}
           />
         ) : product.colorways.length > 0 ? (
-          <ColorDots colorways={product.colorways} />
+          <ColorDots colorways={product.colorways} limit={6} />
         ) : null}
 
         <Link

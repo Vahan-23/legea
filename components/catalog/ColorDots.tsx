@@ -34,8 +34,7 @@ type ColorDotsProps = {
 };
 
 /**
- * Свотчи расцветок (+ опционально fashion) для карточки каталога.
- * На мобиле — крупные touch-таргеты; на desktop — компактные как раньше.
+ * Свотчи расцветок (+ fashion) — одинаковый размер слота, без ring-offset.
  */
 export function ColorDots({
   colorways,
@@ -70,28 +69,31 @@ export function ColorDots({
     event.stopPropagation();
   };
 
-  const fashionClass = fashionActive
-    ? "flex h-9 w-9 items-center justify-center overflow-hidden rounded-full bg-white p-0.5 ring-2 ring-blue ring-offset-1 touch-manipulation sm:h-5 sm:w-5 sm:p-px sm:ring-offset-0"
-    : "flex h-9 w-9 items-center justify-center overflow-hidden rounded-full bg-white p-0.5 ring-1 ring-navy/30 hover:ring-blue touch-manipulation sm:h-5 sm:w-5 sm:p-px";
+  /** Фиксированный слот — компактнее, чтобы ряд не вылезал из карточки */
+  const slotClass = interactive
+    ? "flex h-7 w-7 shrink-0 items-center justify-center sm:h-5 sm:w-5"
+    : "flex h-5 w-5 shrink-0 items-center justify-center sm:h-3.5 sm:w-3.5";
 
-  const swatchClass = (active: boolean) => {
+  const buttonClass = (active: boolean) => {
+    const base =
+      "box-border flex h-full w-full items-center justify-center overflow-hidden rounded-full bg-white p-[2px] touch-manipulation sm:p-px";
     if (!interactive) {
-      return "flex h-6 w-6 items-center justify-center rounded-full bg-white p-px ring-1 ring-navy/25 sm:h-3.5 sm:w-3.5";
+      return `${base} ring-1 ring-inset ring-navy/25`;
     }
     if (active) {
-      return "flex h-9 w-9 items-center justify-center rounded-full bg-white p-0.5 ring-2 ring-blue ring-offset-1 touch-manipulation sm:h-5 sm:w-5 sm:p-px sm:ring-offset-0";
+      return `${base} ring-2 ring-inset ring-blue`;
     }
-    return "flex h-9 w-9 items-center justify-center rounded-full bg-white p-0.5 ring-1 ring-navy/25 hover:ring-blue touch-manipulation sm:h-5 sm:w-5 sm:p-px";
+    return `${base} ring-1 ring-inset ring-navy/25 hover:ring-blue`;
   };
 
   return (
     <ul
-      className={`flex flex-wrap items-center gap-2.5 sm:gap-1.5 ${className}`}
+      className={`flex max-w-full min-w-0 flex-wrap items-center gap-1.5 sm:gap-1.5 ${className}`}
       role="list"
       onMouseLeave={onPreviewEnd}
     >
       {fashionSrc ? (
-        <li>
+        <li className={slotClass}>
           <button
             type="button"
             title={t("showFashion")}
@@ -105,14 +107,14 @@ export function ColorDots({
               event.stopPropagation();
               onPreviewFashion?.();
             }}
-            className={fashionClass}
+            className={buttonClass(fashionActive)}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={fashionSrc}
               alt=""
               draggable={false}
-              className="h-full w-full rounded-full object-cover"
+              className="block h-full w-full rounded-full object-cover"
             />
           </button>
         </li>
@@ -125,7 +127,7 @@ export function ColorDots({
         const active = !fashionActive && activeCode === code;
 
         return (
-          <li key={code} title={code}>
+          <li key={code} title={code} className={slotClass}>
             <button
               type="button"
               aria-label={code}
@@ -155,7 +157,7 @@ export function ColorDots({
                     }
                   : undefined
               }
-              className={swatchClass(active)}
+              className={buttonClass(active)}
             >
               <span
                 className="block h-full w-full rounded-full"
@@ -172,7 +174,9 @@ export function ColorDots({
         );
       })}
       {rest > 0 ? (
-        <li className="font-mono text-[10px] text-muted">+{rest}</li>
+        <li className="flex h-7 shrink-0 items-center font-mono text-[10px] text-muted sm:h-5">
+          +{rest}
+        </li>
       ) : null}
     </ul>
   );
