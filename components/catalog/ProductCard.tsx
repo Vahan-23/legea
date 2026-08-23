@@ -5,11 +5,10 @@ import { useLocale } from "next-intl";
 import { ColorDots } from "@/components/catalog/ColorDots";
 import { ProductCardImage } from "@/components/catalog/ProductCardImage";
 import { PeekCarousel, type PeekCarouselSlide } from "@/components/ui/PeekCarousel";
-import { Link } from "@/i18n/navigation";
+import { Link, useRouter } from "@/i18n/navigation";
 import { saveCatalogFocus } from "@/lib/catalogScroll";
 import { PRODUCT_IMAGE_PLACEHOLDER } from "@/lib/productImages";
-import { prefetchImage, prefetchImagesQueued } from "@/lib/prefetchImages";
-import { CATALOG_CARD_IMAGE_SIZES } from "@/lib/catalogGridView";
+import { prefetchImage } from "@/lib/prefetchImages";
 import { useIsMobile } from "@/lib/useIsMobile";
 import { productName } from "@/types/product";
 import type { Locale } from "@/i18n/routing";
@@ -19,9 +18,7 @@ import type { ProductPhotos } from "@/lib/productImages";
 type ProductCardProps = {
   product: Product;
   photos?: ProductPhotos;
-  /** AI fashion — показывается по умолчанию; hover → реальное фото */
   fashionSrc?: string | null;
-  /** Первая карточка на странице — грузим фото сразу */
   eager?: boolean;
 };
 
@@ -45,9 +42,9 @@ function ProductCardInner({
 }: ProductCardProps) {
   const locale = useLocale() as Locale;
   const mobile = useIsMobile();
+  const router = useRouter();
   const name = productName(product, locale);
-  const cardRef = useRef<HTMLElement>(null);
-  const [inView, setInView] = useState(eager);
+  const productHref = `/catalog/${product.id}` as const;
 
   const productSrc = useMemo(
     () => resolveDefaultFront(product, photos),
@@ -102,29 +99,16 @@ function ProductCardInner({
   }, [product.id, fashionSrc, slides.length]);
 
   useEffect(() => {
-    if (eager) return;
-    const el = cardRef.current;
-    if (!el) return;
+    const first = slides[0]?.src;
+    if (first) void prefetchImage(first);
+  }, [slides]);
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry?.isIntersecting) {
-          setInView(true);
-          observer.disconnect();
-        }
-      },
-      { rootMargin: "300px 0px", threshold: 0.01 },
-    );
-
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [eager]);
-
-  useEffect(() => {
-    if (!inView) return;
-    const urls = slides.map((slide) => slide.src);
-    return prefetchImagesQueued(urls, 150);
-  }, [inView, slides]);
+  const warmProductPage = useCallback(() => {
+    router.prefetch(productHref);
+    for (const slide of slides) {
+      if (slide.src) void prefetchImage(slide.src);
+    }
+  }, [router, productHref, slides]);
 
   const activeSlide = slides[slideIndex];
   const fashionActive = activeSlide?.key === "fashion";
@@ -173,20 +157,25 @@ function ProductCardInner({
   const showSwatches = colorwaysWithPhoto.length > 0 || hasFashion;
 
   return (
-    <article ref={cardRef} className="group flex flex-col">
+    <article
+      className="group flex min-w-0 flex-col overflow-hidden"
+      onMouseEnter={warmProductPage}
+      onTouchStart={warmProductPage}
+    >
       <Link
-        href={`/catalog/${product.id}`}
-        className="block"
+        href={productHref}
+        prefetch
+        className="block min-w-0"
         onClick={handleLinkClick}
       >
-        <div className="relative aspect-[3/4] overflow-hidden bg-off-white touch-pan-y">
+        <div className="relative aspect-[3/4] w-full overflow-hidden bg-off-white">
           {canSlide ? (
             <PeekCarousel
               slides={slides}
               index={slideIndex}
               onIndexChange={selectIndex}
-              imagePriority={inView}
-              imageSizes={CATALOG_CARD_IMAGE_SIZES}
+              layout="slide"
+              imagePriority={eager}
               onSwipe={() => {
                 swipedRef.current = true;
               }}
@@ -196,15 +185,14 @@ function ProductCardInner({
               src={slides[0]?.src ?? PRODUCT_IMAGE_PLACEHOLDER}
               alt={name}
               fit={slides[0]?.fit}
-              priority={inView}
-              sizes={CATALOG_CARD_IMAGE_SIZES}
+              priority={eager}
               className="transition-transform duration-500 group-hover:scale-[1.02]"
             />
           )}
         </div>
       </Link>
 
-      <div className="flex flex-1 flex-col gap-2.5 pt-3">
+      <div className="flex min-w-0 flex-1 flex-col gap-2.5 pt-3">
         {showSwatches ? (
           <ColorDots
             colorways={colorwaysWithPhoto}
@@ -221,8 +209,9 @@ function ProductCardInner({
         ) : null}
 
         <Link
-          href={`/catalog/${product.id}`}
-          className="block space-y-1"
+          href={productHref}
+          prefetch
+          className="block min-w-0 space-y-1"
           onClick={handleLinkClick}
         >
           <h3 className="font-sans text-sm font-medium normal-case tracking-normal text-graphite transition-colors group-hover:text-navy sm:text-[15px]">

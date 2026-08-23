@@ -10,10 +10,10 @@ import {
 import { ProductCardImage } from "@/components/catalog/ProductCardImage";
 
 const SWIPE_THRESHOLD_PX = 36;
-/** Peek только на узких экранах — на desktop фото на всю ширину */
 const PEEK_MAX_WIDTH = 768;
 const SLIDE_RATIO_PEEK = 0.82;
 const GAP_PEEK = 10;
+const SLIDE_MS = 350;
 
 export type PeekCarouselSlide = {
   key: string;
@@ -32,9 +32,9 @@ type PeekCarouselProps = {
   nextLabel?: string;
   onSwipe?: () => void;
   overlay?: ReactNode;
-  /** Активный слайд грузится с приоритетом (видимая карточка) */
   imagePriority?: boolean;
-  imageSizes?: string;
+  /** slide — полноширинные слайды с анимацией (каталог). peek — карточка товара */
+  layout?: "slide" | "peek";
 };
 
 export function PeekCarousel({
@@ -48,32 +48,41 @@ export function PeekCarousel({
   onSwipe,
   overlay,
   imagePriority = false,
-  imageSizes = "(max-width: 767px) 100vw, 50vw",
+  layout = "peek",
 }: PeekCarouselProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const touchStart = useRef<{ x: number; y: number } | null>(null);
   const [containerWidth, setContainerWidth] = useState(0);
+  const [widthReady, setWidthReady] = useState(false);
 
   const count = slides.length;
   const canSlide = count > 1;
   const safeIndex =
     count === 0 ? 0 : ((index % count) + count) % count;
 
-  const peek = containerWidth > 0 && containerWidth < PEEK_MAX_WIDTH;
+  const peek =
+    layout === "peek" && containerWidth > 0 && containerWidth < PEEK_MAX_WIDTH;
   const slideRatio = peek ? SLIDE_RATIO_PEEK : 1;
   const gap = peek ? GAP_PEEK : 0;
   const slideWidth = containerWidth * slideRatio;
 
   useLayoutEffect(() => {
+    if (layout === "slide") return;
     const el = containerRef.current;
     if (!el) return;
 
-    const update = () => setContainerWidth(el.clientWidth);
+    const update = () => {
+      const w = el.clientWidth;
+      if (w > 0) {
+        setContainerWidth(w);
+        setWidthReady(true);
+      }
+    };
     update();
     const observer = new ResizeObserver(update);
     observer.observe(el);
     return () => observer.disconnect();
-  }, []);
+  }, [layout]);
 
   const go = useCallback(
     (delta: number) => {
@@ -122,6 +131,43 @@ export function PeekCarousel({
 
   if (count === 0) return null;
 
+  if (layout === "slide") {
+    return (
+      <div
+        ref={containerRef}
+        className={`relative h-full w-full overflow-hidden ${className}`}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+      >
+        <div
+          className="flex h-full will-change-transform"
+          style={{
+            transform: `translateX(-${safeIndex * 100}%)`,
+            transition: `transform ${SLIDE_MS}ms ease-out`,
+          }}
+        >
+          {slides.map((slide, slideIndex) => (
+            <div
+              key={slide.key}
+              className="relative h-full w-full shrink-0 grow-0 basis-full bg-off-white"
+            >
+              <ProductCardImage
+                src={slide.src}
+                alt={slide.alt}
+                fit={slide.fit}
+                priority={imagePriority && slideIndex === 0}
+              />
+            </div>
+          ))}
+        </div>
+        {overlay}
+      </div>
+    );
+  }
+
+  const activeSlide = slides[safeIndex];
+  if (!activeSlide) return null;
+
   const offset =
     containerWidth > 0 && slideWidth > 0
       ? containerWidth / 2 -
@@ -137,12 +183,11 @@ export function PeekCarousel({
       onTouchEnd={handleTouchEnd}
     >
       <div
-        className="flex h-full"
+        className="flex h-full will-change-transform"
         style={{
           gap: `${gap}px`,
-          transform: `translateX(${offset}px)`,
-          transition:
-            containerWidth > 0 ? "transform 350ms ease-out" : undefined,
+          transform: widthReady ? `translateX(${offset}px)` : undefined,
+          transition: widthReady ? `transform ${SLIDE_MS}ms ease-out` : undefined,
         }}
       >
         {slides.map((slide, slideIndex) => {
@@ -150,7 +195,7 @@ export function PeekCarousel({
           return (
             <div
               key={slide.key}
-              className="relative h-full shrink-0 overflow-hidden bg-off-white transition-[opacity,transform] duration-300 ease-out"
+              className="relative h-full shrink-0 overflow-hidden bg-off-white"
               style={{
                 width:
                   slideWidth > 0 ? slideWidth : `${slideRatio * 100}%`,
@@ -159,7 +204,10 @@ export function PeekCarousel({
                   ? isActive
                     ? "scale(1)"
                     : "scale(0.96)"
-                  : "scale(1)",
+                  : undefined,
+                transition: peek
+                  ? "opacity 300ms ease-out, transform 300ms ease-out"
+                  : undefined,
               }}
             >
               <ProductCardImage
@@ -167,7 +215,6 @@ export function PeekCarousel({
                 alt={slide.alt}
                 fit={slide.fit}
                 priority={imagePriority && isActive}
-                sizes={imageSizes}
               />
             </div>
           );

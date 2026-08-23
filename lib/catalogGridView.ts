@@ -1,9 +1,5 @@
 export type CatalogGridColumns = 2 | 3 | 4;
 
-/** Фиксированный sizes — смена колонок не перезагружает фото */
-export const CATALOG_CARD_IMAGE_SIZES =
-  "(max-width: 767px) 100vw, 480px";
-
 export const CATALOG_GRID_STORAGE_KEY = "legea-catalog-grid";
 
 export const DEFAULT_GRID_COLUMNS: CatalogGridColumns = 2;

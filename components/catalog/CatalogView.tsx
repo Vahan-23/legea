@@ -140,22 +140,22 @@ export function CatalogView({
   );
 
   return (
-    <div className="mx-auto grid max-w-6xl gap-8 px-4 py-8 sm:px-6 sm:py-12 lg:grid-cols-[240px_1fr] lg:gap-10">
+    <div className="mx-auto grid max-w-6xl gap-8 overflow-x-hidden px-4 py-8 sm:px-6 sm:py-12 lg:grid-cols-[240px_1fr] lg:gap-10">
       <FilterSidebar
         filters={filtersLive}
         colorKeys={colorKeys}
         onChange={handleFiltersChange}
       />
 
-      <div className="space-y-5 sm:space-y-6">
+      <div className="min-w-0 space-y-5 overflow-x-hidden sm:space-y-6">
         <div className="flex flex-col gap-3 sm:gap-4">
           <SearchBar value={qDraft} onChange={setQDraft} />
 
-          <div className="flex items-center gap-2 justify-between">
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
             <button
               type="button"
               onClick={() => setFiltersOpen(true)}
-              className="inline-flex shrink-0 items-center gap-2 border border-navy bg-white px-4 py-2.5 font-sans text-xs font-medium uppercase tracking-wide text-navy lg:hidden"
+              className="inline-flex w-full shrink-0 items-center justify-center gap-2 border border-navy bg-white px-4 py-2.5 font-sans text-xs font-medium uppercase tracking-wide text-navy sm:w-auto lg:hidden"
             >
               {t("filters")}
               {facetCount > 0 ? (
@@ -165,7 +165,7 @@ export function CatalogView({
               ) : null}
             </button>
 
-            <div className="ml-auto flex min-w-0 items-center gap-3">
+            <div className="flex w-full min-w-0 items-center justify-end gap-3 sm:ml-auto sm:w-auto">
               <GridViewToggle value={gridColumns} onChange={setGridColumns} />
               <SortSelect
                 value={filters.sort}
@@ -196,20 +196,12 @@ export function CatalogView({
             </div>
           </div>
         ) : (
-          <div
-            className={
-              listPending
-                ? "opacity-70 transition-opacity"
-                : "transition-opacity"
-            }
-          >
-            <ProductGrid
-              products={deferredFiltered}
-              cardPhotos={cardPhotos}
-              fashionModels={fashionModels}
-              columns={gridColumns}
-            />
-          </div>
+          <ProductGrid
+            products={deferredFiltered}
+            cardPhotos={cardPhotos}
+            fashionModels={fashionModels}
+            columns={gridColumns}
+          />
         )}
       </div>
 

@@ -59,7 +59,7 @@ export function ProductGrid({
   }, []);
 
   return (
-    <ul className={gridClassName(columns)}>
+    <ul className={`${gridClassName(columns)} min-w-0 overflow-x-hidden`}>
       {products.map((product, index) => (
         <li key={product.id} id={`catalog-product-${product.id}`}>
           <ProductCard
