@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useMemo, useState, type ComponentType } from "react";
+import { useCallback, useEffect, useMemo, useState, type ComponentType } from "react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/Button";
+import { PeekCarousel, type PeekCarouselSlide } from "@/components/ui/PeekCarousel";
 import {
   PRODUCT_IMAGE_PLACEHOLDER,
   collectProductPhotoUrls,
@@ -107,11 +108,54 @@ export function ProductViewer({
     setMobile3d(false);
   }, [colorway, hasFront, hasBack, hasPhotos, has3d, mode]);
 
-  const showFashion =
-    Boolean(fashionSrc) && fashionActive && mode !== "3d";
+  const swatchColorways = useMemo(() => {
+    const fromPhotos = colorways.filter(
+      (code) => photos?.byColorway[code]?.front,
+    );
+    return fromPhotos.length > 1 ? fromPhotos : colorways;
+  }, [colorways, photos]);
 
-  const activePhoto = showFashion
-    ? fashionSrc
+  const carouselSlides = useMemo((): PeekCarouselSlide[] => {
+    const items: PeekCarouselSlide[] = [];
+    if (fashionSrc) {
+      items.push({
+        key: "fashion",
+        src: fashionSrc,
+        alt,
+        fit: "cover",
+      });
+    }
+    for (const code of swatchColorways) {
+      const front = photos?.byColorway[code]?.front;
+      if (front) {
+        items.push({ key: code, src: front, alt, fit: "contain" });
+      }
+    }
+    return items;
+  }, [alt, fashionSrc, photos, swatchColorways]);
+
+  const carouselIndex = useMemo(() => {
+    if (carouselSlides.length === 0) return 0;
+    if (fashionActive && fashionSrc) {
+      const fashionIdx = carouselSlides.findIndex(
+        (slide) => slide.key === "fashion",
+      );
+      if (fashionIdx >= 0) return fashionIdx;
+    }
+    if (colorway) {
+      const idx = carouselSlides.findIndex((slide) => slide.key === colorway);
+      if (idx >= 0) return idx;
+    }
+    return carouselSlides.findIndex((slide) => slide.key !== "fashion") >= 0
+      ? carouselSlides.findIndex((slide) => slide.key !== "fashion")
+      : 0;
+  }, [carouselSlides, colorway, fashionActive, fashionSrc]);
+
+  const showCarousel =
+    mode !== "3d" && mode !== "back" && carouselSlides.length > 1;
+
+  const activePhoto = showCarousel
+    ? carouselSlides[carouselIndex]?.src ?? null
     : mode === "back"
       ? active.back
       : mode === "front"
@@ -133,49 +177,27 @@ export function ProductViewer({
     }
   }, [fashionActive, fashionSrc]);
 
-  const swatchColorways = useMemo(() => {
-    const fromPhotos = colorways.filter(
-      (code) => photos?.byColorway[code]?.front,
-    );
-    return fromPhotos.length > 1 ? fromPhotos : colorways;
-  }, [colorways, photos]);
-
-  /** Fashion + расцветки — для стрелок */
-  const arrowSteps = useMemo(() => {
-    const steps: Array<"fashion" | string> = [];
-    if (fashionSrc) steps.push("fashion");
-    steps.push(...swatchColorways);
-    return steps;
-  }, [fashionSrc, swatchColorways]);
-
-  const goColorway = (delta: number) => {
-    if (arrowSteps.length < 2) return;
-    const current: "fashion" | string =
-      fashionActive && fashionSrc
-        ? "fashion"
-        : colorway && arrowSteps.includes(colorway)
-          ? colorway
-          : (arrowSteps.find((s) => s !== "fashion") ?? arrowSteps[0]!);
-    const idx = arrowSteps.indexOf(current);
-    const base = idx >= 0 ? idx : 0;
-    const next =
-      arrowSteps[(base + delta + arrowSteps.length) % arrowSteps.length];
-    if (!next) return;
-    if (next === "fashion") {
-      onFashionOn?.();
+  const handleCarouselIndexChange = useCallback(
+    (index: number) => {
+      const slide = carouselSlides[index];
+      if (!slide) return;
+      if (slide.key === "fashion") {
+        onFashionOn?.();
+        setMode("front");
+        return;
+      }
+      onFashionOff?.();
+      onColorwayChange?.(slide.key);
       setMode("front");
-      return;
-    }
-    onFashionOff?.();
-    onColorwayChange?.(next);
-  };
+    },
+    [carouselSlides, onColorwayChange, onFashionOff, onFashionOn],
+  );
 
   const selectMode = (next: ViewMode) => {
     if (next === "front" || next === "back") onFashionOff?.();
     setMode(next);
   };
 
-  // Подгружаем R3F/three только когда реально нужен 3D
   useEffect(() => {
     if (!show3d || SceneComp) return;
     let cancelled = false;
@@ -183,7 +205,6 @@ export function ProductViewer({
     void import("@/components/canvas/Scene")
       .then((m) => {
         if (!cancelled) {
-          // Updater form: state is a component (function), not a lazy initializer.
           setSceneComp((_prev: ComponentType<SceneProps> | null) => m.Scene);
         }
       })
@@ -208,6 +229,17 @@ export function ProductViewer({
   }, [allPhotoUrls, activePhoto]);
 
   useEffect(() => {
+    const urls = carouselSlides.map((slide) => slide.src);
+    return prefetchImagesQueued(urls, 200);
+  }, [carouselSlides]);
+
+  useEffect(() => {
+    if (showCarousel) {
+      setDisplaySrc(activePhoto);
+      setLoading(false);
+      return;
+    }
+
     if (!activePhoto) {
       setDisplaySrc(null);
       setLoading(false);
@@ -233,7 +265,7 @@ export function ProductViewer({
     return () => {
       cancelled = true;
     };
-  }, [activePhoto]);
+  }, [activePhoto, showCarousel]);
 
   return (
     <div className="w-full max-w-full space-y-3">
@@ -255,19 +287,36 @@ export function ProductViewer({
               </div>
             )}
           </div>
+        ) : showCarousel ? (
+          <PeekCarousel
+            slides={carouselSlides}
+            index={carouselIndex}
+            onIndexChange={handleCarouselIndexChange}
+            showArrows
+            prevLabel={t("photoPrev")}
+            nextLabel={t("photoNext")}
+            overlay={
+              loading ? (
+                <div
+                  className="pointer-events-none absolute inset-x-0 top-3 z-10 flex justify-center sm:top-4"
+                  aria-hidden
+                >
+                  <span className="rounded bg-white/90 px-2 py-1 font-mono text-[10px] uppercase tracking-widest text-muted shadow-sm">
+                    …
+                  </span>
+                </div>
+              ) : null
+            }
+          />
         ) : (
           <>
             {displaySrc ? (
-              // eslint-disable-next-line @next/next/no-img-element -- прямой cache, без 16× /_next/image
+              // eslint-disable-next-line @next/next/no-img-element
               <img
                 src={displaySrc}
                 alt={alt}
                 decoding="async"
-                className={
-                  showFashion
-                    ? "absolute inset-0 h-full w-full object-cover"
-                    : "absolute inset-0 h-full w-full object-contain p-3 sm:p-4"
-                }
+                className="absolute inset-0 h-full w-full object-contain p-3 sm:p-4"
               />
             ) : (
               // eslint-disable-next-line @next/next/no-img-element
@@ -296,31 +345,6 @@ export function ProductViewer({
             ) : null}
           </>
         )}
-
-        {arrowSteps.length > 1 ? (
-          <>
-            <button
-              type="button"
-              aria-label={t("photoPrev")}
-              onClick={() => goColorway(-1)}
-              className="absolute left-2 top-1/2 z-30 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-navy shadow-sm ring-1 ring-navy/10 transition hover:bg-white sm:left-3 sm:h-11 sm:w-11"
-            >
-              <span aria-hidden className="text-lg leading-none sm:text-xl">
-                ‹
-              </span>
-            </button>
-            <button
-              type="button"
-              aria-label={t("photoNext")}
-              onClick={() => goColorway(1)}
-              className="absolute right-2 top-1/2 z-30 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-navy shadow-sm ring-1 ring-navy/10 transition hover:bg-white sm:right-3 sm:h-11 sm:w-11"
-            >
-              <span aria-hidden className="text-lg leading-none sm:text-xl">
-                ›
-              </span>
-            </button>
-          </>
-        ) : null}
       </div>
 
       {hasPhotos && !fashionActive ? (

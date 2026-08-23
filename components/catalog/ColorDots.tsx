@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { parseColorway, swatchBackground } from "@/lib/colorCode";
 import { colors } from "@/data/colors";
 
@@ -24,11 +25,13 @@ type ColorDotsProps = {
   className?: string;
   activeCode?: string | null;
   onPreview?: (code: string) => void;
+  fashionSrc?: string | null;
+  fashionActive?: boolean;
+  onSelectFashion?: () => void;
 };
 
 /**
- * Ряд цветовых точек-свотчей для карточки каталога.
- * Наведение — hover-превью на карточке (см. ProductCard).
+ * Свотчи расцветок (+ опционально fashion) для карточки каталога.
  */
 export function ColorDots({
   colorways,
@@ -36,7 +39,12 @@ export function ColorDots({
   className = "",
   activeCode = null,
   onPreview,
+  fashionSrc = null,
+  fashionActive = false,
+  onSelectFashion,
 }: ColorDotsProps) {
+  const t = useTranslations("product");
+
   const valid: string[] = [];
   for (const code of colorways) {
     try {
@@ -49,45 +57,70 @@ export function ColorDots({
 
   const visible = valid.slice(0, limit);
   const rest = valid.length - visible.length;
-  const interactive = Boolean(onPreview);
+  const interactive = Boolean(onPreview || onSelectFashion);
+
+  const stop = (event: React.SyntheticEvent) => {
+    event.preventDefault();
+    event.stopPropagation();
+  };
 
   return (
     <ul
-      className={`flex flex-wrap items-center gap-2.5 sm:gap-1.5 ${className}`}
+      className={`flex flex-wrap items-center gap-2.5 ${className}`}
       role="list"
     >
+      {fashionSrc ? (
+        <li>
+          <button
+            type="button"
+            title={t("showFashion")}
+            aria-label={t("showFashion")}
+            aria-pressed={fashionActive}
+            onClick={(event) => {
+              stop(event);
+              onSelectFashion?.();
+            }}
+            className={
+              fashionActive
+                ? "flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-white p-[3px] ring-2 ring-blue ring-offset-2 touch-manipulation"
+                : "flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-white p-[3px] ring-1 ring-navy/30 hover:ring-blue touch-manipulation"
+            }
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={fashionSrc}
+              alt=""
+              draggable={false}
+              className="h-full w-full rounded-full object-cover"
+            />
+          </button>
+        </li>
+      ) : null}
+
       {visible.map((code) => {
         const bg = swatchBackground(code);
         const isGradient = bg.startsWith("conic");
         const edge = isDarkOrLight(code);
-        const active = activeCode === code;
+        const active = !fashionActive && activeCode === code;
 
         return (
           <li key={code} title={code}>
-            <span
-              className={
-                interactive
-                  ? "flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-white p-0.5 ring-1 ring-navy/25 transition-shadow hover:ring-blue touch-manipulation sm:h-5 sm:w-5 sm:p-px"
-                  : "flex h-6 w-6 items-center justify-center rounded-full bg-white p-px ring-1 ring-navy/25 sm:h-3.5 sm:w-3.5"
-              }
-              style={
-                active
-                  ? { boxShadow: `0 0 0 2px ${colors.blue}` }
-                  : undefined
-              }
+            <button
+              type="button"
               aria-label={code}
-              onMouseEnter={
+              aria-pressed={active}
+              disabled={!interactive}
+              onClick={
                 interactive
                   ? (event) => {
-                      event.stopPropagation();
+                      stop(event);
                       onPreview?.(code);
                     }
                   : undefined
               }
-              onClick={
+              onMouseEnter={
                 interactive
                   ? (event) => {
-                      event.preventDefault();
                       event.stopPropagation();
                       onPreview?.(code);
                     }
@@ -101,6 +134,13 @@ export function ColorDots({
                     }
                   : undefined
               }
+              className={
+                interactive
+                  ? active
+                    ? "flex h-10 w-10 items-center justify-center rounded-full bg-white p-[3px] ring-2 ring-blue ring-offset-2 touch-manipulation"
+                    : "flex h-10 w-10 items-center justify-center rounded-full bg-white p-[3px] ring-1 ring-navy/30 hover:ring-blue touch-manipulation"
+                  : "flex h-6 w-6 items-center justify-center rounded-full bg-white p-px ring-1 ring-navy/25"
+              }
             >
               <span
                 className="block h-full w-full rounded-full"
@@ -112,7 +152,7 @@ export function ColorDots({
                     : undefined,
                 }}
               />
-            </span>
+            </button>
           </li>
         );
       })}

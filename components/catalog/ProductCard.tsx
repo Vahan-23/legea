@@ -3,17 +3,15 @@
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { ColorDots } from "@/components/catalog/ColorDots";
+import { PeekCarousel, type PeekCarouselSlide } from "@/components/ui/PeekCarousel";
 import { Link } from "@/i18n/navigation";
 import { saveCatalogFocus } from "@/lib/catalogScroll";
 import { PRODUCT_IMAGE_PLACEHOLDER } from "@/lib/productImages";
-import { isImageCached, prefetchImage } from "@/lib/prefetchImages";
-import { useIsMobile } from "@/lib/useIsMobile";
+import { prefetchImage, prefetchImagesQueued } from "@/lib/prefetchImages";
 import { productName } from "@/types/product";
 import type { Locale } from "@/i18n/routing";
 import type { Product } from "@/types/product";
 import type { ProductPhotos } from "@/lib/productImages";
-
-const SWIPE_THRESHOLD_PX = 36;
 
 type ProductCardProps = {
   product: Product;
@@ -41,7 +39,6 @@ function ProductCardInner({
 }: ProductCardProps) {
   const t = useTranslations("catalog");
   const locale = useLocale() as Locale;
-  const mobile = useIsMobile();
   const name = productName(product, locale);
   const sizeFrom = product.sizes[0];
   const sizeTo = product.sizes[product.sizes.length - 1];
@@ -52,124 +49,81 @@ function ProductCardInner({
   );
 
   const hasFashion = Boolean(fashionSrc);
-  const defaultSrc = hasFashion ? fashionSrc! : productSrc;
 
   const colorwaysWithPhoto = useMemo(() => {
     if (!photos) return [];
     return product.colorways.filter((code) => photos.byColorway[code]?.front);
   }, [product.colorways, photos]);
 
-  const canPreview = colorwaysWithPhoto.length > 1;
+  const slides = useMemo((): PeekCarouselSlide[] => {
+    const items: PeekCarouselSlide[] = [];
+    if (hasFashion && fashionSrc) {
+      items.push({
+        key: "fashion",
+        src: fashionSrc,
+        alt: name,
+        fit: "cover",
+      });
+    }
+    for (const code of colorwaysWithPhoto) {
+      const front = photos?.byColorway[code]?.front;
+      if (front) {
+        items.push({
+          key: code,
+          src: front,
+          alt: name,
+          fit: "contain",
+        });
+      }
+    }
+    if (items.length === 0) {
+      items.push({
+        key: "default",
+        src: productSrc,
+        alt: name,
+        fit: "contain",
+      });
+    }
+    return items;
+  }, [colorwaysWithPhoto, fashionSrc, hasFashion, name, photos, productSrc]);
 
-  const [displaySrc, setDisplaySrc] = useState(defaultSrc);
-  const [previewCode, setPreviewCode] = useState<string | null>(null);
-  const [colorIndex, setColorIndex] = useState(0);
-  const touchStart = useRef<{ x: number; y: number } | null>(null);
+  const canSlide = slides.length > 1;
+  const [slideIndex, setSlideIndex] = useState(0);
   const swipedRef = useRef(false);
 
   useEffect(() => {
-    setDisplaySrc(defaultSrc);
-    setPreviewCode(null);
-    setColorIndex(0);
-  }, [defaultSrc]);
+    setSlideIndex(0);
+  }, [product.id, fashionSrc, slides.length]);
 
-  const showColorPhoto = useCallback(
-    (code: string) => {
-      const front = photos?.byColorway[code]?.front;
-      if (!front) return;
-      setPreviewCode(code);
-      if (isImageCached(front)) {
-        setDisplaySrc(front);
-        return;
-      }
-      void prefetchImage(front).then(() => setDisplaySrc(front));
+  useEffect(() => {
+    const urls = slides.map((slide) => slide.src);
+    return prefetchImagesQueued(urls, 200);
+  }, [slides]);
+
+  const activeSlide = slides[slideIndex];
+  const fashionActive = activeSlide?.key === "fashion";
+  const activeCode = fashionActive ? null : activeSlide?.key ?? null;
+
+  const selectIndex = useCallback(
+    (index: number) => {
+      setSlideIndex(index);
+      const slide = slides[index];
+      if (slide?.src) void prefetchImage(slide.src);
     },
-    [photos],
+    [slides],
   );
 
-  const selectColor = useCallback(
-    (code: string) => {
-      const idx = colorwaysWithPhoto.indexOf(code);
-      if (idx >= 0) setColorIndex(idx);
-      showColorPhoto(code);
-    },
-    [colorwaysWithPhoto, showColorPhoto],
-  );
+  const handleSelectFashion = useCallback(() => {
+    const idx = slides.findIndex((slide) => slide.key === "fashion");
+    if (idx >= 0) selectIndex(idx);
+  }, [selectIndex, slides]);
 
   const handlePreview = useCallback(
     (code: string) => {
-      if (mobile) {
-        selectColor(code);
-        return;
-      }
-      showColorPhoto(code);
+      const idx = slides.findIndex((slide) => slide.key === code);
+      if (idx >= 0) selectIndex(idx);
     },
-    [mobile, selectColor, showColorPhoto],
-  );
-
-  const restoreDefault = useCallback(() => {
-    setPreviewCode(null);
-    setDisplaySrc(defaultSrc);
-  }, [defaultSrc]);
-
-  const handlePreviewEnd = useCallback(() => {
-    if (mobile) return;
-    restoreDefault();
-  }, [mobile, restoreDefault]);
-
-  const handleCardEnter = useCallback(() => {
-    if (mobile || !hasFashion || previewCode) return;
-    if (isImageCached(productSrc)) {
-      setDisplaySrc(productSrc);
-      return;
-    }
-    void prefetchImage(productSrc).then(() => {
-      setDisplaySrc(productSrc);
-    });
-  }, [mobile, hasFashion, previewCode, productSrc]);
-
-  const handleTouchStart = useCallback(
-    (event: React.TouchEvent) => {
-      if (!mobile || !canPreview) return;
-      const touch = event.touches[0];
-      if (!touch) return;
-      touchStart.current = { x: touch.clientX, y: touch.clientY };
-      swipedRef.current = false;
-    },
-    [mobile, canPreview],
-  );
-
-  const handleTouchEnd = useCallback(
-    (event: React.TouchEvent) => {
-      if (!mobile || !canPreview || !touchStart.current) return;
-      const touch = event.changedTouches[0];
-      if (!touch) {
-        touchStart.current = null;
-        return;
-      }
-
-      const dx = touch.clientX - touchStart.current.x;
-      const dy = touch.clientY - touchStart.current.y;
-      touchStart.current = null;
-
-      if (
-        Math.abs(dx) < SWIPE_THRESHOLD_PX ||
-        Math.abs(dx) < Math.abs(dy) * 1.2
-      ) {
-        return;
-      }
-
-      swipedRef.current = true;
-      const count = colorwaysWithPhoto.length;
-      setColorIndex((prev) => {
-        const next =
-          dx < 0 ? (prev + 1) % count : (prev - 1 + count) % count;
-        const code = colorwaysWithPhoto[next];
-        if (code) showColorPhoto(code);
-        return next;
-      });
-    },
-    [mobile, canPreview, colorwaysWithPhoto, showColorPhoto],
+    [selectIndex, slides],
   );
 
   const handleLinkClick = useCallback(
@@ -185,81 +139,51 @@ function ProductCardInner({
     [product.id],
   );
 
-  const activeCode =
-    previewCode ?? colorwaysWithPhoto[colorIndex] ?? null;
-
-  const imageClass = hasFashion
-    ? "pointer-events-none absolute inset-0 h-full w-full object-cover transition-opacity duration-500"
-    : "pointer-events-none absolute inset-0 h-full w-full object-contain p-4 transition-transform duration-300 group-hover:scale-[1.03]";
-
-  const showingFashion = hasFashion && displaySrc === fashionSrc;
-
   return (
-    <article
-      className="group flex flex-col border border-transparent bg-white transition-all hover:-translate-y-1 hover:border-blue"
-      onMouseEnter={hasFashion && !mobile ? handleCardEnter : undefined}
-      onMouseLeave={
-        (canPreview || hasFashion) && !mobile ? handlePreviewEnd : undefined
-      }
-    >
+    <article className="group flex flex-col border border-transparent bg-white transition-all hover:-translate-y-1 hover:border-blue">
       <Link
         href={`/catalog/${product.id}`}
         className="block"
         onClick={handleLinkClick}
       >
-        <div
-          className="relative aspect-[3/4] overflow-hidden bg-off-white touch-pan-y"
-          onTouchStart={handleTouchStart}
-          onTouchEnd={handleTouchEnd}
-        >
-          {hasFashion ? (
-            <>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={fashionSrc!}
-                alt=""
-                decoding="async"
-                loading="lazy"
-                draggable={false}
-                className={`${imageClass} ${
-                  showingFashion ? "opacity-100" : "opacity-0"
-                }`}
-              />
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={displaySrc === fashionSrc ? productSrc : displaySrc}
-                alt={name}
-                decoding="async"
-                loading="lazy"
-                draggable={false}
-                className={`pointer-events-none absolute inset-0 h-full w-full object-contain p-4 transition-opacity duration-500 ${
-                  showingFashion ? "opacity-0" : "opacity-100"
-                }`}
-              />
-            </>
+        <div className="relative aspect-[3/4] overflow-hidden bg-off-white touch-pan-y">
+          {canSlide ? (
+            <PeekCarousel
+              slides={slides}
+              index={slideIndex}
+              onIndexChange={selectIndex}
+              onSwipe={() => {
+                swipedRef.current = true;
+              }}
+            />
           ) : (
             // eslint-disable-next-line @next/next/no-img-element
             <img
-              src={displaySrc}
+              src={slides[0]?.src ?? PRODUCT_IMAGE_PLACEHOLDER}
               alt={name}
               decoding="async"
               loading="lazy"
               draggable={false}
-              className={imageClass}
+              className={
+                slides[0]?.fit === "cover"
+                  ? "pointer-events-none absolute inset-0 h-full w-full object-cover"
+                  : "pointer-events-none absolute inset-0 h-full w-full object-contain p-4"
+              }
             />
           )}
         </div>
       </Link>
 
       <div className="px-4 pt-2">
-        {canPreview ? (
+        {colorwaysWithPhoto.length > 0 || hasFashion ? (
           <ColorDots
             colorways={colorwaysWithPhoto}
             activeCode={activeCode}
-            onPreview={handlePreview}
+            fashionSrc={fashionSrc}
+            fashionActive={fashionActive}
+            onSelectFashion={hasFashion ? handleSelectFashion : undefined}
+            onPreview={canSlide ? handlePreview : undefined}
           />
-        ) : colorwaysWithPhoto.length === 1 ? (
-          <ColorDots colorways={colorwaysWithPhoto} />
         ) : (
           <ColorDots colorways={product.colorways} />
         )}
