@@ -7,6 +7,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import { ProductCardImage } from "@/components/catalog/ProductCardImage";
 
 const SWIPE_THRESHOLD_PX = 36;
 /** Peek только на узких экранах — на desktop фото на всю ширину */
@@ -31,6 +32,9 @@ type PeekCarouselProps = {
   nextLabel?: string;
   onSwipe?: () => void;
   overlay?: ReactNode;
+  /** Активный слайд грузится с приоритетом (видимая карточка) */
+  imagePriority?: boolean;
+  imageSizes?: string;
 };
 
 export function PeekCarousel({
@@ -43,6 +47,8 @@ export function PeekCarousel({
   nextLabel = "Next",
   onSwipe,
   overlay,
+  imagePriority = false,
+  imageSizes = "(max-width: 767px) 100vw, 50vw",
 }: PeekCarouselProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const touchStart = useRef<{ x: number; y: number } | null>(null);
@@ -156,18 +162,12 @@ export function PeekCarousel({
                   : "scale(1)",
               }}
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <ProductCardImage
                 src={slide.src}
                 alt={slide.alt}
-                decoding="async"
-                loading="lazy"
-                draggable={false}
-                className={
-                  slide.fit === "cover"
-                    ? "pointer-events-none absolute inset-0 h-full w-full object-cover"
-                    : "pointer-events-none absolute inset-0 h-full w-full object-contain p-3 sm:p-4"
-                }
+                fit={slide.fit}
+                priority={imagePriority && isActive}
+                sizes={imageSizes}
               />
             </div>
           );

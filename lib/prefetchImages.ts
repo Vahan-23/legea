@@ -47,7 +47,14 @@ export function prefetchImagesQueued(
     timerId = window.setTimeout(step, gapMs);
   };
 
-  timerId = window.setTimeout(step, 600);
+  if (urls[0]) {
+    void prefetchImage(urls[0]);
+    idx = 1;
+  }
+
+  if (idx < urls.length) {
+    timerId = window.setTimeout(step, gapMs);
+  }
 
   return () => {
     cancelled = true;

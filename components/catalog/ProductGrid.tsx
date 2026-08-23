@@ -3,6 +3,10 @@
 import { useEffect, useRef } from "react";
 import { ProductCard } from "@/components/catalog/ProductCard";
 import { consumeCatalogFocus } from "@/lib/catalogScroll";
+import {
+  gridClassName,
+  type CatalogGridColumns,
+} from "@/lib/catalogGridView";
 import type { ProductPhotos } from "@/lib/productImages";
 import type { Product } from "@/types/product";
 
@@ -11,12 +15,14 @@ type ProductGridProps = {
   cardPhotos?: Record<string, ProductPhotos>;
   /** Уже резолвнутые URL: productId → fashionSrc (включая oversize/junior). */
   fashionModels?: Record<string, string>;
+  columns?: CatalogGridColumns;
 };
 
 export function ProductGrid({
   products,
   cardPhotos,
   fashionModels,
+  columns = 2,
 }: ProductGridProps) {
   const restoredRef = useRef(false);
 
@@ -53,13 +59,15 @@ export function ProductGrid({
   }, []);
 
   return (
-    <ul className="grid grid-cols-2 gap-x-4 gap-y-8 sm:gap-x-5 sm:gap-y-10 md:grid-cols-3 xl:grid-cols-4">
-      {products.map((product) => (
+    <ul className={gridClassName(columns)}>
+      {products.map((product, index) => (
         <li key={product.id} id={`catalog-product-${product.id}`}>
           <ProductCard
             product={product}
             photos={cardPhotos?.[product.id]}
             fashionSrc={fashionModels?.[product.id] ?? null}
+            eager={index === 0}
+            gridColumns={columns}
           />
         </li>
       ))}

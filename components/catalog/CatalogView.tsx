@@ -14,6 +14,7 @@ import { useSearchParams } from "next/navigation";
 import { ActiveFilters } from "@/components/catalog/ActiveFilters";
 import { FilterSidebar } from "@/components/catalog/FilterSidebar";
 import { MobileFilterSheet } from "@/components/catalog/MobileFilterSheet";
+import { GridViewToggle } from "@/components/catalog/GridViewToggle";
 import { ProductGrid } from "@/components/catalog/ProductGrid";
 import { SearchBar, SortSelect } from "@/components/catalog/SearchBar";
 import { Button } from "@/components/ui/Button";
@@ -25,6 +26,7 @@ import {
   parseCatalogFilters,
   serializeCatalogFilters,
 } from "@/lib/catalogFilters";
+import { useCatalogGridView } from "@/lib/useCatalogGridView";
 import type { Locale } from "@/i18n/routing";
 import type { ProductPhotos } from "@/lib/productImages";
 import type { CatalogFilters, Product } from "@/types/product";
@@ -58,6 +60,7 @@ export function CatalogView({
 
   const [qDraft, setQDraft] = useState(filters.q);
   const [filtersOpen, setFiltersOpen] = useState(false);
+  const [gridColumns, setGridColumns] = useCatalogGridView();
 
   useEffect(() => {
     setQDraft(filters.q);
@@ -162,12 +165,15 @@ export function CatalogView({
               ) : null}
             </button>
 
-            <SortSelect
-              value={filters.sort}
-              onChange={(sort) =>
-                pushFilters({ ...filters, q: qDraft.trim(), sort })
-              }
-            />
+            <div className="ml-auto flex min-w-0 items-center gap-3">
+              <GridViewToggle value={gridColumns} onChange={setGridColumns} />
+              <SortSelect
+                value={filters.sort}
+                onChange={(sort) =>
+                  pushFilters({ ...filters, q: qDraft.trim(), sort })
+                }
+              />
+            </div>
           </div>
         </div>
 
@@ -201,6 +207,7 @@ export function CatalogView({
               products={deferredFiltered}
               cardPhotos={cardPhotos}
               fashionModels={fashionModels}
+              columns={gridColumns}
             />
           </div>
         )}
