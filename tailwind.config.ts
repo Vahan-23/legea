@@ -5,6 +5,13 @@ const config: Config = {
   content: [
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./lib/**/*.{js,ts,jsx,tsx}",
+  ],
+  safelist: [
+    "md:grid-cols-2",
+    "md:grid-cols-3",
+    "md:grid-cols-4",
+    "md:grid-cols-5",
   ],
   theme: {
     extend: {

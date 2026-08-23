@@ -1,19 +1,22 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import type { CatalogGridColumns } from "@/lib/catalogGridView";
-
-const OPTIONS: CatalogGridColumns[] = [2, 3, 4];
+import {
+  GRID_COLUMN_OPTIONS,
+  type CatalogGridColumns,
+} from "@/lib/catalogGridView";
 
 type GridViewToggleProps = {
   value: CatalogGridColumns;
   onChange: (value: CatalogGridColumns) => void;
+  /** При открытых фильтрах 5 недоступно */
+  maxColumns?: CatalogGridColumns;
 };
 
 function GridIcon({ columns }: { columns: CatalogGridColumns }) {
   const cols = columns;
   const rows = 2;
-  const gap = 1.4;
+  const gap = 1.2;
   const cellW = (20 - gap * (cols - 1)) / cols;
   const cellH = (14 - gap * (rows - 1)) / rows;
 
@@ -34,7 +37,7 @@ function GridIcon({ columns }: { columns: CatalogGridColumns }) {
             y={row * (cellH + gap)}
             width={cellW}
             height={cellH}
-            rx={0.5}
+            rx={0.45}
           />
         );
       })}
@@ -42,9 +45,14 @@ function GridIcon({ columns }: { columns: CatalogGridColumns }) {
   );
 }
 
-/** Переключатель плотности сетки — 2 / 3 / 4 колонки реально отличаются. */
-export function GridViewToggle({ value, onChange }: GridViewToggleProps) {
+export function GridViewToggle({
+  value,
+  onChange,
+  maxColumns = 5,
+}: GridViewToggleProps) {
   const t = useTranslations("catalog");
+  const options = GRID_COLUMN_OPTIONS.filter((n) => n <= maxColumns);
+  const activeValue = value > maxColumns ? maxColumns : value;
 
   return (
     <div
@@ -54,8 +62,8 @@ export function GridViewToggle({ value, onChange }: GridViewToggleProps) {
     >
       <span className="sr-only">{t("gridView")}</span>
       <div className="inline-flex items-stretch border border-navy/15 bg-white p-0.5">
-        {OPTIONS.map((columns) => {
-          const active = value === columns;
+        {options.map((columns) => {
+          const active = activeValue === columns;
           return (
             <button
               key={columns}
@@ -66,8 +74,8 @@ export function GridViewToggle({ value, onChange }: GridViewToggleProps) {
               onClick={() => onChange(columns)}
               className={
                 active
-                  ? "flex min-w-[2.75rem] flex-col items-center justify-center gap-0.5 bg-navy px-2 py-1.5 text-white"
-                  : "flex min-w-[2.75rem] flex-col items-center justify-center gap-0.5 px-2 py-1.5 text-muted transition-colors hover:bg-off-white hover:text-navy"
+                  ? "flex min-w-[2.5rem] flex-col items-center justify-center gap-0.5 bg-navy px-1.5 py-1.5 text-white"
+                  : "flex min-w-[2.5rem] flex-col items-center justify-center gap-0.5 px-1.5 py-1.5 text-muted transition-colors hover:bg-off-white hover:text-navy"
               }
             >
               <GridIcon columns={columns} />

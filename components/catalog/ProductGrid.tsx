@@ -22,7 +22,7 @@ export function ProductGrid({
   products,
   cardPhotos,
   fashionModels,
-  columns = 2,
+  columns = 4,
 }: ProductGridProps) {
   const restoredRef = useRef(false);
 
@@ -59,7 +59,17 @@ export function ProductGrid({
   }, []);
 
   return (
-    <ul className={`${gridClassName(columns)} min-w-0 overflow-x-hidden`}>
+    <ul
+      className={`${gridClassName(columns)} min-w-0 overflow-x-hidden ${
+        columns === 5
+          ? "md:grid-cols-5"
+          : columns === 4
+            ? "md:grid-cols-4"
+            : columns === 3
+              ? "md:grid-cols-3"
+              : "md:grid-cols-2"
+      }`}
+    >
       {products.map((product, index) => (
         <li
           key={product.id}

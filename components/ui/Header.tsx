@@ -40,7 +40,7 @@ export async function Header({ locale }: HeaderProps) {
     <>
       <StickyHeader>
         <header className="border-b border-blue/30 bg-white/95 backdrop-blur-sm">
-          <div className="mx-auto flex max-w-6xl items-center justify-between gap-6 px-6 py-4">
+          <div className="relative flex w-full items-center gap-4 px-4 py-4 sm:px-6 lg:px-8 xl:px-10">
             <Link href="/" className="shrink-0" aria-label="Legea">
               <BrandLogo
                 height={40}
@@ -48,22 +48,24 @@ export async function Header({ locale }: HeaderProps) {
                 className="h-10 w-auto object-contain"
               />
             </Link>
-            <nav className="hidden items-center gap-6 md:flex" aria-label="Main">
+
+            <nav
+              className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-6 md:flex"
+              aria-label="Main"
+            >
               {navKeys.map((key) => (
                 <Link
                   key={key}
                   href={navHrefs[key]}
-                  className="text-sm uppercase tracking-wide text-graphite hover:text-blue"
+                  className="text-sm font-semibold uppercase tracking-wide text-graphite hover:text-blue"
                 >
                   {t(key)}
                 </Link>
               ))}
-              <SpecNavButton />
             </nav>
-            <div className="flex items-center gap-4">
-              <div className="md:hidden">
-                <SpecNavButton />
-              </div>
+
+            <div className="ml-auto flex shrink-0 items-center gap-2 sm:gap-3">
+              <SpecNavButton />
               <LangSwitcher />
             </div>
           </div>

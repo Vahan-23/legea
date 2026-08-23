@@ -26,6 +26,7 @@ import {
   parseCatalogFilters,
   serializeCatalogFilters,
 } from "@/lib/catalogFilters";
+import { columnsWithSidebar } from "@/lib/catalogGridView";
 import { useCatalogGridView } from "@/lib/useCatalogGridView";
 import type { Locale } from "@/i18n/routing";
 import type { ProductPhotos } from "@/lib/productImages";
@@ -60,11 +61,35 @@ export function CatalogView({
 
   const [qDraft, setQDraft] = useState(filters.q);
   const [filtersOpen, setFiltersOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
   const [gridColumns, setGridColumns] = useCatalogGridView();
 
   useEffect(() => {
     setQDraft(filters.q);
   }, [filters.q]);
+
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem("legea-catalog-filters-open");
+      // Default: open. Only close if user previously chose closed.
+      if (raw === "0") setSidebarOpen(false);
+      else setSidebarOpen(true);
+    } catch {
+      setSidebarOpen(true);
+    }
+  }, []);
+
+  const toggleSidebar = useCallback(() => {
+    setSidebarOpen((prev) => {
+      const next = !prev;
+      try {
+        localStorage.setItem("legea-catalog-filters-open", next ? "1" : "0");
+      } catch {
+        /* ignore */
+      }
+      return next;
+    });
+  }, []);
 
   const colorKeys = useMemo(
     () => collectCatalogColorKeys(products),
@@ -141,18 +166,26 @@ export function CatalogView({
 
   return (
     <div className="w-full overflow-x-hidden py-6 sm:py-8 lg:py-10">
-      <div className="lg:grid lg:grid-cols-[minmax(11rem,20%)_minmax(0,80%)] lg:items-start">
+      <div
+        className={
+          sidebarOpen
+            ? "lg:grid lg:grid-cols-[minmax(12rem,18%)_minmax(0,1fr)] lg:items-start"
+            : "block w-full"
+        }
+      >
         <FilterSidebar
           filters={filtersLive}
           colorKeys={colorKeys}
           onChange={handleFiltersChange}
+          open={sidebarOpen}
         />
 
-        <div className="min-w-0 space-y-5 px-4 sm:space-y-6 sm:px-6 lg:px-8 xl:px-10">
+        <div className="min-w-0 w-full space-y-5 px-4 sm:space-y-6 sm:px-6 lg:px-8 xl:px-10 2xl:px-12">
           <div className="flex flex-col gap-3 sm:gap-4">
             <SearchBar value={qDraft} onChange={setQDraft} />
 
             <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+              {/* Mobile sheet */}
               <button
                 type="button"
                 onClick={() => setFiltersOpen(true)}
@@ -166,8 +199,31 @@ export function CatalogView({
                 ) : null}
               </button>
 
+              {/* Desktop: одна фиксированная кнопка открыть/закрыть */}
+              <button
+                type="button"
+                onClick={toggleSidebar}
+                className="hidden min-w-[9.5rem] shrink-0 items-center justify-center gap-2 border border-navy/20 bg-white px-4 py-2.5 font-sans text-xs font-medium uppercase tracking-wide text-navy transition-colors hover:border-blue hover:text-blue lg:inline-flex"
+                aria-expanded={sidebarOpen}
+                aria-label={sidebarOpen ? t("filtersClose") : t("filtersOpen")}
+              >
+                <span aria-hidden className="font-mono text-sm leading-none">
+                  {sidebarOpen ? "‹" : "›"}
+                </span>
+                {t("filters")}
+                {facetCount > 0 ? (
+                  <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-blue px-1 font-mono text-[10px] text-white">
+                    {facetCount}
+                  </span>
+                ) : null}
+              </button>
+
               <div className="flex w-full min-w-0 items-center justify-end gap-3 sm:ml-auto sm:w-auto">
-                <GridViewToggle value={gridColumns} onChange={setGridColumns} />
+                <GridViewToggle
+                  value={gridColumns}
+                  onChange={setGridColumns}
+                  maxColumns={sidebarOpen ? 4 : 5}
+                />
                 <SortSelect
                   value={filters.sort}
                   onChange={(sort) =>
@@ -201,7 +257,7 @@ export function CatalogView({
               products={deferredFiltered}
               cardPhotos={cardPhotos}
               fashionModels={fashionModels}
-              columns={gridColumns}
+              columns={columnsWithSidebar(gridColumns, sidebarOpen)}
             />
           )}
         </div>

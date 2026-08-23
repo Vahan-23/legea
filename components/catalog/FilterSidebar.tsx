@@ -180,12 +180,18 @@ export function FilterSidebar({
   filters,
   colorKeys,
   onChange,
+  open,
 }: {
   filters: CatalogFilters;
   colorKeys: ColorCodeKey[];
   onChange: (next: CatalogFilters) => void;
+  open: boolean;
+  onToggle?: () => void;
+  facetCount?: number;
 }) {
   const t = useTranslations("catalog");
+
+  if (!open) return null;
 
   return (
     <aside className="sticky top-4 hidden max-h-[calc(100dvh-2rem)] space-y-6 overflow-y-auto border-r border-navy/10 px-3 pb-8 pt-1 lg:block xl:px-5">
