@@ -11,11 +11,12 @@ import {
   useTeamFilters,
   type TeamStatusFilter,
 } from "@/hooks/useTeamFilters";
+import type { Locale } from "@/i18n/routing";
 
 type TeamsSectionProps = {
   teams?: Team[];
   labels?: TeamSectionLabels;
-  preferEnglish?: boolean;
+  locale?: Locale;
   className?: string;
 };
 
@@ -24,14 +25,14 @@ const TABS: TeamStatusFilter[] = ["current", "history", "all"];
 export function TeamsSection({
   teams = TEAMS,
   labels = defaultTeamLabels,
-  preferEnglish = false,
+  locale = "ru",
   className,
 }: TeamsSectionProps) {
   const tablistId = useId();
   const [mounted, setMounted] = useState(false);
   const [spotlightIndex, setSpotlightIndex] = useState(0);
   const [reduceMotion, setReduceMotion] = useState(false);
-  const filters = useTeamFilters({ teams });
+  const filters = useTeamFilters({ teams, locale });
   const filteredIds = filters.filtered.map((t) => t.id).join(",");
 
   useEffect(() => {
@@ -120,8 +121,8 @@ export function TeamsSection({
               >
                 <option value="">{labels.countryAll}</option>
                 {filters.countries.map((c) => (
-                  <option key={c} value={c}>
-                    {c}
+                  <option key={c.code} value={c.code}>
+                    {c.label}
                   </option>
                 ))}
               </select>
@@ -164,7 +165,7 @@ export function TeamsSection({
                     <TeamCard
                       team={team}
                       labels={labels}
-                      preferEnglish={preferEnglish}
+                      locale={locale}
                       spotlight={isSpotlight}
                       dimmed={!reduceMotion && !isSpotlight}
                     />

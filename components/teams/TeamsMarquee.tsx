@@ -3,25 +3,25 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { TEAMS, type Team } from "@/data/teams";
+import type { Locale } from "@/i18n/routing";
+import { teamDisplayName } from "@/lib/teamLocale";
 
 type TeamsMarqueeProps = {
   teams?: Team[];
-  /** Только действующие контракты (по умолчанию да). */
   currentOnly?: boolean;
   className?: string;
-  preferEnglish?: boolean;
+  locale?: Locale;
 };
 
-function logoAlt(team: Team, preferEnglish: boolean): string {
-  const name = preferEnglish ? team.nameEn : team.name;
-  return `Логотип ${name}`;
+function logoAlt(team: Team, locale: Locale): string {
+  return teamDisplayName(team, locale);
 }
 
 export function TeamsMarquee({
   teams = TEAMS,
   currentOnly = true,
   className,
-  preferEnglish = false,
+  locale = "ru",
 }: TeamsMarqueeProps) {
   const [reducedMotion, setReducedMotion] = useState(false);
 
@@ -50,7 +50,7 @@ export function TeamsMarquee({
             >
               <Image
                 src={team.logo}
-                alt={logoAlt(team, preferEnglish)}
+                alt={logoAlt(team, locale)}
                 width={80}
                 height={80}
                 loading="lazy"
@@ -77,7 +77,7 @@ export function TeamsMarquee({
           >
             <Image
               src={team.logo}
-              alt={index < list.length ? logoAlt(team, preferEnglish) : ""}
+              alt={index < list.length ? logoAlt(team, locale) : ""}
               width={96}
               height={96}
               loading="lazy"

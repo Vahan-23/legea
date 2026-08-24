@@ -3,6 +3,7 @@
 import { useLocale, useTranslations } from "next-intl";
 import { TeamsSection } from "@/components/teams/TeamsSection";
 import type { TeamSectionLabels } from "@/components/teams/labels";
+import { isLocale } from "@/i18n/routing";
 
 /**
  * Блок «Нам доверяют» на главной: полная секция с фильтрами.
@@ -10,7 +11,8 @@ import type { TeamSectionLabels } from "@/components/teams/labels";
  */
 export function HomeClients() {
   const t = useTranslations("home.clients");
-  const locale = useLocale();
+  const rawLocale = useLocale();
+  const locale = isLocale(rawLocale) ? rawLocale : "ru";
 
   const labels: TeamSectionLabels = {
     title: t("title"),
@@ -26,7 +28,5 @@ export function HomeClients() {
     logoAlt: (name) => t("logoAlt", { name }),
   };
 
-  return (
-    <TeamsSection labels={labels} preferEnglish={locale === "en"} />
-  );
+  return <TeamsSection labels={labels} locale={locale} />;
 }

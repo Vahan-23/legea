@@ -4,6 +4,12 @@ import Image from "next/image";
 import { useState } from "react";
 import type { Team } from "@/data/teams";
 import type { TeamSectionLabels } from "@/components/teams/labels";
+import type { Locale } from "@/i18n/routing";
+import {
+  teamDisplayCountry,
+  teamDisplayLeague,
+  teamDisplayName,
+} from "@/lib/teamLocale";
 
 function countryFlagEmoji(code: string): string {
   const normalized = code.length === 2 ? code.toUpperCase() : "";
@@ -23,7 +29,7 @@ function initials(name: string): string {
 type TeamCardProps = {
   team: Team;
   labels: TeamSectionLabels;
-  preferEnglish?: boolean;
+  locale: Locale;
   /** Активная карточка: цвет */
   spotlight?: boolean;
   /** Остальные: серый «неактивный» вид */
@@ -33,12 +39,14 @@ type TeamCardProps = {
 export function TeamCard({
   team,
   labels,
-  preferEnglish = false,
+  locale,
   spotlight = false,
   dimmed = false,
 }: TeamCardProps) {
   const [failed, setFailed] = useState(false);
-  const displayName = preferEnglish ? team.nameEn : team.name;
+  const displayName = teamDisplayName(team, locale);
+  const displayCountry = teamDisplayCountry(team, locale);
+  const displayLeague = teamDisplayLeague(team, locale);
   const flag = countryFlagEmoji(team.countryCode);
   const sinceLabel = team.since != null ? labels.since(team.since) : null;
 
@@ -88,15 +96,15 @@ export function TeamCard({
               {flag}
             </span>
           ) : null}
-          <span>{team.country}</span>
+          <span>{displayCountry}</span>
         </p>
-        {team.league ? (
+        {displayLeague ? (
           <p
             className={`mt-0.5 text-[11px] font-medium transition-colors duration-300 ${
               dimmed ? "text-graphite/30" : "text-graphite/60"
             } group-hover:text-graphite/65`}
           >
-            {team.league}
+            {displayLeague}
           </p>
         ) : null}
         {sinceLabel ? (

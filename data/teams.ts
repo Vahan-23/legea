@@ -2,10 +2,16 @@ export type Team = {
   id: string;
   name: string;
   nameEn: string;
+  /** Армянское название; клубы — транслитерация латиницы */
+  nameHy?: string;
   country: string;
   countryCode: string;
   type: "national" | "club";
   league?: string;
+  /** Русское название лиги */
+  leagueRu?: string;
+  /** Армянское название лиги */
+  leagueHy?: string;
   logo: string;
   since?: number;
   current: boolean;
@@ -17,6 +23,7 @@ export const TEAMS: Team[] = [
     id: "montenegro-nt",
     name: "Сборная Черногории",
     nameEn: "Montenegro National Team",
+    nameHy: "Չեռնոգորիայի հավաքական",
     country: "Черногория",
     countryCode: "ME",
     type: "national",
@@ -27,6 +34,7 @@ export const TEAMS: Team[] = [
     id: "western-sahara-nt",
     name: "Сборная Западной Сахары",
     nameEn: "Western Sahara National Team",
+    nameHy: "Արևմտյան Սահարայի հավաքական",
     country: "Западная Сахара",
     countryCode: "EH",
     type: "national",
@@ -35,8 +43,9 @@ export const TEAMS: Team[] = [
   },
   {
     id: "hapoel-jerusalem",
-    name: "Hapoel Jerusalem",
+    name: "Хапоэль (Иерусалим)",
     nameEn: "Hapoel Jerusalem",
+    nameHy: "Հապոել Երուսաբեմ",
     country: "Израиль",
     countryCode: "IL",
     type: "club",
@@ -45,19 +54,23 @@ export const TEAMS: Team[] = [
   },
   {
     id: "as-gubbio",
-    name: "AS Gubbio",
+    name: "АС Губбио",
     nameEn: "AS Gubbio",
+    nameHy: "ԱՍ Գուբբիո",
     country: "Италия",
     countryCode: "IT",
     type: "club",
     league: "Serie C",
+    leagueRu: "Серия С",
+    leagueHy: "Սերիա Ց",
     logo: "/logos/as-gubbio.png",
     current: true,
   },
   {
     id: "ac-pavia",
-    name: "AC Pavia",
+    name: "АК Павиа",
     nameEn: "AC Pavia",
+    nameHy: "ԱԿ Պավիա",
     country: "Италия",
     countryCode: "IT",
     type: "club",
@@ -66,19 +79,23 @@ export const TEAMS: Team[] = [
   },
   {
     id: "giugliano-calcio",
-    name: "Giugliano Calcio",
+    name: "Гиуглиано Калкио",
     nameEn: "Giugliano Calcio",
+    nameHy: "Գիուգլիանո Կալկիո",
     country: "Италия",
     countryCode: "IT",
     type: "club",
     league: "Serie C",
+    leagueRu: "Серия С",
+    leagueHy: "Սերիա Ց",
     logo: "/logos/giugliano-calcio.png",
     current: true,
   },
   {
     id: "ssd-savoia",
-    name: "SSD Savoia",
+    name: "ССД Савоиа",
     nameEn: "SSD Savoia",
+    nameHy: "ՍՍԴ Սավոիա",
     country: "Италия",
     countryCode: "IT",
     type: "club",
@@ -87,8 +104,9 @@ export const TEAMS: Team[] = [
   },
   {
     id: "spartak-subotica",
-    name: "Spartak Subotica",
+    name: "Спартак Суботика",
     nameEn: "Spartak Subotica",
+    nameHy: "Սպարտակ Սուբոտիկա",
     country: "Сербия",
     countryCode: "RS",
     type: "club",
@@ -97,8 +115,9 @@ export const TEAMS: Team[] = [
   },
   {
     id: "fk-tukums-2000",
-    name: "FK Tukums 2000",
+    name: "ФК Тукумс 2000",
     nameEn: "FK Tukums 2000",
+    nameHy: "ՖԿ Տուկումս 2000",
     country: "Латвия",
     countryCode: "LV",
     type: "club",
@@ -107,8 +126,9 @@ export const TEAMS: Team[] = [
   },
   {
     id: "dfk-dainava",
-    name: "DFK Dainava",
+    name: "ДФК Даинава",
     nameEn: "DFK Dainava",
+    nameHy: "ԴՖԿ Դաինավա",
     country: "Литва",
     countryCode: "LT",
     type: "club",
@@ -117,8 +137,9 @@ export const TEAMS: Team[] = [
   },
   {
     id: "marconi-stallions",
-    name: "Marconi Stallions",
+    name: "Маркони Сталлионс",
     nameEn: "Marconi Stallions",
+    nameHy: "Մարկոնի Ստալլիոնս",
     country: "Австралия",
     countryCode: "AU",
     type: "club",
@@ -127,8 +148,9 @@ export const TEAMS: Team[] = [
   },
   {
     id: "st-george-city",
-    name: "St George City FC",
+    name: "Сент-Джордж Сити",
     nameEn: "St George City FC",
+    nameHy: "Ստ. Գեորգե Կիտյ ՖԿ",
     country: "Австралия",
     countryCode: "AU",
     type: "club",
@@ -137,8 +159,9 @@ export const TEAMS: Team[] = [
   },
   {
     id: "ssc-napoli",
-    name: "SSC Napoli",
+    name: "ССК Наполи",
     nameEn: "SSC Napoli",
+    nameHy: "ՍՍԿ Նապոլի",
     country: "Италия",
     countryCode: "IT",
     type: "club",
@@ -148,8 +171,9 @@ export const TEAMS: Team[] = [
   },
   {
     id: "palermo",
-    name: "Palermo",
+    name: "Палермо",
     nameEn: "Palermo",
+    nameHy: "Պալերմո",
     country: "Италия",
     countryCode: "IT",
     type: "club",
@@ -158,8 +182,9 @@ export const TEAMS: Team[] = [
   },
   {
     id: "udinese",
-    name: "Udinese",
+    name: "Удинесе",
     nameEn: "Udinese",
+    nameHy: "Ուդինեսե",
     country: "Италия",
     countryCode: "IT",
     type: "club",
@@ -168,8 +193,9 @@ export const TEAMS: Team[] = [
   },
   {
     id: "frosinone",
-    name: "Frosinone",
+    name: "Фросиноне",
     nameEn: "Frosinone",
+    nameHy: "Ֆրոսինոնե",
     country: "Италия",
     countryCode: "IT",
     type: "club",
@@ -178,8 +204,9 @@ export const TEAMS: Team[] = [
   },
   {
     id: "reggina",
-    name: "Reggina",
+    name: "Реггина",
     nameEn: "Reggina",
+    nameHy: "Ռեգգինա",
     country: "Италия",
     countryCode: "IT",
     type: "club",
@@ -188,8 +215,9 @@ export const TEAMS: Team[] = [
   },
   {
     id: "livorno",
-    name: "Livorno",
+    name: "Ливорно",
     nameEn: "Livorno",
+    nameHy: "Լիվորնո",
     country: "Италия",
     countryCode: "IT",
     type: "club",
@@ -198,8 +226,9 @@ export const TEAMS: Team[] = [
   },
   {
     id: "cosenza",
-    name: "Cosenza",
+    name: "Косенза",
     nameEn: "Cosenza",
+    nameHy: "Կոսենզա",
     country: "Италия",
     countryCode: "IT",
     type: "club",
@@ -208,8 +237,9 @@ export const TEAMS: Team[] = [
   },
   {
     id: "crvena-zvezda",
-    name: "Crvena Zvezda",
+    name: "Красная Звезда",
     nameEn: "Crvena Zvezda",
+    nameHy: "Ցրվենա Զվեզդա",
     country: "Сербия",
     countryCode: "RS",
     type: "club",
@@ -218,8 +248,9 @@ export const TEAMS: Team[] = [
   },
   {
     id: "nec-nijmegen",
-    name: "NEC Nijmegen",
+    name: "НЕК Ниджмеген",
     nameEn: "NEC Nijmegen",
+    nameHy: "ՆԵԿ Նիջմեգեն",
     country: "Нидерланды",
     countryCode: "NL",
     type: "club",
@@ -228,8 +259,9 @@ export const TEAMS: Team[] = [
   },
   {
     id: "nac-breda",
-    name: "NAC Breda",
+    name: "НАК Бреда",
     nameEn: "NAC Breda",
+    nameHy: "ՆԱԿ Բրեդա",
     country: "Нидерланды",
     countryCode: "NL",
     type: "club",
@@ -238,8 +270,9 @@ export const TEAMS: Team[] = [
   },
   {
     id: "the-new-saints",
-    name: "The New Saints",
+    name: "Нью Сэйнтс",
     nameEn: "The New Saints",
+    nameHy: "Նիո Սայնտս",
     country: "Уэльс",
     countryCode: "WLS",
     type: "club",
@@ -248,8 +281,9 @@ export const TEAMS: Team[] = [
   },
   {
     id: "nk-celje",
-    name: "NK Celje",
+    name: "НК Келдже",
     nameEn: "NK Celje",
+    nameHy: "ՆԿ Կելջե",
     country: "Словения",
     countryCode: "SI",
     type: "club",
@@ -258,8 +292,9 @@ export const TEAMS: Team[] = [
   },
   {
     id: "levadiakos",
-    name: "Levadiakos",
+    name: "Левадиакос",
     nameEn: "Levadiakos",
+    nameHy: "Լեվադիակոս",
     country: "Греция",
     countryCode: "GR",
     type: "club",
@@ -270,6 +305,7 @@ export const TEAMS: Team[] = [
     id: "north-korea-nt",
     name: "Сборная КНДР",
     nameEn: "North Korea National Team",
+    nameHy: "Հյուսիսային Կորեայի հավաքական",
     country: "КНДР",
     countryCode: "KP",
     type: "national",
@@ -281,6 +317,7 @@ export const TEAMS: Team[] = [
     id: "gibraltar-nt",
     name: "Сборная Гибралтара",
     nameEn: "Gibraltar National Team",
+    nameHy: "Ջիբրալթարի հավաքական",
     country: "Гибралтар",
     countryCode: "GI",
     type: "national",
