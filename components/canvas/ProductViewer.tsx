@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState, type ComponentType } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type ComponentType } from "react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/Button";
 import { PeekCarousel, type PeekCarouselSlide } from "@/components/ui/PeekCarousel";
@@ -16,11 +16,14 @@ import {
   prefetchImagesQueued,
 } from "@/lib/prefetchImages";
 import { prefetchProduct3d, prefetchSceneModule } from "@/lib/prefetchGlb";
+import { swatchBackground } from "@/lib/colorCode";
 import type { SceneProps } from "@/components/canvas/Scene";
 import { preserveGlbMaterials, productHasViewer3d } from "@/lib/models";
 import { useProductStore } from "@/store/useProductStore";
 
 type ViewMode = "front" | "back" | "3d";
+
+export type ProductViewMode = ViewMode;
 
 type ProductViewerProps = {
   productId?: string;
@@ -35,6 +38,9 @@ type ProductViewerProps = {
   fashionActive?: boolean;
   onFashionOff?: () => void;
   onFashionOn?: () => void;
+  /** Управление режимом снаружи (свотчи 3D / фото) */
+  mode?: ProductViewMode;
+  onModeChange?: (mode: ProductViewMode) => void;
 };
 
 function useIsMobile(): boolean {
@@ -66,6 +72,8 @@ export function ProductViewer({
   fashionActive = false,
   onFashionOff,
   onFashionOn,
+  mode: controlledMode,
+  onModeChange,
 }: ProductViewerProps) {
   const t = useTranslations("product");
   const mobile = useIsMobile();
@@ -85,31 +93,58 @@ export function ProductViewer({
   const hasPhotos = hasFront || hasBack;
   const has3d = productHasViewer3d(productId, model);
 
-  const [mode, setMode] = useState<ViewMode>("front");
+  const [internalMode, setInternalMode] = useState<ViewMode>("front");
+  const mode = controlledMode ?? internalMode;
+  const onModeChangeRef = useRef(onModeChange);
+  onModeChangeRef.current = onModeChange;
+
+  const updateMode = useCallback(
+    (next: ViewMode) => {
+      if (controlledMode === undefined) {
+        setInternalMode(next);
+      }
+      onModeChangeRef.current?.(next);
+    },
+    [controlledMode],
+  );
   const [displaySrc, setDisplaySrc] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [SceneComp, setSceneComp] = useState<ComponentType<SceneProps> | null>(
     null,
   );
   const [sceneLoading, setSceneLoading] = useState(false);
+  const prefetchCancelRef = useRef<(() => void) | null>(null);
+  const prevColorwayRef = useRef<string | null>(null);
+  const prevProductIdRef = useRef(productId);
+  const [colorReveal, setColorReveal] = useState<{
+    key: number;
+    color: string;
+  } | null>(null);
 
   useEffect(() => {
-    setMode(hasPhotos || fashionSrc ? "front" : has3d ? "3d" : "front");
     setSceneComp(null);
-  }, [productId, has3d, hasPhotos, fashionSrc]);
+    if (controlledMode !== undefined) return;
+    const initial = hasPhotos || fashionSrc ? "front" : has3d ? "3d" : "front";
+    setInternalMode(initial);
+  }, [productId, has3d, hasPhotos, fashionSrc, controlledMode]);
 
   useEffect(() => {
     if (mode === "back" && !hasBack) {
-      setMode(hasFront ? "front" : has3d ? "3d" : "front");
-    } else if (mode === "front" && !hasFront && !fashionActive && !fashionSrc) {
-      setMode(hasBack ? "back" : has3d ? "3d" : "front");
+      updateMode(hasFront ? "front" : has3d ? "3d" : "front");
     } else if (mode === "3d" && !has3d) {
-      setMode(hasFront ? "front" : hasBack ? "back" : "front");
-    } else if (!hasPhotos && !fashionSrc && has3d) {
-      setMode("3d");
+      updateMode(hasFront ? "front" : hasBack ? "back" : "front");
+    } else if (
+      mode === "front" &&
+      !hasFront &&
+      !fashionActive &&
+      !fashionSrc &&
+      !hasBack
+    ) {
+      updateMode(has3d ? "3d" : "front");
+    } else if (!hasPhotos && !fashionSrc && has3d && mode !== "3d") {
+      updateMode("3d");
     }
   }, [
-    colorway,
     hasFront,
     hasBack,
     hasPhotos,
@@ -117,6 +152,7 @@ export function ProductViewer({
     mode,
     fashionActive,
     fashionSrc,
+    updateMode,
   ]);
 
   const swatchColorways = useMemo(() => {
@@ -183,10 +219,49 @@ export function ProductViewer({
   }, [fashionSrc]);
 
   useEffect(() => {
-    if (fashionActive && fashionSrc) {
-      setMode((m) => (m === "3d" ? "front" : m));
+    if (fashionActive && fashionSrc && mode === "3d") {
+      updateMode("front");
     }
-  }, [fashionActive, fashionSrc]);
+  }, [fashionActive, fashionSrc, mode, updateMode]);
+
+  /** Смена расцветки в 3D → фото + короткая «раскрывающая» анимация */
+  useEffect(() => {
+    if (productId !== prevProductIdRef.current) {
+      prevProductIdRef.current = productId;
+      prevColorwayRef.current = colorway;
+      setColorReveal(null);
+      return;
+    }
+
+    if (!colorway || prevColorwayRef.current === colorway) return;
+
+    const was3d = mode === "3d";
+    prevColorwayRef.current = colorway;
+
+    if (!was3d) return;
+
+    if (hasFront || hasBack) {
+      updateMode(hasFront ? "front" : "back");
+    }
+
+    let flashColor = "#1e7fe0";
+    try {
+      flashColor = swatchBackground(colorway);
+    } catch {
+      /* ignore */
+    }
+
+    setColorReveal((prev) => ({ key: (prev?.key ?? 0) + 1, color: flashColor }));
+    const timer = window.setTimeout(() => setColorReveal(null), 900);
+    return () => window.clearTimeout(timer);
+  }, [
+    colorway,
+    productId,
+    mode,
+    hasFront,
+    hasBack,
+    updateMode,
+  ]);
 
   const handleCarouselIndexChange = useCallback(
     (index: number) => {
@@ -194,31 +269,33 @@ export function ProductViewer({
       if (!slide) return;
       if (slide.key === "fashion") {
         onFashionOn?.();
-        setMode("front");
+        updateMode("front");
         return;
       }
       onFashionOff?.();
       onColorwayChange?.(slide.key);
-      setMode("front");
+      updateMode("front");
     },
-    [carouselSlides, onColorwayChange, onFashionOff, onFashionOn],
+    [carouselSlides, onColorwayChange, onFashionOff, onFashionOn, updateMode],
   );
 
   const selectMode = (next: ViewMode) => {
     if (next === "3d") onFashionOff?.();
     if (next === "front" || next === "back") onFashionOff?.();
-    setMode(next);
-  };
-
-  const open3d = () => {
-    onFashionOff?.();
-    setMode("3d");
+    updateMode(next);
   };
 
   useEffect(() => {
-    if (!has3d || !productId) return;
-    return prefetchProduct3d(productId, model);
-  }, [has3d, productId, model]);
+    if (mode !== "3d" || !productId) return;
+    prefetchCancelRef.current?.();
+    prefetchCancelRef.current = prefetchProduct3d(productId, model);
+  }, [mode, productId, model]);
+
+  useEffect(() => {
+    return () => {
+      prefetchCancelRef.current?.();
+    };
+  }, [productId]);
 
   useEffect(() => {
     if (!show3d || SceneComp) return;
@@ -292,22 +369,51 @@ export function ProductViewer({
   return (
     <div className="w-full max-w-full space-y-3">
       <div className="relative aspect-[3/4] w-full max-w-full overflow-hidden bg-off-white">
+        {colorReveal ? (
+          <div
+            key={colorReveal.key}
+            className="viewer-color-flash pointer-events-none absolute inset-0 z-20"
+            style={{ backgroundColor: colorReveal.color }}
+            aria-hidden
+          />
+        ) : null}
+        {colorReveal ? (
+          <div
+            key={`toast-${colorReveal.key}`}
+            className="viewer-color-toast pointer-events-none absolute inset-x-0 bottom-4 z-30 flex justify-center px-4 sm:bottom-6"
+            role="status"
+            aria-live="polite"
+          >
+            <span className="rounded bg-navy px-3 py-2 font-mono text-[10px] uppercase tracking-widest text-white shadow-lg sm:text-xs">
+              {t("colorwaySwitchFlash")}
+            </span>
+          </div>
+        ) : null}
         {show3d ? (
           <div className="absolute inset-0 touch-none">
             {SceneComp ? (
               <SceneComp
                 productId={productId}
                 model={model}
-                colorway={colorway}
+                colorway={null}
                 branding={branding}
                 mobile={mobile}
                 preserveMaterials={preserveMaterials}
+                presentation
               />
             ) : (
               <div className="flex h-full items-center justify-center font-mono text-xs uppercase tracking-widest text-muted">
                 {sceneLoading ? "…" : "3D"}
               </div>
             )}
+            <div
+              className="pointer-events-none absolute inset-x-0 top-3 z-10 flex justify-center sm:top-4"
+              aria-hidden
+            >
+              <span className="rounded bg-navy/90 px-2.5 py-1 font-mono text-[10px] uppercase tracking-widest text-white shadow-sm">
+                {t("view3dOriginal")}
+              </span>
+            </div>
           </div>
         ) : showCarousel ? (
           <PeekCarousel
@@ -335,10 +441,13 @@ export function ProductViewer({
             {displaySrc ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img
+                key={displaySrc}
                 src={displaySrc}
                 alt={alt}
                 decoding="async"
-                className="absolute inset-0 h-full w-full object-contain p-3 sm:p-4"
+                className={`absolute inset-0 h-full w-full object-contain p-3 sm:p-4 ${
+                  colorReveal ? "viewer-photo-reveal" : ""
+                }`}
               />
             ) : (
               // eslint-disable-next-line @next/next/no-img-element
@@ -362,7 +471,7 @@ export function ProductViewer({
         )}
       </div>
 
-      {hasPhotos || has3d ? (
+      {hasPhotos ? (
         <div className="flex flex-wrap gap-2">
           {hasFront ? (
             <Button
@@ -384,16 +493,6 @@ export function ProductViewer({
               onClick={() => selectMode("back")}
             >
               {t("photoBack")}
-            </Button>
-          ) : null}
-          {has3d ? (
-            <Button
-              type="button"
-              variant={mode === "3d" ? "primary" : "secondary"}
-              className="px-4 py-2 text-xs sm:px-6 sm:py-3 sm:text-sm"
-              onClick={open3d}
-            >
-              3D
             </Button>
           ) : null}
         </div>

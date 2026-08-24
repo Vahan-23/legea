@@ -29,6 +29,8 @@ export type SceneProps = {
   interactive?: boolean;
   /** Масштаб модели в сцене */
   modelScale?: number;
+  /** Витринный режим на карточке товара — мягкий автоповорот и подиум */
+  presentation?: boolean;
 };
 
 function AutoSpin({
@@ -54,6 +56,33 @@ function AutoSpin({
   );
 }
 
+function PresentationPedestal() {
+  return (
+    <group position={[0, -0.86, 0]}>
+      <mesh rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
+        <ringGeometry args={[0.55, 0.72, 64]} />
+        <meshStandardMaterial
+          color="#d8dde6"
+          metalness={0.15}
+          roughness={0.85}
+          transparent
+          opacity={0.55}
+        />
+      </mesh>
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.002, 0]}>
+        <circleGeometry args={[0.78, 64]} />
+        <meshStandardMaterial
+          color="#eef1f6"
+          metalness={0}
+          roughness={1}
+          transparent
+          opacity={0.35}
+        />
+      </mesh>
+    </group>
+  );
+}
+
 export function Scene({
   productId = null,
   glbUrl = null,
@@ -65,6 +94,7 @@ export function Scene({
   transparent = false,
   interactive = true,
   modelScale = 0.85,
+  presentation = false,
 }: SceneProps) {
   const [reducedMotion, setReducedMotion] = useState(false);
   const setRenderer = useCanvasCaptureStore((s) => s.setRenderer);
@@ -84,7 +114,6 @@ export function Scene({
 
   const spin = !interactive && !reducedMotion;
 
-  // Display-only: дальше камера — модель целиком в кадре
   const cameraPosition = interactive
     ? DEFAULT_CAMERA_POSITION
     : ([
@@ -95,7 +124,7 @@ export function Scene({
 
   return (
     <Canvas
-      camera={{ position: cameraPosition, fov: 35 }}
+      camera={{ position: cameraPosition, fov: presentation ? 32 : 35 }}
       dpr={mobile ? 1 : [1, 1.5]}
       gl={{
         preserveDrawingBuffer: interactive,
@@ -103,7 +132,6 @@ export function Scene({
         alpha: true,
         outputColorSpace: THREE.SRGBColorSpace,
       }}
-      // Без ACES: иначе royal blue × orange map = тёмно-бирюзовый
       flat
       style={{
         width: "100%",
@@ -113,7 +141,6 @@ export function Scene({
         touchAction: interactive && !mobile ? "none" : undefined,
       }}
       onCreated={({ gl }) => {
-        // Не чёрный clear — иначе alpha=1 заливает canvas чёрным поверх CSS
         if (transparent) {
           gl.setClearColor(0x000000, 0);
         } else {
@@ -123,7 +150,12 @@ export function Scene({
       }}
     >
       <Suspense fallback={interactive ? <CanvasLoader /> : null}>
-        <Lighting mobile={mobile} showFloorShadow={interactive && !transparent} />
+        <Lighting
+          mobile={mobile}
+          showFloorShadow={interactive && !transparent}
+          presentation={presentation}
+        />
+        {presentation ? <PresentationPedestal /> : null}
         <AutoSpin enabled={spin} scale={modelScale}>
           <ProductModel
             productId={productId}
@@ -137,7 +169,9 @@ export function Scene({
         {interactive ? (
           <IdleOrbitControls
             enableZoom={!mobile}
-            disableAutoRotate={reducedMotion || mobile}
+            disableAutoRotate={reducedMotion}
+            idleMs={presentation ? 1200 : 3000}
+            autoRotateSpeed={presentation ? 1.1 : 0.8}
           />
         ) : null}
       </Suspense>

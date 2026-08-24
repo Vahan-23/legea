@@ -62,6 +62,45 @@
   }
 }
 
+@keyframes viewer-color-flash {
+  0% {
+    opacity: 0.72;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes viewer-color-toast {
+  0% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  18% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  75% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes viewer-photo-reveal {
+  0% {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 @layer components {
   .teams-marquee__track {
     animation: teams-marquee-scroll 40s linear infinite;
@@ -77,6 +116,18 @@
 
   .brand-ticker:hover .brand-ticker__track {
     animation-play-state: paused;
+  }
+
+  .viewer-color-flash {
+    animation: viewer-color-flash 0.75s ease-out forwards;
+  }
+
+  .viewer-color-toast {
+    animation: viewer-color-toast 0.9s ease-out forwards;
+  }
+
+  .viewer-photo-reveal {
+    animation: viewer-photo-reveal 0.55s ease-out;
   }
 
   .team-logo {
@@ -106,6 +157,12 @@
     .team-logo--color,
     .team-logo--live {
       @apply scale-100 opacity-100 grayscale-0;
+    }
+
+    .viewer-color-flash,
+    .viewer-color-toast,
+    .viewer-photo-reveal {
+      animation: none !important;
     }
   }
 }

@@ -118,7 +118,11 @@ export function productHasViewer3d(
   return false;
 }
 
+/** Показывать GLB только в заводской расцветке — без runtime-recolor. */
+export const ORIGINAL_GLB_ONLY = true;
+
 /** TXM-костюмы (верх/низ): показываем GLB как запечён, без kit-shader. */
 export function preserveGlbMaterials(productId: string | null | undefined): boolean {
+  if (ORIGINAL_GLB_ONLY) return true;
   return Boolean(productId?.startsWith("TXM"));
 }

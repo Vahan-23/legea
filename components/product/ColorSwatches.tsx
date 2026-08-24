@@ -36,12 +36,24 @@ type ColorSwatchesProps = {
   colorways: string[];
   value: string | null;
   onChange: (code: string) => void;
-  /** Предзагрузка фото при наведении на свотч */
   onPreview?: (code: string) => void;
   fashionSrc?: string | null;
   fashionActive?: boolean;
   onSelectFashion?: () => void;
+  has3d?: boolean;
+  view3dActive?: boolean;
+  onSelect3d?: () => void;
 };
+
+const colorSwatchClass = (active: boolean) =>
+  active
+    ? "flex h-10 w-10 items-center justify-center rounded-full bg-white p-[3px] ring-2 ring-blue ring-offset-2"
+    : "flex h-10 w-10 items-center justify-center rounded-full bg-white p-[3px] ring-1 ring-navy/30 hover:ring-blue";
+
+const mediaSwatchClass = (active: boolean) =>
+  active
+    ? "flex h-12 w-12 items-center justify-center rounded-sm bg-white p-1 ring-2 ring-blue ring-offset-2"
+    : "flex h-12 w-12 items-center justify-center rounded-sm bg-white p-1 ring-1 ring-navy/30 hover:ring-blue";
 
 export function ColorSwatches({
   colorways,
@@ -51,6 +63,9 @@ export function ColorSwatches({
   fashionSrc = null,
   fashionActive = false,
   onSelectFashion,
+  has3d = false,
+  view3dActive = false,
+  onSelect3d,
 }: ColorSwatchesProps) {
   const t = useTranslations("product");
 
@@ -63,11 +78,15 @@ export function ColorSwatches({
     }
   });
 
-  const label = fashionActive
-    ? t("showFashion")
-    : value
-      ? value
-      : null;
+  const label = view3dActive
+    ? t("view3d")
+    : fashionActive
+      ? t("showFashion")
+      : value
+        ? value
+        : null;
+
+  const showMediaRow = Boolean(fashionSrc) || has3d;
 
   return (
     <div>
@@ -79,34 +98,10 @@ export function ColorSwatches({
           </span>
         ) : null}
       </p>
-      <ul className="flex flex-wrap gap-3">
-        {fashionSrc ? (
-          <li>
-            <button
-              type="button"
-              title={t("showFashion")}
-              aria-label={t("showFashion")}
-              aria-pressed={fashionActive}
-              onClick={() => onSelectFashion?.()}
-              className={
-                fashionActive
-                  ? "flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-white p-[3px] ring-2 ring-blue ring-offset-2"
-                  : "flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-white p-[3px] ring-1 ring-navy/30 hover:ring-blue"
-              }
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={fashionSrc}
-                alt=""
-                draggable={false}
-                className="h-full w-full rounded-full object-cover"
-              />
-            </button>
-          </li>
-        ) : null}
 
+      <ul className="flex flex-wrap gap-3">
         {valid.map((code) => {
-          const active = !fashionActive && code === value;
+          const active = !fashionActive && !view3dActive && code === value;
           const bg = swatchBackground(code);
           const isGradient = bg.startsWith("conic");
           const dark = isDarkSwatch(code);
@@ -122,11 +117,7 @@ export function ColorSwatches({
                 onClick={() => onChange(code)}
                 onMouseEnter={() => onPreview?.(code)}
                 onFocus={() => onPreview?.(code)}
-                className={
-                  active
-                    ? "flex h-10 w-10 items-center justify-center rounded-full bg-white p-[3px] ring-2 ring-blue ring-offset-2"
-                    : "flex h-10 w-10 items-center justify-center rounded-full bg-white p-[3px] ring-1 ring-navy/30 hover:ring-blue"
-                }
+                className={colorSwatchClass(active)}
               >
                 <span
                   className="block h-full w-full rounded-full"
@@ -144,6 +135,44 @@ export function ColorSwatches({
           );
         })}
       </ul>
+
+      {showMediaRow ? (
+        <div className="mt-4 flex flex-wrap gap-3">
+          {fashionSrc ? (
+            <button
+              type="button"
+              title={t("showFashion")}
+              aria-label={t("showFashion")}
+              aria-pressed={fashionActive && !view3dActive}
+              onClick={() => onSelectFashion?.()}
+              className={mediaSwatchClass(fashionActive && !view3dActive)}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={fashionSrc}
+                alt=""
+                draggable={false}
+                className="h-full w-full rounded-sm object-cover"
+              />
+            </button>
+          ) : null}
+
+          {has3d ? (
+            <button
+              type="button"
+              title={t("view3d")}
+              aria-label={t("view3d")}
+              aria-pressed={view3dActive}
+              onClick={() => onSelect3d?.()}
+              className={mediaSwatchClass(view3dActive)}
+            >
+              <span className="flex h-full w-full items-center justify-center rounded-sm bg-black font-display text-lg leading-none text-white">
+                3D
+              </span>
+            </button>
+          ) : null}
+        </div>
+      ) : null}
     </div>
   );
 }

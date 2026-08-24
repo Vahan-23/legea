@@ -11,6 +11,10 @@ type IdleOrbitControlsProps = {
   enableZoom?: boolean;
   /** Отключить autoRotate (prefers-reduced-motion) */
   disableAutoRotate?: boolean;
+  /** Пауза до автоповорота, мс */
+  idleMs?: number;
+  /** Скорость автоповорота */
+  autoRotateSpeed?: number;
 };
 
 const IDLE_MS = 3000;
@@ -37,6 +41,8 @@ export const DEFAULT_CAMERA_POSITION: [number, number, number] = (() => {
 export function IdleOrbitControls({
   enableZoom = true,
   disableAutoRotate = false,
+  idleMs = IDLE_MS,
+  autoRotateSpeed = AUTO_SPEED,
 }: IdleOrbitControlsProps) {
   const controls = useRef<OrbitControlsImpl>(null);
   const idleSince = useRef(performance.now());
@@ -78,8 +84,9 @@ export function IdleOrbitControls({
 
   useFrame(() => {
     if (disableAutoRotate || !controls.current) return;
-    const idle = performance.now() - idleSince.current >= IDLE_MS;
+    const idle = performance.now() - idleSince.current >= idleMs;
     controls.current.autoRotate = idle;
+    controls.current.autoRotateSpeed = autoRotateSpeed;
   });
 
   return (
@@ -92,7 +99,7 @@ export function IdleOrbitControls({
       minPolarAngle={Math.PI * 0.12}
       maxPolarAngle={Math.PI * 0.88}
       autoRotate={false}
-      autoRotateSpeed={AUTO_SPEED}
+      autoRotateSpeed={autoRotateSpeed}
       makeDefault
     />
   );

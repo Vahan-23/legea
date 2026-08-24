@@ -1,5 +1,4 @@
-import { getGlbProductZones } from "@/lib/glbColorZones";
-import { resolveGlbUrlSync } from "@/lib/models";
+import { ORIGINAL_GLB_ONLY, resolveGlbUrlSync } from "@/lib/models";
 import { prefetchImage } from "@/lib/prefetchImages";
 
 const glbLoaded = new Set<string>();
@@ -46,8 +45,8 @@ function runWhenIdle(fn: () => void): () => void {
 }
 
 /**
- * Тихая фоновая подготовка 3D на странице товара:
- * GLB → albedo → three.js + useGLTF cache (idle).
+ * Подготовка 3D — только по запросу (открытие вкладки 3D):
+ * GLB → three.js + useGLTF cache (idle). Без albedo/recolor.
  */
 export function prefetchProduct3d(
   productId: string,
@@ -58,9 +57,11 @@ export function prefetchProduct3d(
 
   void prefetchGlb(glbUrl);
 
-  const zones = getGlbProductZones(productId);
-  if (zones?.albedoUrl) {
-    void prefetchImage(zones.albedoUrl);
+  if (!ORIGINAL_GLB_ONLY) {
+    void import("@/lib/glbColorZones").then(({ getGlbProductZones }) => {
+      const zones = getGlbProductZones(productId);
+      if (zones?.albedoUrl) void prefetchImage(zones.albedoUrl);
+    });
   }
 
   const cancelIdle = runWhenIdle(() => {

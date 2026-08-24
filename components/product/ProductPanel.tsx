@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
-import { ProductViewer } from "@/components/canvas/ProductViewer";
+import { ProductViewer, type ProductViewMode } from "@/components/canvas/ProductViewer";
 import { BrandingPanel } from "@/components/product/BrandingPanel";
 import { ColorSwatches } from "@/components/product/ColorSwatches";
 import { PriceLevel } from "@/components/product/PriceLevel";
@@ -25,6 +25,7 @@ import { useSpecStore } from "@/store/useSpecStore";
 import { totalPieces } from "@/types/spec";
 import type { Locale } from "@/i18n/routing";
 import type { ProductPhotos } from "@/lib/productImages";
+import { productHasViewer3d } from "@/lib/models";
 import { prefetchImage } from "@/lib/prefetchImages";
 import type { Product } from "@/types/product";
 import { productName } from "@/types/product";
@@ -45,6 +46,7 @@ export function ProductPanel({
   const t = useTranslations("product");
   const name = productName(product, locale);
   const sizes = useMemo(() => getMatrixSizes(product), [product]);
+  const has3d = productHasViewer3d(product.id, product.model);
 
   const colorway = useProductStore((s) => s.colorway);
   const quantities = useProductStore((s) => s.quantities);
@@ -59,10 +61,16 @@ export function ProductPanel({
   const [addedFlash, setAddedFlash] = useState(false);
   const [fashionActive, setFashionActive] = useState(Boolean(fashionSrc));
   const [catalogHref, setCatalogHref] = useState("/catalog");
+  const [viewerMode, setViewerMode] = useState<ProductViewMode>("front");
 
   useEffect(() => {
     setCatalogHref(catalogHrefFromFocus(peekCatalogFocus()));
   }, []);
+
+  useEffect(() => {
+    setViewerMode("front");
+    setFashionActive(Boolean(fashionSrc));
+  }, [product.id, fashionSrc]);
 
   useEffect(() => {
     initProduct({
@@ -71,10 +79,6 @@ export function ProductPanel({
       sizes,
     });
   }, [product.id, product.colorways, sizes, initProduct]);
-
-  useEffect(() => {
-    setFashionActive(Boolean(fashionSrc));
-  }, [product.id, fashionSrc]);
 
   const pieces = totalPieces(quantities);
   const canAdd = pieces > 0 && colorway != null;
@@ -126,6 +130,7 @@ export function ProductPanel({
             model={product.model}
             colorway={colorway}
             colorways={product.colorways}
+            mode={viewerMode}
             onColorwayChange={(code) => {
               setFashionActive(false);
               setColorway(code);
@@ -135,7 +140,11 @@ export function ProductPanel({
             fashionSrc={fashionSrc}
             fashionActive={fashionActive}
             onFashionOff={() => setFashionActive(false)}
-            onFashionOn={() => setFashionActive(true)}
+            onFashionOn={() => {
+              setFashionActive(true);
+              setViewerMode("front");
+            }}
+            onModeChange={setViewerMode}
           />
         </div>
 
@@ -173,10 +182,22 @@ export function ProductPanel({
               value={colorway}
               fashionSrc={fashionSrc}
               fashionActive={fashionActive}
-              onSelectFashion={() => setFashionActive(true)}
+              has3d={has3d}
+              view3dActive={viewerMode === "3d"}
+              onSelect3d={() => {
+                setFashionActive(false);
+                setViewerMode("3d");
+              }}
+              onSelectFashion={() => {
+                setFashionActive(true);
+                setViewerMode("front");
+              }}
               onChange={(code) => {
                 setFashionActive(false);
                 setColorway(code);
+                if (viewerMode === "3d") {
+                  setViewerMode("front");
+                }
               }}
               onPreview={previewColorway}
             />
