@@ -3,6 +3,7 @@ import { Link } from "@/i18n/navigation";
 import { isLocale } from "@/i18n/routing";
 import { notFound } from "next/navigation";
 import { BrandLogo } from "@/components/ui/BrandLogo";
+import { BrandTicker } from "@/components/ui/BrandTicker";
 import { LangSwitcher } from "@/components/ui/LangSwitcher";
 import { StickyHeader } from "@/components/ui/StickyHeader";
 import { SpecNavButton } from "@/components/spec/SpecNavButton";
@@ -71,6 +72,7 @@ export async function Header({ locale }: HeaderProps) {
           </div>
           <div className="section-rule" />
         </header>
+        <BrandTicker />
       </StickyHeader>
       <SpecDrawer />
     </>

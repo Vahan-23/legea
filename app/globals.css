@@ -71,6 +71,14 @@
     animation-play-state: paused;
   }
 
+  .brand-ticker__track {
+    animation: teams-marquee-scroll 28s linear infinite;
+  }
+
+  .brand-ticker:hover .brand-ticker__track {
+    animation-play-state: paused;
+  }
+
   .team-logo {
     @apply h-[85%] w-[85%] object-contain scale-100 opacity-50 grayscale transition-[filter,opacity,transform] duration-500 ease-out;
   }
@@ -89,7 +97,8 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .teams-marquee__track {
+    .teams-marquee__track,
+    .brand-ticker__track {
       animation: none;
     }
 
