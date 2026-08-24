@@ -52,3 +52,51 @@
     @apply w-full border border-navy/20 bg-white px-3 py-2 text-sm text-graphite outline-none transition-colors focus:border-blue;
   }
 }
+
+@keyframes teams-marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@layer components {
+  .teams-marquee__track {
+    animation: teams-marquee-scroll 40s linear infinite;
+  }
+
+  .teams-marquee:hover .teams-marquee__track {
+    animation-play-state: paused;
+  }
+
+  .team-logo {
+    @apply h-[85%] w-[85%] object-contain scale-100 opacity-50 grayscale transition-[filter,opacity,transform] duration-500 ease-out;
+  }
+
+  .team-logo--color {
+    @apply opacity-100 grayscale-0;
+  }
+
+  .team-logo--live {
+    @apply scale-110 opacity-100 grayscale-0;
+  }
+
+  .group:hover .team-logo,
+  .group:focus-visible .team-logo {
+    @apply opacity-100 grayscale-0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .teams-marquee__track {
+      animation: none;
+    }
+
+    .team-logo,
+    .team-logo--color,
+    .team-logo--live {
+      @apply scale-100 opacity-100 grayscale-0;
+    }
+  }
+}

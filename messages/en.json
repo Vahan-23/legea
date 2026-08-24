@@ -73,8 +73,17 @@
     },
     "clients": {
       "title": "Trusted by",
-      "subtitle": "Clubs and schools — logos after approval",
-      "placeholder": "Club {n}"
+      "subtitle": "Clubs and national teams that choose Legea kit",
+      "placeholder": "Club {n}",
+      "tabCurrent": "Current",
+      "tabHistory": "History",
+      "tabAll": "All",
+      "countryAll": "All countries",
+      "countryLabel": "Country",
+      "found": "Found: {count}",
+      "empty": "No teams match. Try different filters or search.",
+      "since": "since {year}",
+      "logoAlt": "Logo of {name}"
     },
     "lead": {
       "title": "Quick enquiry",
