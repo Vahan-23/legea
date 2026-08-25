@@ -5,6 +5,7 @@ import {
   useDeferredValue,
   useEffect,
   useMemo,
+  useRef,
   useState,
   useTransition,
 } from "react";
@@ -59,13 +60,28 @@ export function CatalogView({
     [searchParams],
   );
 
+  const filtersRef = useRef(filters);
+  filtersRef.current = filters;
+
   const [qDraft, setQDraft] = useState(filters.q);
+  /** Последнее q из URL — не затираем быстрый ввод устаревшим debounce. */
+  const urlQRef = useRef(filters.q);
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [gridColumns, setGridColumns] = useCatalogGridView();
 
   useEffect(() => {
-    setQDraft(filters.q);
+    if (filters.q === urlQRef.current) return;
+    const previousUrlQ = urlQRef.current;
+    urlQRef.current = filters.q;
+    setQDraft((draft) => {
+      const d = draft.trim();
+      const prev = previousUrlQ.trim();
+      const next = filters.q.trim();
+      // Пользователь уже ушёл дальше URL (быстрый ввод) — не трогаем поле
+      if (d !== prev && d !== next) return draft;
+      return filters.q;
+    });
   }, [filters.q]);
 
   useEffect(() => {
@@ -110,7 +126,9 @@ export function CatalogView({
 
   const filtered = useMemo(() => {
     const result = filterProducts(products, filtersLive, locale);
-    if (with3d.size === 0) return result;
+    const q = filtersLive.q.trim();
+    // При поиске оставляем порядок релевантности из filterProducts
+    if (q || with3d.size === 0) return result;
     return [...result].sort((a, b) => {
       const a3d = with3d.has(a.id) ? 0 : 1;
       const b3d = with3d.has(b.id) ? 0 : 1;
@@ -135,15 +153,18 @@ export function CatalogView({
 
   useEffect(() => {
     const nextQ = qDraft.trim();
-    if (nextQ === filters.q) return;
+    if (nextQ === filtersRef.current.q) return;
     const timer = window.setTimeout(() => {
-      pushFilters({ ...filters, q: nextQ });
+      const latest = filtersRef.current;
+      if (nextQ === latest.q) return;
+      pushFilters({ ...latest, q: nextQ });
     }, SEARCH_URL_DEBOUNCE_MS);
     return () => window.clearTimeout(timer);
-  }, [qDraft, filters, pushFilters]);
+  }, [qDraft, pushFilters]);
 
   const reset = useCallback(() => {
     setQDraft("");
+    urlQRef.current = "";
     pushFilters(emptyCatalogFilters());
   }, [pushFilters]);
 

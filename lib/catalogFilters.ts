@@ -175,24 +175,82 @@ function hasOversize(product: Product): boolean {
   return product.sizes.some((size) => OVERSIZE_SIZES.has(size));
 }
 
+/** Нижний регистр, без пробелов / дефисов / подчёркиваний. */
+function normalizeSearchToken(value: string): string {
+  return value.toLowerCase().replace(/[\s\-_/]+/g, "");
+}
+
+/** Только цифры — для «314» → B314, «1173» → TXM1173P229. */
+function digitsOnly(value: string): string {
+  return value.replace(/\D+/g, "");
+}
+
+function productSearchHaystacks(product: Product, locale: Locale): string[] {
+  const names = [
+    product.name[locale],
+    product.name.ru,
+    product.name.en,
+    product.name.hy,
+  ].filter(Boolean) as string[];
+  return [product.id, ...names];
+}
+
+/**
+ * Универсальный поиск: артикул и названия, с нормализацией.
+ * «314» → B314; «b 314» → B314; «1173» → TXM1173P229.
+ */
 function matchesQuery(
   product: Product,
   query: string,
   locale: Locale,
 ): boolean {
-  if (!query) return true;
-  const needle = query.toLowerCase();
-  if (product.id.toLowerCase().includes(needle)) return true;
-  const name = (product.name[locale] || product.name.ru).toLowerCase();
-  if (name.includes(needle)) return true;
-  // Также en/ru имена — чтобы поиск не зависел только от локали
-  if (locale !== "ru" && product.name.ru.toLowerCase().includes(needle)) {
-    return true;
+  return querySearchScore(product, query, locale) > 0;
+}
+
+/**
+ * Чем выше score — тем релевантнее.
+ * 0 = нет совпадения.
+ */
+export function querySearchScore(
+  product: Product,
+  query: string,
+  locale: Locale,
+): number {
+  const raw = query.trim();
+  if (!raw) return 1;
+
+  const needle = normalizeSearchToken(raw);
+  const needleDigits = digitsOnly(raw);
+  const idNorm = normalizeSearchToken(product.id);
+  const idDigits = digitsOnly(product.id);
+
+  // Точное совпадение артикула
+  if (idNorm === needle) return 100;
+  // Артикул начинается с запроса (или «b314» при «b31»)
+  if (idNorm.startsWith(needle)) return 90;
+  // Подстрока в артикуле («314» в «b314»)
+  if (needle.length >= 2 && idNorm.includes(needle)) return 80;
+
+  // Числовой фрагмент артикула («314» → B314, «1173» → TXM1173…)
+  if (needleDigits.length >= 2 && idDigits.includes(needleDigits)) {
+    if (idDigits === needleDigits) return 85;
+    if (idDigits.endsWith(needleDigits)) return 75;
+    return 65;
   }
-  if (locale !== "en" && product.name.en.toLowerCase().includes(needle)) {
-    return true;
+
+  // Названия (все локали)
+  for (const hay of productSearchHaystacks(product, locale)) {
+    const hayNorm = normalizeSearchToken(hay);
+    if (hayNorm.includes(needle)) return 40;
+    if (
+      needleDigits.length >= 3 &&
+      digitsOnly(hay).includes(needleDigits)
+    ) {
+      return 30;
+    }
   }
-  return false;
+
+  return 0;
 }
 
 export function filterProducts(
@@ -227,7 +285,13 @@ export function filterProducts(
     return true;
   });
 
+  const q = filters.q.trim();
   result = [...result].sort((a, b) => {
+    if (q) {
+      const scoreDiff =
+        querySearchScore(b, q, locale) - querySearchScore(a, q, locale);
+      if (scoreDiff !== 0) return scoreDiff;
+    }
     if (filters.sort === "name") {
       const nameA = a.name[locale] || a.name.ru;
       const nameB = b.name[locale] || b.name.ru;

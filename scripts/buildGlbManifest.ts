@@ -16,10 +16,11 @@ function productIdFromGlbName(file: string): string | null {
   const base = file.replace(/\.glb$/i, "");
   if (/^logo/i.test(base) || /_3D1$/i.test(base)) return null;
   const named = /^([A-Za-z0-9]+)_3D$/i.exec(base);
-  if (named?.[1]) return named[1];
+  if (named?.[1]) return named[1].toUpperCase();
   const optimized = /^([A-Za-z0-9]+)-optimized$/i.exec(base);
-  if (optimized?.[1]) return optimized[1];
-  if (/^[A-Za-z0-9]+$/.test(base)) return base;
+  if (optimized?.[1]) return optimized[1].toUpperCase();
+  // Артикулы в каталоге в UPPERCASE (B314), файлы иногда b314.glb
+  if (/^[A-Za-z0-9]+$/.test(base)) return base.toUpperCase();
   return null;
 }
 
