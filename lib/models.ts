@@ -88,18 +88,7 @@ export function isKnownModel(model: string | null): model is ModelId {
 }
 
 /** Только фото/fashion в каталоге — без 3D (в т.ч. без generic ball.glb). */
-export const PHOTO_ONLY_PRODUCT_IDS = new Set<string>([
-  "P278",
-  "P281",
-  "M1037",
-  "P186",
-  "K200",
-  "K212",
-  "G030",
-  "G027",
-  "B111",
-  "TXM1173P229",
-]);
+export const PHOTO_ONLY_PRODUCT_IDS = new Set<string>([]);
 
 export function isPhotoOnlyProduct(
   productId: string | null | undefined,
