@@ -138,7 +138,9 @@
   "common": {
     "openMenu": "Открыть меню",
     "closeMenu": "Закрыть меню",
-    "language": "Язык"
+    "language": "Язык",
+    "scrollToTop": "Наверх",
+    "scrollToTopBrand": "LEGEA"
   },
   "footer": {
     "rights": "Все права защищены",

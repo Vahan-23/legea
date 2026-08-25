@@ -123,6 +123,9 @@ export function ProductViewer({
 
   useEffect(() => {
     setSceneComp(null);
+  }, [productId]);
+
+  useEffect(() => {
     if (controlledMode !== undefined) return;
     const initial = hasPhotos || fashionSrc ? "front" : has3d ? "3d" : "front";
     setInternalMode(initial);
@@ -286,16 +289,26 @@ export function ProductViewer({
   };
 
   useEffect(() => {
-    if (mode !== "3d" || !productId) return;
+    if (!has3d || !productId) return;
     prefetchCancelRef.current?.();
     prefetchCancelRef.current = prefetchProduct3d(productId, model);
-  }, [mode, productId, model]);
 
-  useEffect(() => {
+    // Scene-компонент заранее, Canvas монтируется только в режиме 3D
+    let cancelled = false;
+    void prefetchSceneModule()
+      .then((m) => {
+        if (!cancelled) {
+          setSceneComp(() => m.Scene);
+        }
+      })
+      .catch(() => {});
+
     return () => {
+      cancelled = true;
       prefetchCancelRef.current?.();
+      prefetchCancelRef.current = null;
     };
-  }, [productId]);
+  }, [has3d, productId, model]);
 
   useEffect(() => {
     if (!show3d || SceneComp) return;
@@ -304,7 +317,7 @@ export function ProductViewer({
     void prefetchSceneModule()
       .then((m) => {
         if (!cancelled) {
-          setSceneComp((_prev: ComponentType<SceneProps> | null) => m.Scene);
+          setSceneComp(() => m.Scene);
         }
       })
       .finally(() => {
@@ -367,7 +380,7 @@ export function ProductViewer({
   }, [activePhoto, showCarousel]);
 
   return (
-    <div className="w-full max-w-full space-y-3">
+    <div className="w-full max-w-full space-y-2">
       <div className="relative aspect-[3/4] w-full max-w-full overflow-hidden bg-off-white">
         {colorReveal ? (
           <div

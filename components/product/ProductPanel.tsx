@@ -114,6 +114,33 @@ export function ProductPanel({
     window.setTimeout(() => setAddedFlash(false), 2000);
   };
 
+  const colorSwatches = (
+    <ColorSwatches
+      colorways={product.colorways}
+      value={colorway}
+      fashionSrc={fashionSrc}
+      fashionActive={fashionActive}
+      has3d={has3d}
+      view3dActive={viewerMode === "3d"}
+      onSelect3d={() => {
+        setFashionActive(false);
+        setViewerMode("3d");
+      }}
+      onSelectFashion={() => {
+        setFashionActive(true);
+        setViewerMode("front");
+      }}
+      onChange={(code) => {
+        setFashionActive(false);
+        setColorway(code);
+        if (viewerMode === "3d") {
+          setViewerMode("front");
+        }
+      }}
+      onPreview={previewColorway}
+    />
+  );
+
   return (
     <div className="mx-auto w-full max-w-6xl overflow-x-hidden px-4 py-8 sm:px-6 sm:py-12">
       <Link
@@ -123,8 +150,32 @@ export function ProductPanel({
         {t("backToCatalog")}
       </Link>
 
-      <div className="grid gap-8 sm:gap-10 lg:grid-cols-2">
-        <div className="min-w-0 space-y-4 lg:sticky lg:top-6 lg:self-start">
+      <div className="grid gap-8 sm:gap-10 lg:grid-cols-2 lg:items-start">
+        {/* Mobile: название сверху; desktop: правая колонка сверху */}
+        <header className="order-1 min-w-0 space-y-4 lg:col-start-2 lg:row-start-1">
+          <p className="font-mono text-2xl tracking-tight text-navy sm:text-3xl">
+            {product.id}
+          </p>
+          <h1 className="break-words text-display-sm normal-case tracking-display">
+            {name}
+          </h1>
+
+          <div className="flex flex-wrap items-center gap-3 sm:gap-4">
+            <PriceLevel level={product.priceLevel} />
+            {product.oversizeId ? (
+              <span className="border border-navy/20 px-2 py-1 font-mono text-[10px] uppercase text-navy">
+                {t("badgeOversize")}
+              </span>
+            ) : null}
+            {product.juniorId ? (
+              <span className="border border-navy/20 px-2 py-1 font-mono text-[10px] uppercase text-navy">
+                {t("badgeJunior")}
+              </span>
+            ) : null}
+          </div>
+        </header>
+
+        <div className="order-2 min-w-0 space-y-3 lg:sticky lg:top-6 lg:col-start-1 lg:row-span-2 lg:row-start-1 lg:self-start">
           <ProductViewer
             productId={product.id}
             model={product.model}
@@ -146,62 +197,18 @@ export function ProductPanel({
             }}
             onModeChange={setViewerMode}
           />
+
+          {/* Цвета/3D у карточки — только mobile */}
+          <div className="lg:hidden">{colorSwatches}</div>
         </div>
 
-        <div className="min-w-0 space-y-6 sm:space-y-8">
-          <div className="space-y-4">
-            <p className="font-mono text-2xl tracking-tight text-navy sm:text-3xl">
-              {product.id}
-            </p>
-            <h1 className="break-words text-display-sm normal-case tracking-display">
-              {name}
-            </h1>
-
-            <div className="flex flex-wrap items-center gap-3 sm:gap-4">
-              <PriceLevel level={product.priceLevel} />
-              {product.oversizeId ? (
-                <span className="border border-navy/20 px-2 py-1 font-mono text-[10px] uppercase text-navy">
-                  {t("badgeOversize")}
-                </span>
-              ) : null}
-              {product.juniorId ? (
-                <span className="border border-navy/20 px-2 py-1 font-mono text-[10px] uppercase text-navy">
-                  {t("badgeJunior")}
-                </span>
-              ) : null}
-            </div>
-          </div>
-
+        <div className="order-3 min-w-0 space-y-6 sm:space-y-8 lg:col-start-2 lg:row-start-2">
           <div className="section-rule" />
 
           <TechBadges tech={product.tech} />
 
-          <div className="space-y-3">
-            <ColorSwatches
-              colorways={product.colorways}
-              value={colorway}
-              fashionSrc={fashionSrc}
-              fashionActive={fashionActive}
-              has3d={has3d}
-              view3dActive={viewerMode === "3d"}
-              onSelect3d={() => {
-                setFashionActive(false);
-                setViewerMode("3d");
-              }}
-              onSelectFashion={() => {
-                setFashionActive(true);
-                setViewerMode("front");
-              }}
-              onChange={(code) => {
-                setFashionActive(false);
-                setColorway(code);
-                if (viewerMode === "3d") {
-                  setViewerMode("front");
-                }
-              }}
-              onPreview={previewColorway}
-            />
-          </div>
+          {/* Desktop: цвета в правой колонке как раньше */}
+          <div className="hidden lg:block">{colorSwatches}</div>
 
           <SizeMatrix
             sizes={sizes}

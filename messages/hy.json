@@ -138,7 +138,9 @@
   "common": {
     "openMenu": "Բացել ընտրացանկը",
     "closeMenu": "Փակել ընտրացանկը",
-    "language": "Լեզու"
+    "language": "Լեզու",
+    "scrollToTop": "Վերև",
+    "scrollToTopBrand": "LEGEA"
   },
   "footer": {
     "rights": "Բոլոր իրավունքները պաշտպանված են",

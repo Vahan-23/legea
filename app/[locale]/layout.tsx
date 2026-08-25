@@ -10,6 +10,7 @@ import {
 import type { ReactNode } from "react";
 import { Footer } from "@/components/ui/Footer";
 import { Header } from "@/components/ui/Header";
+import { ScrollToTop } from "@/components/ui/ScrollToTop";
 import { isLocale, locales, type Locale } from "@/i18n/routing";
 import "../globals.css";
 
@@ -72,6 +73,7 @@ export default async function LocaleLayout({
           <Header locale={locale} />
           <main className="flex-1">{children}</main>
           <Footer locale={locale} />
+          <ScrollToTop />
         </NextIntlClientProvider>
       </body>
     </html>
