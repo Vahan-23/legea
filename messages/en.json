@@ -100,7 +100,8 @@
         "required": "Required field",
         "phone": "At least 9 digits",
         "rateLimit": "Too many requests. Try again later.",
-        "send": "Could not send. Email us at {email}"
+        "send": "Could not send. Email us at {email}",
+        "misconfigured": "Sending is temporarily unavailable. Email us at {email}"
       }
     }
   },
@@ -117,7 +118,7 @@
     },
     "contacts": {
       "title": "Contacts",
-      "lead": "Reach us by phone, email or the homepage form",
+      "lead": "Reach us by phone, email or the form on this page",
       "map": "Open in Google Maps",
       "body": "Legal details and the exact warehouse address will be confirmed with the client.\nHours: weekdays, by appointment."
     },

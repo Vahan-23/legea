@@ -50,6 +50,7 @@ export const specApiSchema = z.discriminatedUnion("type", [
     specNumber: z.string().regex(/^SPEC-\d{8}-[A-Z0-9]{4}$/),
     locale: z.enum(["ru", "hy", "en"]),
     contact: quickLeadSchema,
+    source: z.string().trim().max(80).optional(),
     website: z.string().optional(),
   }),
 ]);

@@ -1,11 +1,13 @@
 import { NextResponse } from "next/server";
-import { Resend } from "resend";
 import {
   clientEmailHtml,
   clientEmailSubject,
   managerEmailHtml,
   managerEmailSubject,
+  quickLeadEmailHtml,
+  quickLeadEmailSubject,
 } from "@/lib/emailTemplates";
+import { getMailConfig, managerRecipients, sendEmail } from "@/lib/mail";
 import { checkRateLimit } from "@/lib/rateLimit";
 import { specApiSchema } from "@/lib/specSchema";
 
@@ -28,25 +30,6 @@ function parseDataUrl(dataUrl: string): { content: string } {
     return { content: match[2] };
   }
   return { content: dataUrl };
-}
-
-async function sendWithRetry(
-  resend: Resend,
-  payload: Parameters<Resend["emails"]["send"]>[0],
-): Promise<{ id?: string; error: string | null }> {
-  const attempt = async () => {
-    const result = await resend.emails.send(payload);
-    if (result.error) {
-      return { id: undefined, error: result.error.message };
-    }
-    return { id: result.data?.id, error: null };
-  };
-
-  const first = await attempt();
-  if (!first.error) return first;
-
-  await new Promise((r) => setTimeout(r, 2000));
-  return attempt();
 }
 
 export async function POST(request: Request) {
@@ -91,35 +74,32 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: true, specNumber: body.specNumber });
   }
 
-  const apiKey = process.env.RESEND_API_KEY;
-  const from = process.env.RESEND_FROM;
-  const managerEmail = process.env.MANAGER_EMAIL;
-  const managerCc = process.env.MANAGER_EMAIL_CC;
-
-  if (!apiKey || !from || !managerEmail) {
+  const mailConfig = getMailConfig();
+  if (!mailConfig) {
     return NextResponse.json(
       { ok: false, error: "misconfigured" },
       { status: 500 },
     );
   }
 
-  const resend = new Resend(apiKey);
-
   if (body.type === "quick") {
-    const managerResult = await sendWithRetry(resend, {
-      from,
-      to: [managerEmail],
-      cc: managerCc ? [managerCc] : undefined,
-      subject: `Быстрая заявка ${body.specNumber} от ${body.contact.organization}`,
-      html: `
-        <p>Быстрая заявка <strong>${body.specNumber}</strong></p>
-        <ul>
-          <li>Организация: ${body.contact.organization}</li>
-          <li>Контакт: ${body.contact.contactPerson}</li>
-          <li>Телефон: ${body.contact.phone}</li>
-          <li>Комментарий: ${body.contact.comment || "—"}</li>
-        </ul>
-      `,
+    const recipients = managerRecipients(mailConfig);
+    const managerResult = await sendEmail(mailConfig, {
+      from: mailConfig.from,
+      ...recipients,
+      subject: quickLeadEmailSubject(
+        body.specNumber,
+        body.contact.organization,
+      ),
+      html: quickLeadEmailHtml({
+        specNumber: body.specNumber,
+        organization: body.contact.organization,
+        contactPerson: body.contact.contactPerson,
+        phone: body.contact.phone,
+        comment: body.contact.comment,
+        locale: body.locale,
+        source: body.source ?? "Сайт",
+      }),
     });
 
     if (managerResult.error) {
@@ -147,10 +127,10 @@ export async function POST(request: Request) {
     });
   }
 
-  const managerResult = await sendWithRetry(resend, {
-    from,
-    to: [managerEmail],
-    cc: managerCc ? [managerCc] : undefined,
+  const recipients = managerRecipients(mailConfig);
+  const managerResult = await sendEmail(mailConfig, {
+    from: mailConfig.from,
+    ...recipients,
     subject: managerEmailSubject(
       body.specNumber,
       body.contact.organization,
@@ -173,8 +153,8 @@ export async function POST(request: Request) {
     );
   }
 
-  const clientResult = await sendWithRetry(resend, {
-    from,
+  const clientResult = await sendEmail(mailConfig, {
+    from: mailConfig.from,
     to: [body.contact.email],
     subject: clientEmailSubject(body.specNumber),
     html: clientEmailHtml({

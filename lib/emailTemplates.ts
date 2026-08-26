@@ -41,6 +41,35 @@ export function clientEmailHtml(input: {
   `;
 }
 
+export function quickLeadEmailSubject(
+  specNumber: string,
+  organization: string,
+): string {
+  return `Быстрая заявка ${specNumber} от ${organization}`;
+}
+
+export function quickLeadEmailHtml(input: {
+  specNumber: string;
+  organization: string;
+  contactPerson: string;
+  phone: string;
+  comment: string;
+  locale: string;
+  source: string;
+}): string {
+  return `
+    <p>Быстрая заявка <strong>${escapeHtml(input.specNumber)}</strong></p>
+    <ul>
+      <li>Источник: ${escapeHtml(input.source)}</li>
+      <li>Язык сайта: ${escapeHtml(input.locale)}</li>
+      <li>Организация: ${escapeHtml(input.organization)}</li>
+      <li>Контакт: ${escapeHtml(input.contactPerson)}</li>
+      <li>Телефон: ${escapeHtml(input.phone)}</li>
+      <li>Комментарий: ${escapeHtml(input.comment || "—")}</li>
+    </ul>
+  `;
+}
+
 function escapeHtml(value: string): string {
   return value
     .replaceAll("&", "&amp;")
